@@ -1,0 +1,79 @@
+// we should perhaps use px for spacings?
+body {
+  // fixed
+  --spacing-fixed-3xl: 5rem;
+  --spacing-fixed-2xl: 2.5rem;
+  --spacing-fixed-xl: 2rem;
+  --spacing-fixed-lg: 1.5rem;
+  --spacing-fixed-md: 1rem;
+  --spacing-fixed-sm: 0.75rem;
+  --spacing-fixed-xs: 0.5rem;
+  --spacing-fixed-2xs: 0.25rem;
+  --spacing-fixed-3xs: 0.125rem;
+  --spacing-fixed-zero: 0;
+
+  // responsive
+  --spacing-responsive-3xl: 5rem;
+  --spacing-responsive-2xl: 2.5rem;
+  --spacing-responsive-xl: 2rem;
+  --spacing-responsive-lg: 1.5rem;
+  --spacing-responsive-md: 1rem;
+  --spacing-responsive-sm: 0.75rem;
+  --spacing-responsive-xs: 0.5rem;
+  --spacing-responsive-2xs: 0.25rem;
+  --spacing-responsive-3xs: 0.125rem;
+  --spacing-responsive-page-padding: 2.5rem;
+
+  @media (max-width: 767px) {
+    --spacing-responsive-3xl: 2.5rem;
+    --spacing-responsive-2xl: 2rem;
+    --spacing-responsive-xl: 1.5rem;
+    --spacing-responsive-lg: 1rem;
+    --spacing-responsive-md: 0.75rem;
+    --spacing-responsive-sm: 0.5rem;
+    --spacing-responsive-xs: 0.25rem;
+    --spacing-responsive-2xs: 0.125rem;
+    --spacing-responsive-3xs: 0rem;
+    --spacing-responsive-page-padding: 1rem;
+  }
+}
+
+/* if using px for spacings */
+/*
+  // fixed
+  --spacing-fixed-3xl: 80px;
+  --spacing-fixed-2xl: 40px;
+  --spacing-fixed-xl: 32px;
+  --spacing-fixed-lg: 24px;
+  --spacing-fixed-md: 16px;
+  --spacing-fixed-sm: 12px;
+  --spacing-fixed-xs: 8px;
+  --spacing-fixed-2xs: 4px;
+  --spacing-fixed-3xs: 2px;
+  --spacing-fixed-zero: 0px;
+
+  // responsive
+  --spacing-responsive-3xl: 80px;
+  --spacing-responsive-2xl: 40px;
+  --spacing-responsive-xl: 32px;
+  --spacing-responsive-lg: 24px;
+  --spacing-responsive-md: 16px;
+  --spacing-responsive-sm: 12px;
+  --spacing-responsive-xs: 8px;
+  --spacing-responsive-2xs: 4px;
+  --spacing-responsive-3xs: 2px;
+  --spacing-responsive-horizontal-margin: 40px;
+
+  @media (max-width: 767px) {
+    --spacing-responsive-3xl: 40px;
+    --spacing-responsive-2xl: 32px;
+    --spacing-responsive-xl: 24px;
+    --spacing-responsive-lg: 16px;
+    --spacing-responsive-md: 12px;
+    --spacing-responsive-sm: 8px;
+    --spacing-responsive-xs: 4px;
+    --spacing-responsive-2xs: 2px;
+    --spacing-responsive-3xs: 0px;
+    --spacing-responsive-horizontal-margin: 16px;
+  }
+*/

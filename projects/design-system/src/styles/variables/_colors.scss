@@ -1,0 +1,201 @@
+body {
+  // surface
+  --surface-background: #ECEFF6;
+  --surface-primary: #FFFFFF;
+  --surface-secondary: #F6F7FA;
+  --surface-hover: #F6F7FA;
+  --surface-pressed: #E3E8F1;
+  --surface-action-secondary: #FFFFFF;
+  --surface-disabled-light: #EEEEEE;
+  --surface-disabled-dark: #ABABAB;
+  --surface-success: #52AE30;
+  --surface-warning: #FF6600;
+  --surface-error: #F0323D;
+
+  // text-icon
+  --text-icon-primary: #151617;
+  --text-icon-secondary: #7D828B;
+  --text-icon-disabled-light: #EEEEEE;
+  --text-icon-disabled-dark: #ABABAB;
+  --text-icon-inverse: #FFFFFF;
+  --text-icon-white: #FFFFFF;
+  --text-icon-success: #52AE30;
+  --text-icon-warning: #FF6600;
+  --text-icon-error: #F0323D;
+
+  // border
+  --border-light: #E7EBF3;
+  --border-heavy: #A6ADBA;
+  --border-disabled: #CDCDCD;
+  --border-success: #52AE30;
+  --border-warning: #FF6600;
+  --border-error: #F0323D;
+
+  // green
+  --brand-green-default: #52AE30;
+  --brand-green-light: #74BE59;
+  --brand-green-dark: #428B26;
+  --brand-green-alpha-10: #{rgba(#52AE30, 0.1)};
+  --brand-green-alpha-20: #{rgba(#52AE30, 0.2)};
+  --brand-green-alpha-25: #{rgba(#52AE30, 0.25)};
+  --brand-green-tint-10: #EEF7EA;
+  --brand-green-tint-20: #DCEFD6;
+  --brand-green-shadow: rgba(#006648, 0.2);
+
+  // orange
+  --brand-orange-default: #FF6600;
+  --brand-orange-light: #FF8533;
+  --brand-orange-dark: #CC5200;
+  --brand-orange-alpha-10: #{rgba(#FF6600, 0.1)};
+  --brand-orange-alpha-20: #{rgba(#FF6600, 0.2)};
+  --brand-orange-alpha-25: #{rgba(#FF6600, 0.25)};
+  --brand-orange-tint-10: #FFF0E5;
+  --brand-orange-tint-20: #FFE0CC;
+  --brand-orange-shadow: rgba(#CC5200, 0.2);
+
+  // red
+  --brand-red-default: #F0323D;
+  --brand-red-light: #FF697B;
+  --brand-red-dark: #C02831;
+  --brand-red-alpha-10: #{rgba(#F0323D, 0.1)};
+  --brand-red-alpha-20: #{rgba(#F0323D, 0.2)};
+  --brand-red-alpha-25: #{rgba(#F0323D, 0.25)};
+  --brand-red-tint-10: #FDEAEC;
+  --brand-red-tint-20: #FFD9DE;
+  --brand-red-shadow: rgba(#C02831, 0.2);
+
+  // blue
+  --brand-blue-default: #0F87D2;
+  --brand-blue-light: #5BA5EB;
+  --brand-blue-dark: #0C6CA8;
+  --brand-blue-alpha-10: #{rgba(#0F87D2, 0.1)};
+  --brand-blue-alpha-20: #{rgba(#0F87D2, 0.2)};
+  --brand-blue-alpha-25: #{rgba(#0F87D2, 0.25)};
+  --brand-blue-tint-10: #E7F3FA;
+  --brand-blue-tint-20: #D6E9FA;
+  --brand-blue-shadow: rgba(#0C6CA8, 0.2);
+
+  // yellow
+  --brand-yellow-default: #FFCC00;
+  --brand-yellow-light: #FFD633;
+  --brand-yellow-dark: #CCA300;
+  --brand-yellow-alpha-10: #{rgba(#FFCC00, 0.1)};
+  --brand-yellow-alpha-20: #{rgba(#FFCC00, 0.2)};
+  --brand-yellow-alpha-25: #{rgba(#FFCC00, 0.25)};
+
+  // grey
+  --brand-grey-default: #7D828B;
+  --brand-grey-light: #A6ADBA;
+  --brand-grey-dark: #656971;
+  --brand-grey-alpha-10: #{rgba(#A6ADBA, 0.1)};
+  --brand-grey-alpha-20: #{rgba(#A6ADBA, 0.2)};
+  --brand-grey-alpha-25: #{rgba(#A6ADBA, 0.25)};
+  --brand-grey-alpha-50: #{rgba(#7D828B, 0.5)};
+  --brand-grey-shadow: #{rgba(#A6ADBA, 0.2)};
+
+  // mobile-glass
+  --mobile-glass-alpha-30: #{rgba(#000000, 0.3)};
+  --mobile-glass-alpha-40: #{rgba(#000000, 0.4)};
+  --mobile-glass-alpha-60: #{rgba(#000000, 0.6)};
+
+  &.dark-theme {
+    // surface
+    --surface-background: #1D1E20;
+    --surface-primary: #27282B;
+    --surface-secondary: #303236;
+    --surface-hover: #303236;
+    --surface-pressed: #3A3D40;
+    --surface-action-secondary: #3A3D40;
+    --surface-disabled-light: #333333;
+    --surface-disabled-dark: #525252;
+    --surface-success: #81CC66;
+    --surface-warning: #FF944D;
+    --surface-error: #FF808F;
+
+    // text-icon
+    --text-icon-primary: #E8ECF4;
+    --text-icon-secondary: #A6ADBA;
+    --text-icon-disabled-light: #333333;
+    --text-icon-disabled-dark: #525252;
+    --text-icon-inverse: #000000;
+    --text-icon-white: #FFFFFF;
+    --text-icon-success: #81CC66;
+    --text-icon-warning: #FF944D;
+    --text-icon-error: #FF808F;
+
+    // border
+    --border-light: #3A3C41;
+    --border-heavy: #7D828B;
+    --border-disabled: #565656;
+    --border-success: #81CC66;
+    --border-warning: #FF944D;
+    --border-error: #FF808F;
+
+    // green
+    --brand-green-default: #81CC66;
+    --brand-green-light: #4E9933;
+    --brand-green-dark: #A0D98C;
+    --brand-green-alpha-10: #{rgba(#81CC66, 0.1)};
+    --brand-green-alpha-20: #{rgba(#81CC66, 0.2)};
+    --brand-green-alpha-25: #{rgba(#81CC66, 0.25)};
+    --brand-green-tint-10: #39443B;
+    --brand-green-tint-20: #405140;
+    --brand-green-shadow: rgba(#006648, 0.2);
+
+    // orange */
+    --brand-orange-default: #FF944D;
+    --brand-orange-light: #FF751A;
+    --brand-orange-dark: #FFB280;
+    --brand-orange-alpha-10: #{rgba(#FF944D, 0.1)};
+    --brand-orange-alpha-20: #{rgba(#FF944D, 0.2)};
+    --brand-orange-alpha-25: #{rgba(#FF944D, 0.25)};
+    --brand-orange-tint-10: #4A3D36;
+    --brand-orange-tint-20: #59463B;
+    --brand-orange-shadow: rgba(#CC5200, 0.2);
+
+    // red
+    --brand-red-default: #FF808F;
+    --brand-red-light: #FF4D62;
+    --brand-red-dark: #FFB2BC;
+    --brand-red-alpha-10: #{rgba(#FF808F, 0.1)};
+    --brand-red-alpha-20: #{rgba(#FF808F, 0.2)};
+    --brand-red-alpha-25: #{rgba(#FF808F, 0.25)};
+    --brand-red-tint-10: #4A393F;
+    --brand-red-tint-20: #613A44;
+    --brand-red-shadow: rgba(#C02831, 0.2);
+
+    // blue
+    --brand-blue-default: #66B5FF;
+    --brand-blue-light: #339CFF;
+    --brand-blue-dark: #99CEFF;
+    --brand-blue-alpha-10: #{rgba(#66B5FF, 0.1)};
+    --brand-blue-alpha-20: #{rgba(#66B5FF, 0.2)};
+    --brand-blue-alpha-25: #{rgba(#66B5FF, 0.25)};
+    --brand-blue-tint-10: #36414D;
+    --brand-blue-tint-20: #334C66;
+    --brand-blue-shadow: rgba(#0C6CA8, 0.2);
+
+    // yellow
+    --brand-yellow-default: #FFCC00;
+    --brand-yellow-light: #CCA300;
+    --brand-yellow-dark: #FFD633;
+    --brand-yellow-alpha-10: #{rgba(#FFCC00, 0.1)};
+    --brand-yellow-alpha-20: #{rgba(#FFCC00, 0.2)};
+    --brand-yellow-alpha-25: #{rgba(#FFCC00, 0.25)};
+
+    // grey
+    --brand-grey-default: #7D828B;
+    --brand-grey-light: #656971;
+    --brand-grey-dark: #A6ADBA;
+    --brand-grey-alpha-10: #{rgba(#A6ADBA, 0.1)};
+    --brand-grey-alpha-20: #{rgba(#A6ADBA, 0.2)};
+    --brand-grey-alpha-25: #{rgba(#A6ADBA, 0.25)};
+    --brand-grey-alpha-50: #{rgba(#7D828B, 0.5)};
+    --brand-grey-shadow: #{rgba(#0D0D0D, 0.2)};
+
+    // mobile-glass
+    --mobile-glass-alpha-30: #{rgba(#000000, 0.3)};
+    --mobile-glass-alpha-40: #{rgba(#000000, 0.4)};
+    --mobile-glass-alpha-60: #{rgba(#000000, 0.6)};
+  }
+}

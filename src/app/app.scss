@@ -1,0 +1,5 @@
+@use 'mixins/typography-mixins' as typMxn;
+
+.test2 {
+  @include typMxn.body-md-bold-fixed;
+}

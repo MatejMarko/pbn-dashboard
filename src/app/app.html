@@ -340,3 +340,119 @@
 
 
 <router-outlet />
+
+<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+  <lib-button text="some text" color="green" variant="primary" size="xl"></lib-button>
+  <lib-button text="some text" color="blue" variant="primary" size="lg"></lib-button>
+  <lib-button text="some text" color="orange" variant="primary" size="md"></lib-button>
+  <lib-button text="some text" color="red" variant="primary" size="sm"></lib-button>
+  <lib-button text="some text" color="green" variant="secondary" size="md"></lib-button>
+  <lib-button text="some text" color="blue" variant="secondary" size="md"></lib-button>
+  <lib-button text="some text" color="orange" variant="secondary" size="md"></lib-button>
+  <lib-button text="some text" color="red" variant="secondary" size="md"></lib-button>
+  <lib-button text="some text" color="green" variant="tertiary" size="md"></lib-button>
+  <lib-button text="some text" color="blue" variant="tertiary" size="md"></lib-button>
+  <lib-button text="some text" color="orange" variant="tertiary" size="lg"></lib-button>
+  <lib-button text="some text" color="red" variant="tertiary" size="md"></lib-button>
+  <lib-button text="some text" color="green" variant="primary" size="md" [disabled]="true"></lib-button>
+  <lib-button text="some text" color="red" variant="secondary" size="md"  [disabled]="true"></lib-button>
+  <lib-button text="some text" color="red" variant="tertiary" size="sm"  [disabled]="true"></lib-button>
+
+  <lib-button text="some text" color="green" variant="primary" size="md" [iconOnly]="true" icon="OTP-icon-32x32-heart"></lib-button>
+  <lib-button text="some text" color="blue" variant="secondary" size="lg" [iconOnly]="true" icon="OTP-icon-32x32-heart"></lib-button>
+  <lib-button text="some text" color="orange" variant="tertiary" size="md" [iconOnly]="true" icon="OTP-icon-32x32-heart"></lib-button>
+
+</div>
+<!--
+<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+  <lib-button text="some text" color="green" variant="primary" size="lg"></lib-button>
+  <lib-button text="some text" color="blue" variant="primary" size="lg"></lib-button>
+  <lib-button text="some text" color="orange" variant="primary" size="lg"></lib-button>
+  <lib-button text="some text" color="red" variant="primary" size="lg"></lib-button>
+  <lib-button text="some text" color="green" variant="primary" size="xl"></lib-button>
+  <lib-button text="some text" color="blue" variant="primary" size="xl"></lib-button>
+  <lib-button text="some text" color="orange" variant="primary" size="xl"></lib-button>
+  <lib-button text="some text" color="red" variant="primary" size="xl"></lib-button>
+  <lib-button text="some text" color="green" variant="primary" size="md"></lib-button>
+  <lib-button text="some text" color="blue" variant="primary" size="md"></lib-button>
+  <lib-button text="some text" color="orange" variant="primary" size="md"></lib-button>
+  <lib-button text="some text" color="red" variant="primary" size="md"></lib-button>
+  <lib-button text="some text" color="green" variant="primary" size="sm"></lib-button>
+  <lib-button text="some text" color="blue" variant="primary" size="sm"></lib-button>
+  <lib-button text="some text" color="orange" variant="primary" size="sm"></lib-button>
+  <lib-button text="some text" color="red" variant="primary" size="sm"></lib-button>
+
+  <lib-button text="some text" color="green" variant="secondary" size="lg"></lib-button>
+  <lib-button text="some text" color="blue" variant="secondary" size="lg"></lib-button>
+  <lib-button text="some text" color="orange" variant="secondary" size="lg"></lib-button>
+  <lib-button text="some text" color="red" variant="secondary" size="lg"></lib-button>
+  <lib-button text="some text" color="green" variant="secondary" size="xl"></lib-button>
+  <lib-button text="some text" color="blue" variant="secondary" size="xl"></lib-button>
+  <lib-button text="some text" color="orange" variant="secondary" size="xl"></lib-button>
+  <lib-button text="some text" color="red" variant="secondary" size="xl"></lib-button>
+  <lib-button text="some text" color="green" variant="secondary" size="md"></lib-button>
+  <lib-button text="some text" color="blue" variant="secondary" size="md"></lib-button>
+  <lib-button text="some text" color="orange" variant="secondary" size="md"></lib-button>
+  <lib-button text="some text" color="red" variant="secondary" size="md"></lib-button>
+  <lib-button text="some text" color="green" variant="secondary" size="sm"></lib-button>
+  <lib-button text="some text" color="blue" variant="secondary" size="sm"></lib-button>
+  <lib-button text="some text" color="orange" variant="secondary" size="sm"></lib-button>
+  <lib-button text="some text" color="red" variant="secondary" size="sm"></lib-button>
+</div>
+-->
+
+<!--
+<svg width="32" height="32">
+  <use href="assets/icons.svg#OTP-icon-32x32-accessibility"></use>
+</svg>
+-->
+<svg width="32" height="32">
+  <use href="assets/icons.svg#OTP-icon-32x32-heart"></use>
+</svg>
+<svg width="32" height="32">
+  <use href="assets/icons_sprite.svg#OTP-icon-32x32-heart"></use>
+</svg>
+
+
+ANGULAR ARIA
+
+<button ds-button>test</button>
+<button ds-button disabled leadingIcon="OTP-icon-32x32-heart">test</button>
+
+<br/><br/>
+<button (click)="openDialog()">Open Dialog (CDK)</button>
+
+<ds-form-field>
+  <!-- todo: class shouldnt be defined on every occurance of input, but rather in ds-form-field styles (mixin) -->
+  <label class="label-md-semibold-fixed">This is a label</label>
+  <input placeholder="This is a placeholder" ds-input/>
+  <div ds-input-prefix>
+    this is a test
+  </div>
+  <div ds-input-suffix>
+    this is a test
+  </div>
+  <span ds-hint class="label-md-italic-fixed">This is a hint</span>
+  <ng-container ds-hint-right class="label-md-italic-fixed">10/100</ng-container>
+</ds-form-field>
+
+<div style="width: 300px;">
+  <ds-form-field>
+    <!-- todo: class shouldnt be defined on every occurance of input, but rather in ds-form-field styles (mixin) -->
+    <label class="label-md-semibold-fixed">This is a label</label>
+    <input placeholder="This is a placeholder" ds-input/>
+    <div ds-input-prefix>
+      this is a test
+    </div>
+    <div ds-input-suffix>
+      this is a test
+    </div>
+    <span ds-hint class="label-md-italic-fixed">This is a hint</span>
+    <ng-container ds-hint-right class="label-md-italic-fixed">10/100</ng-container>
+  </ds-form-field>
+</div>
+
+<span class="body-md-bold-fixed">test1</span>
+<span class="test2">test1</span>
+
+<div style="height: 600px;"></div>

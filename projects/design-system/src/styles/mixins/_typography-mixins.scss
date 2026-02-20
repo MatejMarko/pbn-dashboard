@@ -1,0 +1,11 @@
+@mixin body-md-fixed {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-fixed-md);
+  line-height: var(--line-height-fixed-md);
+}
+
+@mixin body-md-bold-fixed {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-fixed-md);
+  line-height: var(--line-height-fixed-md);
+}

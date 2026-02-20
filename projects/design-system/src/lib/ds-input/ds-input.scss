@@ -1,0 +1,25 @@
+:host {
+  /*
+  width: 100%;
+  // todo: check paddings again
+  padding: var(--spacing-fixed-sm) var(--spacing-fixed-xs) var(--spacing-fixed-sm) var(--spacing-fixed-md);
+  border: 1px solid var(--border-heavy);
+  border-radius: var(--border-radius-full);
+  background-color: var(--surface-primary);
+  box-sizing: border-box;
+
+  // todo: remove!!
+  outline: none;
+
+  &:active, &:focus {
+    border: 2px solid var(--text-icon-success);
+  }
+  &:focus-visible {
+    border: 2px solid red;
+  }
+  */
+  border: none;
+  outline: none;
+  margin: 0 !important;
+  padding: 0 !important;
+}

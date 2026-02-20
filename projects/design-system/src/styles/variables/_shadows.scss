@@ -1,0 +1,17 @@
+body {
+  --box-shadow-xs: 0 0 2px 0;
+  --box-shadow-small: 0 4px 8px 0;
+  --box-shadow-medium: 0 8px 24px 0;
+
+  --box-shadow-small-neutral: var(--box-shadow-xs) var(--brand-grey-shadow), var(--box-shadow-small) var(--brand-grey-shadow);
+  --box-shadow-small-green: var(--box-shadow-small) var(--brand-green-default);
+  --box-shadow-small-orange: var(--box-shadow-small) var(--brand-orange-default);
+  --box-shadow-small-red: var(--box-shadow-small) var(--brand-red-default);
+  --box-shadow-small-blue: var(--box-shadow-small) var(--brand-blue-default);
+
+  --box-shadow-medium-neutral: var(--box-shadow-xs) var(--brand-grey-shadow), var(--box-shadow-medium) var(--brand-grey-shadow);
+  --box-shadow-medium-green: var(--box-shadow-medium) var(--brand-green-default);
+  --box-shadow-medium-orange: var(--box-shadow-medium) var(--brand-orange-default);
+  --box-shadow-medium-red: var(--box-shadow-medium) var(--brand-red-default);
+  --box-shadow-medium-blue: var(--box-shadow-medium) var(--brand-blue-default);
+}

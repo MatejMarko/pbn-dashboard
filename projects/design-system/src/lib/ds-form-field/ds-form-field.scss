@@ -1,0 +1,78 @@
+@use 'mixins/typography-mixins' as typMxn; // todo: try to get rid of this
+
+:host {
+  display: block;
+
+  /*
+  // todo: get rid of this (ng-deep)
+  ::ng-deep {
+
+  }
+  */
+}
+
+.ds-form-field {
+  // form field layout styles
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-fixed-2xs);
+
+  label, .hint-wrapper {
+    padding: 0 var(--spacing-fixed-md) 0 var(--spacing-fixed-lg);
+
+    // todo: set font styles here
+  }
+
+  .input-wrapper {
+    width: 100%; // i guess so?
+    // todo: check paddings again
+    padding: var(--spacing-fixed-sm) var(--spacing-fixed-xs) var(--spacing-fixed-sm) var(--spacing-fixed-md);
+    outline: 1px solid var(--border-heavy);
+    border-radius: var(--border-radius-full);
+    background-color: var(--surface-primary);
+    box-sizing: border-box;
+
+    display: flex;
+    // set gap an align and justify
+
+    // todo: remove!!
+    // outline: none;
+
+    &:has(> input:active), &:has(> input:focus), &:has(> input:focus-visible) {
+      outline: 2px solid var(--text-icon-success);
+    }
+
+    input {
+      // solve another way
+      color: var(--text-icon-primary);
+
+      @include typMxn.body-md-bold-fixed;
+
+      flex: 1; // i think
+      // no gap in figma
+      // so prefix and suffix must add paddings
+
+      &::placeholder {
+        // find another way to solve this
+        color: var(--text-icon-secondary);
+
+        @include typMxn.body-md-fixed;
+      }
+    }
+  }
+
+  .hint-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-fixed-md);
+    padding: var(--spacing-fixed-3xs) var(--spacing-fixed-md) var(--spacing-fixed-3xs) var(--spacing-fixed-lg)
+  }
+}
+
+// Error state — host has .ds-error-visible when invalid && touched
+ds-form-field.ds-error-visible .ds-form-field .input-wrapper {
+  outline: 2px solid var(--text-icon-error);
+}
+

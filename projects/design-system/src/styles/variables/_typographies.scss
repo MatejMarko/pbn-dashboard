@@ -1,0 +1,72 @@
+body {
+  /*
+  FIXED
+  */
+  // font-family
+  --font-family-brand: 'Source Sans 3';
+
+  // font-weight
+  --font-weight-black: 900;
+  --font-weight-bold: 700;
+  --font-weight-semibold: 600;
+  --font-weight-regular: 400;
+
+  // font-size
+  --font-size-fixed-lg: 1.125rem;
+  --font-size-fixed-md: 1rem;
+  --font-size-fixed-sm: 0.875rem;
+  --font-size-fixed-xs: 0.75rem;
+  --font-size-fixed-2xs: 0.625rem;
+
+  // line-height
+  --line-height-fixed-lg: 1.5rem;
+  --line-height-fixed-md: 1.5rem;
+  --line-height-fixed-sm: 1.25rem;
+  --line-height-fixed-xs: 1rem;
+  --line-height-fixed-2xs: 0.875rem;
+
+  /*
+  RESPONSIVE
+  */
+  // font-size
+  --font-size-responsive-4xl: 2.75rem;
+  --font-size-responsive-3xl: 2rem;
+  --font-size-responsive-2xl: 1.5rem;
+  --font-size-responsive-xl: 1.25rem;
+  --font-size-responsive-lg: 1.125rem;
+  --font-size-responsive-md: 1rem;
+  --font-size-responsive-sm: 0.875rem;
+  --font-size-responsive-xs: 0.75rem;
+
+  // line-height
+  --line-height-responsive-4xl: 3.5rem;
+  --line-height-responsive-3xl: 2.5rem;
+  --line-height-responsive-2xl: 2rem;
+  --line-height-responsive-xl: 1.75rem;
+  --line-height-responsive-lg: 1.5rem;
+  --line-height-responsive-md: 1.5rem;
+  --line-height-responsive-sm: 1.25rem;
+  --line-height-responsive-xs: 1rem;
+
+  @media (max-width: 767px) {
+    // font-size
+    --font-size-responsive-4xl: 2rem;
+    --font-size-responsive-3xl: 1.5rem;
+    --font-size-responsive-2xl: 1.25rem;
+    --font-size-responsive-xl: 1.125rem;
+    --font-size-responsive-lg: 1rem;
+    --font-size-responsive-md: 0.875rem;
+    --font-size-responsive-sm: 0.75rem;
+    --font-size-responsive-xs: 0.625rem;
+
+    // line-height
+    --line-height-responsive-4xl: 2.5rem;
+    --line-height-responsive-3xl: 2rem;
+    --line-height-responsive-2xl: 1.75rem;
+    --line-height-responsive-xl: 1.5rem;
+    --line-height-responsive-lg: 1.5rem;
+    --line-height-responsive-md: 1.25rem;
+    --line-height-responsive-sm: 1rem;
+    --line-height-responsive-xs: 0.875rem;
+  }
+}

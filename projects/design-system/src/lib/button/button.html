@@ -1,0 +1,15 @@
+<button [class]="variant + ' ' + color + ' ' + size" [ngClass]="{'floating': isFloating, 'icon-only': iconOnly}" [disabled]="disabled" [type]="type">
+  @if (iconOnly && icon) {
+    <!-- todo: change height and width
+    also add:
+     -->
+    <svg width="24" height="24">
+      <use [attr.href]="'otp-ds/assets/icons/icons-32x32.svg#'+icon"></use>
+    </svg>
+  } @else {
+    <svg width="24" height="24">
+      <use href="otp-ds/assets/icons/icons-32x32.svg#OTP-icon-32x32-heart"></use>
+    </svg>
+    <span class="body-md-bold-fixed">{{text}}</span>
+  }
+</button>

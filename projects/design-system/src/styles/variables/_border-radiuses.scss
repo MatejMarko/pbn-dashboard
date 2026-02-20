@@ -1,0 +1,19 @@
+body {
+  --border-radius-zero: 0;
+  --border-radius-2xs: 8px;
+  --border-radius-xs: 16px;
+  --border-radius-sm: 24px;
+  --border-radius-md: 32px;
+  --border-radius-lg: 40px;
+  --border-radius-full: 900px;
+
+  @media (max-width: 767px) {
+    --border-radius-zero: 0;
+    --border-radius-2xs: 4px;
+    --border-radius-xs: 8px;
+    --border-radius-sm: 16px;
+    --border-radius-md: 24px;
+    --border-radius-lg: 32px;
+    --border-radius-full: 900px;
+  }
+}

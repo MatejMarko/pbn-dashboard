@@ -24,14 +24,26 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "icons-*.svg",
+                "input": "projects/design-system/src/assets/icons",
+                "output": "otp-ds/assets/icons"
               }
             ],
             "styles": [
-              "src/styles.scss"
-            ]
+              "src/styles.scss",
+              "projects/design-system/src/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "projects/design-system/src/styles"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -71,6 +83,37 @@
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        }
+      }
+    },
+    "design-system": {
+      "projectType": "library",
+      "root": "projects/design-system",
+      "sourceRoot": "projects/design-system/src",
+      "prefix": "lib",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/design-system/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/design-system/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/design-system/tsconfig.spec.json"
+          }
         }
       }
     }

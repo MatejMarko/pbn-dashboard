@@ -1,0 +1,219 @@
+@use 'mixins/typography-mixins' as *;
+
+@font-face {
+  src: url('../assets/fonts/SourceSans3-Regular.ttf') format('truetype');
+  font-family: 'Source Sans 3';
+  font-weight: 400;
+}
+@font-face {
+  src: url('../assets/fonts/SourceSans3-Italic.ttf') format('truetype');
+  font-family: 'Source Sans 3';
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  src: url('../assets/fonts/SourceSans3-SemiBold.ttf') format('truetype');
+  font-family: 'Source Sans 3';
+  font-weight: 600;
+}
+@font-face {
+  src: url('../assets/fonts/SourceSans3-SemiBoldItalic.ttf') format('truetype');
+  font-family: 'Source Sans 3';
+  font-weight: 600;
+  font-style: italic;
+}
+@font-face {
+  src: url('../assets/fonts/SourceSans3-Bold.ttf') format('truetype');
+  font-family: 'Source Sans 3';
+  font-weight: 700;
+}
+@font-face {
+  src: url('../assets/fonts/SourceSans3-BoldItalic.ttf') format('truetype');
+  font-family: 'Source Sans 3';
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+  src: url('../assets/fonts/SourceSans3-Black.ttf') format('truetype');
+  font-family: 'Source Sans 3';
+  font-weight: 900;
+}
+@font-face {
+  src: url('../assets/fonts/SourceSans3-BlackItalic.ttf') format('truetype');
+  font-family: 'Source Sans 3';
+  font-weight: 900;
+  font-style: italic;
+}
+
+// todo: set this (modify)
+body {
+  font-family: var(--font-family-brand), sans-serif;
+  color: var(--text-icon-primary);
+}
+
+.display-md {
+  font-weight: var(--font-weight-black);
+  font-size: var(--font-size-responsive-4xl);
+  line-height: var(--line-height-responsive-4xl);
+}
+
+.heading-lg {
+  font-weight: var(--font-weight-black);
+  font-size: var(--font-size-responsive-3xl);
+  line-height: var(--line-height-responsive-3xl);
+}
+
+.heading-md {
+  font-weight: var(--font-weight-black);
+  font-size: var(--font-size-responsive-2xl);
+  line-height: var(--line-height-responsive-2xl);
+}
+
+.heading-sm {
+  font-weight: var(--font-weight-black);
+  font-size: var(--font-size-responsive-xl);
+  line-height: var(--line-height-responsive-xl);
+}
+
+.body-lg {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-responsive-lg);
+  line-height: var(--line-height-responsive-lg);
+}
+
+.body-lg-bold {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-responsive-lg);
+  line-height: var(--line-height-responsive-lg);
+}
+
+.body-md {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-responsive-md);
+  line-height: var(--line-height-responsive-md);
+}
+
+.body-md-bold {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-responsive-md);
+  line-height: var(--line-height-responsive-md);
+}
+
+.body-md-semibold {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-responsive-md);
+  line-height: var(--line-height-responsive-md);
+}
+
+.body-md-link {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-responsive-md);
+  line-height: var(--line-height-responsive-md);
+  text-decoration: underline;
+}
+
+.label-md {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-responsive-sm);
+  line-height: var(--line-height-responsive-sm);
+}
+
+.label-md-bold {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-responsive-sm);
+  line-height: var(--line-height-responsive-sm);
+}
+
+.label-sm {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-responsive-xs);
+  line-height: var(--line-height-responsive-xs);
+}
+
+.label-sm-bold {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-responsive-xs);
+  line-height: var(--line-height-responsive-xs);
+}
+
+.body-lg-fixed {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-fixed-lg);
+  line-height: var(--line-height-fixed-lg);
+}
+
+.body-lg-bold-fixed {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-fixed-lg);
+  line-height: var(--line-height-fixed-lg);
+}
+
+.body-md-fixed {
+  @include body-md-fixed;
+}
+
+.body-md-bold-fixed {
+  @include body-md-bold-fixed;
+}
+
+.body-md-semibold-fixed {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-fixed-md);
+  line-height: var(--line-height-fixed-md);
+}
+
+.body-md-link-fixed {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-fixed-md);
+  line-height: var(--line-height-fixed-md);
+  text-decoration: underline;
+}
+
+.label-md-fixed {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-fixed-sm);
+  line-height: var(--line-height-fixed-sm);
+}
+
+.label-md-bold-fixed {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-fixed-sm);
+  line-height: var(--line-height-fixed-sm);
+}
+
+.label-md-semibold-fixed {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-fixed-sm);
+  line-height: var(--line-height-fixed-sm);
+}
+
+.label-md-italic-fixed {
+  font-weight: var(--font-weight-regular); // todo: i believe its 400 now
+  font-size: var(--font-size-fixed-sm);
+  line-height: var(--line-height-fixed-sm);
+  font-style: italic;  // not defined in figma variables table, but seen in actual designs
+}
+
+.label-sm-fixed {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-fixed-xs);
+  line-height: var(--line-height-fixed-xs);
+}
+
+.label-sm-bold-fixed {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-fixed-xs);
+  line-height: var(--line-height-fixed-xs);
+}
+
+.label-xs-fixed {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-fixed-2xs);
+  line-height: var(--line-height-fixed-2xs);
+}
+
+.label-xs-bold-fixed {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-fixed-2xs);
+  line-height: var(--line-height-fixed-2xs);
+}

@@ -1,0 +1,18 @@
+<div class="ds-form-field">
+  <!-- todo: we'll probably habe to bind this label to the input via "for -- id" -->
+  <ng-content select="label"></ng-content>
+
+  <div class="input-wrapper">
+    <ng-content select="[ds-input-prefix]"></ng-content>
+    <ng-content select="input[ds-input], textarea[ds-input]"></ng-content>
+    <ng-content select="[ds-input-suffix]"></ng-content>
+  </div>
+
+  @if (shouldShowError) {
+    <ng-content select="[ds-error]"></ng-content>
+  }
+  <div class="hint-wrapper">
+    <ng-content select="[ds-hint]"></ng-content>
+    <ng-content select="[ds-hint-right]"></ng-content>
+  </div>
+</div>

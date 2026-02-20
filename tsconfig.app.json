@@ -4,7 +4,15 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "types": [],
+    "paths": {
+      "@design-system": [
+        "./projects/design-system/src/public-api.ts"
+      ],
+      "@design-system/*": [
+        "./projects/design-system/src/*"
+      ]
+    } // todo: change to "./dist/design-system" yay or nay?
   },
   "include": [
     "src/**/*.ts"

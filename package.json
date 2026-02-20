@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "generate:icons": "node scripts/generate-sprite.js"
   },
   "prettier": {
     "printWidth": 100,
@@ -23,6 +24,7 @@
   "private": true,
   "packageManager": "npm@11.6.2",
   "dependencies": {
+    "@angular/cdk": "^21.1.4",
     "@angular/common": "^21.1.0",
     "@angular/compiler": "^21.1.0",
     "@angular/core": "^21.1.0",
@@ -37,6 +39,9 @@
     "@angular/cli": "^21.1.2",
     "@angular/compiler-cli": "^21.1.0",
     "jsdom": "^27.1.0",
+    "ng-packagr": "^21.1.0",
+    "svgstore": "^3.0.1",
+    "svgstore-cli": "^2.0.1",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
   }
