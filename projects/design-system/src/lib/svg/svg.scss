@@ -1,0 +1,8 @@
+:host {
+  display: inline-flex;
+  width: var(--icon-width, 1em);
+  height: var(--icon-height, 1em);
+  max-width: var(--icon-max-width, none);
+  max-height: var(--icon-max-height, none);
+  color: currentColor;
+}

@@ -45,10 +45,37 @@
   font-style: italic;
 }
 
-// todo: set this (modify)
 body {
   font-family: var(--font-family-brand), sans-serif;
   color: var(--text-icon-primary);
+}
+
+.text-primary {
+  color: var(--text-icon-primary);
+}
+.text-secondary {
+  color: var(--text-icon-secondary);
+}
+.text-disabled-light {
+  color: var(--text-icon-disabled-light);
+}
+.text-disabled-dark {
+  color: var(--text-icon-disabled-dark);
+}
+.text-inverse {
+  color: var(--text-icon-inverse);
+}
+.text-white {
+  color: var(--text-icon-white);
+}
+.text-success {
+  color: var(--text-icon-success);
+}
+.text-warning {
+  color: var(--text-icon-warning);
+}
+.text-error {
+  color: var(--text-icon-error);
 }
 
 .display-md {
@@ -182,16 +209,11 @@ body {
 }
 
 .label-md-semibold-fixed {
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-fixed-sm);
-  line-height: var(--line-height-fixed-sm);
+  @include label-md-semibold-fixed;
 }
 
 .label-md-italic-fixed {
-  font-weight: var(--font-weight-regular); // todo: i believe its 400 now
-  font-size: var(--font-size-fixed-sm);
-  line-height: var(--line-height-fixed-sm);
-  font-style: italic;  // not defined in figma variables table, but seen in actual designs
+  @include label-md-italic-fixed;
 }
 
 .label-sm-fixed {

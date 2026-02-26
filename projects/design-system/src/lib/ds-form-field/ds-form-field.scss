@@ -1,78 +1,99 @@
-@use 'mixins/typography-mixins' as typMxn; // todo: try to get rid of this
+@use '../../styles/mixins/typography-mixins' as typMxn;
 
-:host {
-  display: block;
-
-  /*
-  // todo: get rid of this (ng-deep)
-  ::ng-deep {
-
+@mixin input-focused($outline-color) {
+  &:has(> input[ds-input]:active, > input[ds-input]:focus, > input[ds-input]:focus-visible) {
+    &:not(:has(> input:disabled)) {
+      outline: 2px solid $outline-color;
+    }
   }
-  */
 }
 
-.ds-form-field {
-  // form field layout styles
+ds-form-field {
+  display: block;
 
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-fixed-2xs);
-
-  label, .hint-wrapper {
-    padding: 0 var(--spacing-fixed-md) 0 var(--spacing-fixed-lg);
-
-    // todo: set font styles here
-  }
-
-  .input-wrapper {
-    width: 100%; // i guess so?
-    // todo: check paddings again
-    padding: var(--spacing-fixed-sm) var(--spacing-fixed-xs) var(--spacing-fixed-sm) var(--spacing-fixed-md);
-    outline: 1px solid var(--border-heavy);
-    border-radius: var(--border-radius-full);
-    background-color: var(--surface-primary);
-    box-sizing: border-box;
-
+  .ds-form-field {
     display: flex;
-    // set gap an align and justify
+    flex-direction: column;
+    gap: var(--spacing-fixed-2xs);
 
-    // todo: remove!!
-    // outline: none;
+    // todo: should it be without gap and label, hint, error be positioned absolutely?
 
-    &:has(> input:active), &:has(> input:focus), &:has(> input:focus-visible) {
-      outline: 2px solid var(--text-icon-success);
+    label {
+      @include typMxn.label-md-semibold-fixed;
     }
 
-    input {
-      // solve another way
-      color: var(--text-icon-primary);
+    label, .hint-wrapper {
+      padding: 0 var(--spacing-fixed-md) 0 var(--spacing-fixed-lg);
+    }
 
-      @include typMxn.body-md-bold-fixed;
+    .input-wrapper {
+      width: 100%;
+      padding: var(--spacing-fixed-sm) var(--spacing-fixed-xs) var(--spacing-fixed-sm) var(--spacing-fixed-md);
+      outline: 1px solid var(--border-heavy);
+      border-radius: var(--border-radius-full);
+      background-color: var(--surface-primary);
+      box-sizing: border-box;
+      display: flex;
 
-      flex: 1; // i think
-      // no gap in figma
-      // so prefix and suffix must add paddings
+      input[ds-input] {
+        background-color: transparent;
+        color: var(--text-icon-primary);
+        @include typMxn.body-md-bold-fixed;
 
-      &::placeholder {
-        // find another way to solve this
-        color: var(--text-icon-secondary);
+        flex: 1;
 
+        &::placeholder {
+          color: var(--text-icon-secondary);
+          @include typMxn.body-md-fixed;
+        }
+      }
+
+      @include input-focused(var(--text-icon-success));
+    }
+
+    .ds-error-wrapper {
+      padding: 0 var(--spacing-fixed-2xs);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: var(--spacing-fixed-2xs, 4px);
+
+      ds-error {
         @include typMxn.body-md-fixed;
+        color: var(--text-icon-error);
+      }
+    }
+
+    .hint-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-fixed-md);
+      padding: var(--spacing-fixed-3xs) var(--spacing-fixed-md) var(--spacing-fixed-3xs) var(--spacing-fixed-lg);
+
+      ds-hint, ds-hint-right {
+        @include typMxn.label-md-italic-fixed;
+        color: var(--text-icon-secondary);
       }
     }
   }
 
-  .hint-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-fixed-md);
-    padding: var(--spacing-fixed-3xs) var(--spacing-fixed-md) var(--spacing-fixed-3xs) var(--spacing-fixed-lg)
-  }
-}
+  // error state: host has .ds-error-visible when input is invalid && touched
+  &.ds-error-visible .ds-form-field .input-wrapper {
+    outline-color: var(--text-icon-error);
 
-// Error state — host has .ds-error-visible when invalid && touched
-ds-form-field.ds-error-visible .ds-form-field .input-wrapper {
-  outline: 2px solid var(--text-icon-error);
+    @include input-focused(var(--text-icon-error));
+  }
+
+  // disabled state: host has .ds-disabled when input is disabled
+  &.ds-disabled .ds-form-field {
+    label,  .hint-wrapper > *, .input-wrapper > input[ds-input] {
+      color: var(--text-icon-disabled-dark);
+    }
+    .input-wrapper {
+      outline-color: var(--border-disabled);
+      background-color: var(--surface-disabled-light);
+    }
+  }
 }
 

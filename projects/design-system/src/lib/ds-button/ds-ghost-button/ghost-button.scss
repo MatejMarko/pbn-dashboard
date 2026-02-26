@@ -1,0 +1,44 @@
+@use '../ds-button-common' as btn;
+
+:host {
+  @include btn.button-core;
+  gap: var(--spacing-fixed-xs);
+  background: transparent;
+  padding: var(--spacing-fixed-2xs) 0;
+
+  &.green {
+    color: var(--brand-green-default);
+    &:hover, &:active {
+      color: var(--brand-green-dark);
+    }
+  }
+  &.blue {
+    color: var(--brand-blue-default);
+    &:hover, &:active {
+      color: var(--brand-blue-dark);
+    }
+  }
+  &.orange {
+    color: var(--brand-orange-default);
+    &:hover, &:active {
+      color: var(--brand-orange-dark);
+    }
+  }
+  &.red {
+    color: var(--brand-red-default);
+    &:hover, &:active {
+      color: var(--brand-red-dark);
+    }
+  }
+
+  &:active:not(:disabled) {
+    text-decoration-line: underline;
+  }
+
+  &:disabled,
+  &:disabled:active,
+  &:disabled:hover {
+    color: var(--text-icon-disabled-dark);
+    cursor: not-allowed;
+  }
+}

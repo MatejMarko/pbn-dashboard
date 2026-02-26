@@ -1,6 +1,10 @@
 <div class="ds-form-field">
-  <!-- todo: we'll probably habe to bind this label to the input via "for -- id" -->
-  <ng-content select="label"></ng-content>
+  <label [attr.for]="dsInput?.id">
+    <ng-content select="ds-label"></ng-content>
+    @if (isRequired) {
+      <span>&nbsp;*</span>
+    }
+  </label>
 
   <div class="input-wrapper">
     <ng-content select="[ds-input-prefix]"></ng-content>
@@ -9,10 +13,16 @@
   </div>
 
   @if (shouldShowError) {
-    <ng-content select="[ds-error]"></ng-content>
+    <div class="ds-error-wrapper">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M5.5 10.5L10.5 5.5M10.5 10.5L5.5 5.5M12.9497 3.05025C15.6834 5.78392 15.6834 10.2161 12.9497 12.9497C10.2161 15.6834 5.78392 15.6834 3.05025 12.9497C0.316582 10.2161 0.316582 5.78392 3.05025 3.05025C5.78392 0.316582 10.2161 0.316582 12.9497 3.05025Z" stroke="#F0323D" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <ng-content select="ds-error"></ng-content>
+    </div>
+  } @else {
+    <div class="hint-wrapper">
+      <ng-content select="ds-hint"></ng-content>
+      <ng-content select="ds-hint-right"></ng-content>
+    </div>
   }
-  <div class="hint-wrapper">
-    <ng-content select="[ds-hint]"></ng-content>
-    <ng-content select="[ds-hint-right]"></ng-content>
-  </div>
 </div>

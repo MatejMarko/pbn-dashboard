@@ -1,25 +1,22 @@
-:host {
+@mixin button-core {
   border: none;
-  cursor: pointer; // todo: i suppose?
-  border-radius: var(--border-radius-full);
+  cursor: pointer;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-fixed-xs);
+}
 
-  // todo: check shadows with designers
-  box-shadow: var(--box-shadow-small-neutral);
-
-  &.floating {
-    box-shadow: var(--box-shadow-medium-neutral);
-  }
+@mixin button-base {
+  @include button-core;
+  border-radius: var(--border-radius-full);
 
   &.primary {
     color: var(--text-icon-inverse);
 
     &.green {
       background: var(--brand-green-default);
+      box-shadow: var(--box-shadow-small-green);
       &:hover {
         background: var(--brand-green-light);
       }
@@ -30,6 +27,7 @@
 
     &.blue {
       background: var(--brand-blue-default);
+      box-shadow: var(--box-shadow-small-blue);
       &:hover {
         background: var(--brand-blue-light);
       }
@@ -40,6 +38,7 @@
 
     &.orange {
       background: var(--brand-orange-default);
+      box-shadow: var(--box-shadow-small-orange);
       &:hover {
         background: var(--brand-orange-light);
       }
@@ -50,6 +49,7 @@
 
     &.red {
       background: var(--brand-red-default);
+      box-shadow: var(--box-shadow-small-red);
       &:hover {
         background: var(--brand-red-light);
       }
@@ -62,12 +62,13 @@
     &:disabled:active,
     &:disabled {
       background: var(--surface-disabled-dark);
-      cursor: default; // todo: i guess?
+      box-shadow: var(--box-shadow-small-neutral);
     }
   }
 
   &.secondary {
     background: var(--surface-action-secondary);
+    box-shadow: var(--box-shadow-small-neutral);
 
     &.green {
       color: var(--brand-green-default);
@@ -114,12 +115,11 @@
     &:disabled {
       background: var(--surface-disabled-light);
       color: var(--surface-disabled-dark);
-      cursor: default; // todo: i guess?
     }
   }
 
   &.tertiary {
-    background: transparent; // todo: is it?
+    background: transparent;
     border-width: 1px;
     border-style: solid;
 
@@ -170,58 +170,41 @@
     &:disabled:hover,
     &:disabled:active,
     &:disabled {
-      background: transparent; // todo: is it?
+      background: transparent;
       color: var(--surface-disabled-dark);
       border-color: var(--text-icon-disabled-light);
-      cursor: default; // todo: i guess?
     }
   }
 
-
-  // sizes
-  &.xl {
-    //min-height: 3.5rem;
-    //min-width: 10rem;
-    padding: var(--spacing-fixed-md) var(--spacing-fixed-2xl);
-  }
-
-  &.lg {
-    //min-height: 3rem;
-    //min-width: 8rem;
-    padding: var(--spacing-fixed-sm) var(--spacing-fixed-xl);
-  }
-
-  &.md {
-    //min-height: 2.5rem;
-    //min-width: 6rem;
-    padding: var(--spacing-fixed-xs) var(--spacing-fixed-lg);
-  }
-
-  &.sm {
-    //min-height: 2rem;
-    //min-width: 4rem;
-    padding: var(--spacing-fixed-2xs) var(--spacing-fixed-md);
-  }
-
-
-  // fix this:
-  &.icon-only {
-    &.xl {
-      padding: var(--spacing-fixed-md);
+  &.floating {
+    &.primary {
+      &.green {
+        box-shadow: var(--box-shadow-medium-green);
+      }
+      &.blue {
+        box-shadow: var(--box-shadow-medium-blue);
+      }
+      &.orange {
+        box-shadow: var(--box-shadow-medium-orange);
+      }
+      &.red {
+        box-shadow: var(--box-shadow-medium-red);
+      }
+      &:disabled:hover,
+      &:disabled:active,
+      &:disabled {
+        box-shadow: var(--box-shadow-medium-neutral);
+      }
     }
 
-    &.lg {
-      padding: var(--spacing-fixed-sm);
+    &.secondary {
+      box-shadow: var(--box-shadow-medium-neutral);
     }
+  }
 
-    &.md {
-      padding: var(--spacing-fixed-xs);
-    }
-
-    &.sm {
-      padding: var(--spacing-fixed-2xs);
-    }
+  &:disabled:hover,
+  &:disabled:active,
+  &:disabled {
+    cursor: not-allowed;
   }
 }
-
-

@@ -9,3 +9,16 @@
   font-size: var(--font-size-fixed-md);
   line-height: var(--line-height-fixed-md);
 }
+
+@mixin label-md-italic-fixed {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-fixed-sm);
+  line-height: var(--line-height-fixed-sm);
+  font-style: italic;
+}
+
+@mixin label-md-semibold-fixed {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-fixed-sm);
+  line-height: var(--line-height-fixed-sm);
+}

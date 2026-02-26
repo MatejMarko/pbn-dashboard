@@ -2,14 +2,13 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/design-system",
   "lib": {
-    "entryFile": "src/public-api.ts",
-    "styleIncludePaths": ["src/styles"]
+    "entryFile": "src/public-api.ts"
   },
   "assets": [
     "src/styles.scss",
     "src/styles/**/*.scss",
     "src/assets/fonts/*.ttf",
     "src/assets/icons/icons-*.svg",
-    "./_index.scss" // todo: check whats up with this
+    "./_index.scss"
   ]
 }

@@ -1,0 +1,12 @@
+@if (purposeType() === 'action' && icon()) {
+  <otp-svg [name]="icon()!" size="1rem"></otp-svg>
+}
+@if (purposeType() === 'navigation' && direction() === 'left') {
+  <otp-svg [name]="directionIcon()!" size="1rem"></otp-svg>
+}
+<span class="body-md-semibold-fixed">
+  <ng-content></ng-content>
+</span>
+@if (purposeType() === 'navigation' && direction() !== 'left') {
+  <otp-svg [name]="directionIcon()!" size="1rem"></otp-svg>
+}

@@ -40,7 +40,7 @@ body {
   --brand-green-alpha-25: #{rgba(#52AE30, 0.25)};
   --brand-green-tint-10: #EEF7EA;
   --brand-green-tint-20: #DCEFD6;
-  --brand-green-shadow: rgba(#006648, 0.2);
+  --brand-green-shadow: #{rgba(#006648, 0.2)};
 
   // orange
   --brand-orange-default: #FF6600;
@@ -51,7 +51,7 @@ body {
   --brand-orange-alpha-25: #{rgba(#FF6600, 0.25)};
   --brand-orange-tint-10: #FFF0E5;
   --brand-orange-tint-20: #FFE0CC;
-  --brand-orange-shadow: rgba(#CC5200, 0.2);
+  --brand-orange-shadow: #{rgba(#CC5200, 0.2)};
 
   // red
   --brand-red-default: #F0323D;
@@ -62,7 +62,7 @@ body {
   --brand-red-alpha-25: #{rgba(#F0323D, 0.25)};
   --brand-red-tint-10: #FDEAEC;
   --brand-red-tint-20: #FFD9DE;
-  --brand-red-shadow: rgba(#C02831, 0.2);
+  --brand-red-shadow: #{rgba(#C02831, 0.2)};
 
   // blue
   --brand-blue-default: #0F87D2;
@@ -73,7 +73,7 @@ body {
   --brand-blue-alpha-25: #{rgba(#0F87D2, 0.25)};
   --brand-blue-tint-10: #E7F3FA;
   --brand-blue-tint-20: #D6E9FA;
-  --brand-blue-shadow: rgba(#0C6CA8, 0.2);
+  --brand-blue-shadow: #{rgba(#0C6CA8, 0.2)};
 
   // yellow
   --brand-yellow-default: #FFCC00;
@@ -140,7 +140,7 @@ body {
     --brand-green-alpha-25: #{rgba(#81CC66, 0.25)};
     --brand-green-tint-10: #39443B;
     --brand-green-tint-20: #405140;
-    --brand-green-shadow: rgba(#006648, 0.2);
+    --brand-green-shadow: #{rgba(#006648, 0.2)};
 
     // orange */
     --brand-orange-default: #FF944D;
@@ -151,7 +151,7 @@ body {
     --brand-orange-alpha-25: #{rgba(#FF944D, 0.25)};
     --brand-orange-tint-10: #4A3D36;
     --brand-orange-tint-20: #59463B;
-    --brand-orange-shadow: rgba(#CC5200, 0.2);
+    --brand-orange-shadow: #{rgba(#CC5200, 0.2)};
 
     // red
     --brand-red-default: #FF808F;
@@ -162,7 +162,7 @@ body {
     --brand-red-alpha-25: #{rgba(#FF808F, 0.25)};
     --brand-red-tint-10: #4A393F;
     --brand-red-tint-20: #613A44;
-    --brand-red-shadow: rgba(#C02831, 0.2);
+    --brand-red-shadow: #{rgba(#C02831, 0.2)};
 
     // blue
     --brand-blue-default: #66B5FF;
@@ -173,7 +173,7 @@ body {
     --brand-blue-alpha-25: #{rgba(#66B5FF, 0.25)};
     --brand-blue-tint-10: #36414D;
     --brand-blue-tint-20: #334C66;
-    --brand-blue-shadow: rgba(#0C6CA8, 0.2);
+    --brand-blue-shadow: #{rgba(#0C6CA8, 0.2)};
 
     // yellow
     --brand-yellow-default: #FFCC00;

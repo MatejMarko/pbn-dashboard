@@ -1,0 +1,25 @@
+@use '../ds-button-common' as btn;
+
+:host {
+  @include btn.button-base;
+
+  gap: var(--spacing-fixed-xs);
+
+  &.xl {
+    padding: var(--spacing-fixed-md) var(--spacing-fixed-2xl);
+  }
+
+  &.lg {
+    padding: var(--spacing-fixed-sm) var(--spacing-fixed-xl);
+  }
+
+  &.md {
+    padding: var(--spacing-fixed-xs) var(--spacing-fixed-lg);
+  }
+
+  &.sm {
+    padding: var(--spacing-fixed-2xs) var(--spacing-fixed-md);
+  }
+}
+
+
