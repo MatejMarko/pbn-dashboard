@@ -6,9 +6,9 @@ import { DsDialogCdkConfig } from './ds-dialog-cdk-config';
 
 const DS_DIALOG_DEFAULTS: Partial<DsDialogCdkConfig> = {
   hasBackdrop: true,
-  backdropClass: 'ds-dialog-cdk-backdrop',
-  width: '500px',
-  maxWidth: '90vw',
+  backdropClass: 'otp-dialog-backdrop',
+  width: '30rem',
+  maxWidth: '95vw',
   disableClose: false,
   autoFocus: 'first-tabbable',
   restoreFocus: true,
@@ -26,6 +26,7 @@ export class DsDialogCdkService {
     return this.cdkDialog.open<R, D, C>(component, mergedConfig as any);
   }
 
+  /*
   closeAll(): void {
     this.cdkDialog.closeAll();
   }
@@ -41,4 +42,5 @@ export class DsDialogCdkService {
   get afterAllClosed() {
     return this.cdkDialog.afterAllClosed;
   }
+  */
 }

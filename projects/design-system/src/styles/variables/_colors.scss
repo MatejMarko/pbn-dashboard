@@ -11,6 +11,7 @@ body {
   --surface-success: #52AE30;
   --surface-warning: #FF6600;
   --surface-error: #F0323D;
+  --surface-overlay: #{rgba(#000000, 0.3)};
 
   // text-icon
   --text-icon-primary: #151617;
@@ -93,6 +94,7 @@ body {
   --brand-grey-alpha-50: #{rgba(#7D828B, 0.5)};
   --brand-grey-shadow: #{rgba(#A6ADBA, 0.2)};
 
+  // todo: check if added
   // mobile-glass
   --mobile-glass-alpha-30: #{rgba(#000000, 0.3)};
   --mobile-glass-alpha-40: #{rgba(#000000, 0.4)};
@@ -111,6 +113,7 @@ body {
     --surface-success: #81CC66;
     --surface-warning: #FF944D;
     --surface-error: #FF808F;
+    --surface-overlay: #{rgba(#000000, 0.7)};
 
     // text-icon
     --text-icon-primary: #E8ECF4;
@@ -193,6 +196,7 @@ body {
     --brand-grey-alpha-50: #{rgba(#7D828B, 0.5)};
     --brand-grey-shadow: #{rgba(#0D0D0D, 0.2)};
 
+    // todo: check if these were added to repo
     // mobile-glass
     --mobile-glass-alpha-30: #{rgba(#000000, 0.3)};
     --mobile-glass-alpha-40: #{rgba(#000000, 0.4)};

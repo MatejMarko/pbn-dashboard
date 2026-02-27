@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { BreakpointObserver } from '@angular/cdk/layout';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /** Current screen size category based on viewport width. Ordered large to small. */
@@ -53,7 +53,7 @@ export class ScreenSizeService {
     breakpointObserver
       .observe([this.LG_BREAKPOINT, this.MD_BREAKPOINT])
       .pipe(takeUntilDestroyed())
-      .subscribe(breakpointState => {
+      .subscribe((breakpointState: BreakpointState) => {
         if (breakpointState.breakpoints[this.LG_BREAKPOINT]) {
           this._size.set('LG');
         } else if (breakpointState.breakpoints[this.MD_BREAKPOINT]) {

@@ -1,18 +1,22 @@
 import { Component } from '@angular/core';
 import { DialogRef } from '@angular/cdk/dialog';
+import { DialogComponent, DsButton } from '@design-system';
+import { SvgComponent } from '@design-system/lib/svg/svg';
+import { IconBackground } from '@design-system/lib/icon-background/icon-background';
 
 @Component({
   selector: 'app-second-dialog',
+  imports: [DialogComponent, IconBackground, DsButton],
   template: `
-    <div style="padding: 24px; background: white; border-radius: 8px; max-width: 350px;">
-      <h2>Second Dialog</h2>
-      <p>This is stacked on top of the first dialog.</p>
-      <p>Try pressing Escape — only this dialog should close.</p>
-      <div style="display: flex; gap: 8px; margin-top: 16px;">
-        <input placeholder="Test focus trapping" />
-        <button (click)="close()">Close</button>
-      </div>
-    </div>
+    <lib-dialog-component [hasCloseIcon]="true">
+      <otp-icon-background icon="OTP-icon-24x24-info" size="48" type="success"></otp-icon-background>
+      <ng-container dialogTitle>Second Dialog</ng-container>
+      <ng-container  dialogDescription>This is stacked on top of the first dialog.</ng-container>
+      <ng-container dialogActions>
+        <button (click)="close()" ds-button size="lg" variant="primary" color="green">This one has long</button>
+        <button (click)="close()" ds-button size="lg" variant="secondary" color="green">Close</button>
+      </ng-container>
+    </lib-dialog-component>
   `,
 })
 export class SecondDialog {

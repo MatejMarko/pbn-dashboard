@@ -1,20 +1,26 @@
 import { Component } from '@angular/core';
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
-import { DsDialogCdkService } from '@design-system';
+import { DialogComponent, DsButton, DsDialogCdkService } from '@design-system';
 import { SecondDialog } from './second-dialog';
+import { IconBackground } from '@design-system/lib/icon-background/icon-background';
 
 @Component({
   selector: 'app-first-dialog',
   template: `
-    <div style="padding: 24px; background: white; border-radius: 8px; max-width: 400px;">
-      <h2>First Dialog</h2>
-      <p>This is the first dialog. Try opening another one on top!</p>
-      <div style="display: flex; gap: 8px; margin-top: 16px;">
-        <button (click)="openSecondDialog()">Open Second Dialog</button>
-        <button (click)="close()">Close</button>
-      </div>
-    </div>
+    <lib-dialog-component>
+      <otp-icon-background icon="OTP-icon-24x24-info" size="48" type="warning"></otp-icon-background>
+      <ng-container dialogTitle>First Dialog</ng-container>
+      <ng-container dialogDescription>This is the first dialog. Try opening another one on top!</ng-container>
+      <ng-container dialogActions>
+        <button (click)="openSecondDialog()" ds-button size="lg" variant="primary" color="green">Open Second Dialog</button>
+      </ng-container>
+    </lib-dialog-component>
   `,
+  imports: [
+    DialogComponent,
+    DsButton,
+    IconBackground
+  ]
 })
 export class FirstDialog {
   constructor(

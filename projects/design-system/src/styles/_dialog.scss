@@ -1,0 +1,9 @@
+// not sure where to place this file and how to name it
+
+// each opened dialog gets its own div with .otp-dialog-backdrop.
+// if we dont want to semi-transparent backgrounds to stack
+// and make the background look darker, this style has to be applied to:
+// .cdk-overlay-container
+.otp-dialog-backdrop {
+  background: var(--surface-overlay);
+}

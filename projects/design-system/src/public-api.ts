@@ -9,3 +9,5 @@ export * from './lib/ds-form-field';
 export * from './lib/ds-dialog';
 export * from './lib/ds-dialog-cdk';
 export * from './lib/services/screen-size';
+export * from './lib/dialog-component/dialog-component';
+
