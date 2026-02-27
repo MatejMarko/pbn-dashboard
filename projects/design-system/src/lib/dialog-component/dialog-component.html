@@ -1,0 +1,26 @@
+<div class="dialog-container">
+  @if (hasCloseIcon()) {
+    <!-- todo: translate aria-label -->
+    <div class="close-button-wrapper">
+      <button ds-icon-button ariaLabel="Close the dialog" size="sm" color="green" variant="secondary" icon="OTP-icon-16x16-close" (click)="closeDialog()"></button>
+    </div>
+  }
+
+  <ng-content select="otp-icon-background"></ng-content>
+
+  <!-- todo: accessibility with aria-label (on the dialog itself) must be handled -->
+  <div class="dialog-content">
+    <span class="heading-md">
+      <ng-content select="[dialogTitle]" />
+    </span>
+    <p class="body-md text-secondary">
+      <ng-content select="[dialogDescription]"></ng-content>
+    </p>
+  </div>
+
+  <ng-content select="[dialogCustomContent]"></ng-content>
+
+  <div class="dialog-actions-container">
+    <ng-content select="[dialogActions]"></ng-content>
+  </div>
+</div>
