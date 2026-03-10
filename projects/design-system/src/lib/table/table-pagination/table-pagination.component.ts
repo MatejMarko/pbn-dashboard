@@ -1,12 +1,13 @@
 import { Component, computed, input, output, ViewEncapsulation } from '@angular/core';
 import { SvgComponent } from '../../svg/svg';
 import { DecimalPipe } from '@angular/common';
+import { DsIconButton } from '../../ds-button/ds-icon-button/ds-icon-button';
 
 @Component({
   selector: 'otp-table-pagination',
   templateUrl: './table-pagination.component.html',
   encapsulation: ViewEncapsulation.None,
-  imports: [SvgComponent, DecimalPipe],
+  imports: [SvgComponent, DecimalPipe, DsIconButton],
   host: {
     '[class.table-pagination]': 'true',
   },
@@ -24,28 +25,28 @@ export class TablePaginationComponent {
   /** Emits the new page number when the user navigates. */
   readonly pageChange = output<number>();
 
-  protected totalPages = computed(() =>
+  protected readonly totalPages = computed(() =>
     Math.ceil(this.total() / this.pageSize()),
   );
 
-  protected rangeStart = computed(() =>
+  protected readonly rangeStart = computed(() =>
     this.page() * this.pageSize() + 1,
   );
 
-  protected rangeEnd = computed(() =>
+  protected readonly rangeEnd = computed(() =>
     Math.min((this.page() + 1) * this.pageSize(), this.total()),
   );
 
-  protected hasPrevious = computed(() => this.page() > 0);
-  protected hasNext = computed(() => this.page() < this.totalPages() - 1);
+  protected readonly hasPrevious = computed(() => this.page() > 0);
+  protected readonly hasNext = computed(() => this.page() < this.totalPages() - 1);
 
-  goToPrevious(): void {
+  protected goToPrevious(): void {
     if (this.hasPrevious()) {
       this.pageChange.emit(this.page() - 1);
     }
   }
 
-  goToNext(): void {
+  protected goToNext(): void {
     if (this.hasNext()) {
       this.pageChange.emit(this.page() + 1);
     }

@@ -1,0 +1,11 @@
+@if (table.selectable()) {
+  <otp-table-cell>
+    <input
+      type="checkbox"
+      [checked]="isSelected()"
+      (change)="table.toggleRow(value())"
+      aria-label="Select row"
+    />
+  </otp-table-cell>
+}
+<ng-content></ng-content>

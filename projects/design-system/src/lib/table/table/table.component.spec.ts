@@ -9,7 +9,7 @@ import {
   TableHeaderCellDirective,
   TableRowComponent,
   TableCellDirective,
-  TableFooterDirective,
+  TableFooterComponent,
 } from '../index';
 
 // ── Basic table ─────────────────────────────────────────────────────────────
@@ -76,7 +76,7 @@ class SelectableTableHost {
       </otp-table-footer>
     </otp-table>
   `,
-  imports: [TableComponent, TableHeaderComponent, TableHeaderCellDirective, TableRowComponent, TableCellDirective, TableFooterDirective],
+  imports: [TableComponent, TableHeaderComponent, TableHeaderCellDirective, TableRowComponent, TableCellDirective, TableFooterComponent],
 })
 class FooterTableHost {}
 

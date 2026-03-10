@@ -150,9 +150,9 @@ ANGULAR ARIA
         <otp-table-header-cell>Available limit</otp-table-header-cell>
       </otp-table-header>
 
-      <otp-table-section label="Debit cards" [expandLimit]="4">
+      <otp-table-section label="Debit cards">
         @for (card of debitCards; track card.id) {
-          <otp-table-row [value]="card">
+          <otp-table-row [value]="card.id">
             <otp-table-cell>
               <div class="card-info">
                 <img class="card-image" src="https://placehold.co/48x32?text=VISA" alt="Card image" />
@@ -175,9 +175,9 @@ ANGULAR ARIA
         }
       </otp-table-section>
 
-      <otp-table-section label="Credit card" [expandLimit]="4">
+      <otp-table-section label="Credit card">
         @for (card of creditCards; track card.id) {
-          <otp-table-row [value]="card">
+          <otp-table-row [value]="card.id">
             <otp-table-cell>
               <div class="card-info">
                 <img class="card-image" src="https://placehold.co/48x32?text=VISA" alt="Card image" />
@@ -202,7 +202,7 @@ ANGULAR ARIA
 
       <otp-table-section label="Prepaid cards">
         @for (card of prepaidCards; track card.id) {
-          <otp-table-row [value]="card">
+          <otp-table-row [value]="card.id">
             <otp-table-cell>
               <div class="card-info">
                 <img class="card-image" src="https://placehold.co/48x32?text=VISA" alt="Card image" />
@@ -226,7 +226,9 @@ ANGULAR ARIA
       </otp-table-section>
 
       <otp-table-footer>
-        <button ds-button variant="secondary" color="green" size="sm">Export all</button>
+        <otp-table-footer-actions>
+          <button ds-button variant="secondary" color="green" size="sm">Export all</button>
+        </otp-table-footer-actions>
       </otp-table-footer>
     </otp-table>
   </div>
@@ -244,7 +246,7 @@ ANGULAR ARIA
       </otp-table-header>
 
       @for (card of debitCards; track card.id) {
-        <otp-table-row [value]="card">
+        <otp-table-row [value]="card.id">
           <otp-table-cell>
             <div class="card-info">
               <img class="card-image" src="https://placehold.co/48x32?text=VISA" alt="Card image" />
@@ -267,7 +269,7 @@ ANGULAR ARIA
       }
 
       @for (card of creditCards; track card.id) {
-        <otp-table-row [value]="card">
+        <otp-table-row [value]="card.id">
           <otp-table-cell>
             <div class="card-info">
               <img class="card-image" src="https://placehold.co/48x32?text=VISA" alt="Card image" />
@@ -290,7 +292,7 @@ ANGULAR ARIA
       }
 
       @for (card of prepaidCards; track card.id) {
-        <otp-table-row [value]="card">
+        <otp-table-row [value]="card.id">
           <otp-table-cell>
             <div class="card-info">
               <img class="card-image" src="https://placehold.co/48x32?text=VISA" alt="Card image" />
@@ -313,6 +315,9 @@ ANGULAR ARIA
       }
 
       <otp-table-footer>
+        <otp-table-footer-actions>
+          <button ds-button variant="secondary" color="green" size="sm">Export all</button>
+        </otp-table-footer-actions>
         <otp-table-pagination [page]="page()" [pageSize]="10" [total]="132" (pageChange)="pageChange($event)"></otp-table-pagination>
       </otp-table-footer>
     </otp-table>

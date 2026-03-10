@@ -1,0 +1,12 @@
+@if (table.selectable()) {
+  <otp-table-header-cell>
+    <input
+      type="checkbox"
+      [checked]="table.allSelected()"
+      [indeterminate]="table.someSelected()"
+      (change)="table.toggleAll()"
+      aria-label="Select all rows"
+    />
+  </otp-table-header-cell>
+}
+<ng-content></ng-content>

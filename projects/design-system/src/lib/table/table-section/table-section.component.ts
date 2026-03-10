@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { TableRowComponent } from '../table-row/table-row.component';
 import { SvgComponent } from '../../svg/svg';
-import { GhostButton } from '@design-system/lib/ds-button';
+import { GhostButton } from '../../ds-button/ds-ghost-button/ghost-button';
 
 const TRANSITION_DURATION = 300;
 const TRANSITION_BUFFER = 50;
@@ -33,9 +33,9 @@ export class TableSectionComponent {
   readonly label = input.required<string>();
 
   /** Max rows shown before "Show more" appears. 0 = no limit. */
-  readonly expandLimit = input(0);
+  readonly expandLimit = input(4);
 
-  /** Whether the section is collapsed (header visible, rows hidden). */
+  /** Whether rows in the section are collapsed. */
   readonly collapsed = signal(false);
 
   /** Whether the section is showing all rows (past the expandLimit). */
@@ -54,19 +54,11 @@ export class TableSectionComponent {
   /** Number of hidden rows when not expanded. */
   readonly hiddenCount = computed(() => {
     const limit = this.expandLimit();
-    if (limit <= 0) return 0;
-    return Math.max(0, this.rows().length - limit);
+    if (limit <= 0) {
+      return 0;
+    }
+    return this.rows().length - limit;
   });
-
-  /** Whether "show more" button should appear. */
-  readonly showMoreVisible = computed(
-    () => !this.collapsed() && !this.expanded() && this.hiddenCount() > 0,
-  );
-
-  /** Whether "show less" button should appear. */
-  readonly showLessVisible = computed(
-    () => !this.collapsed() && this.expanded() && this.hiddenCount() > 0,
-  );
 
   constructor() {
     // Apply row visibility for initial render and non-animated state changes
@@ -78,7 +70,9 @@ export class TableSectionComponent {
       const isCollapsed = this.collapsed();
 
       // During animation, visibility is managed by the animation methods.
-      if (this._animating()) return;
+      if (this._animating()) {
+        return;
+      }
 
       rows.forEach((row, index) => {
         if (isCollapsed) {
@@ -94,7 +88,9 @@ export class TableSectionComponent {
     // Set initial max-height on the wrapper after first render.
     afterNextRender(() => {
       const wrapper = this._rowsWrapper()?.nativeElement;
-      if (!wrapper) return;
+      if (!wrapper) {
+        return;
+      }
       if (this.collapsed()) {
         wrapper.style.transition = 'none';
         wrapper.style.maxHeight = '0';
@@ -104,8 +100,10 @@ export class TableSectionComponent {
     });
   }
 
-  toggleCollapsed(): void {
-    if (this._animating()) return;
+  protected toggleCollapsed(): void {
+    if (this._animating()) {
+      return;
+    }
     this._animating.set(true);
 
     const wrapper = this._rowsWrapper()?.nativeElement;
@@ -122,7 +120,7 @@ export class TableSectionComponent {
     }
   }
 
-  toggleExpanded(): void {
+  protected toggleExpanded(): void {
     if (this._animating()) return;
     this._animating.set(true);
 
@@ -189,8 +187,14 @@ export class TableSectionComponent {
     wrapper.style.maxHeight = `${wrapper.offsetHeight}px`;
     void wrapper.offsetHeight;
 
-    // 2. Calculate target height (sum of first N grid row tracks)
-    const targetHeight = this._measureLimitedHeight(wrapper, limit);
+    // 2. Temporarily hide overflow rows to measure target height
+    //    (includes limited rows + toggle button). No visual glitch because
+    //    the wrapper has a locked max-height + overflow: hidden.
+    this._addHiddenClass(wrapper, limit);
+    void wrapper.offsetHeight;
+    const targetHeight = wrapper.scrollHeight;
+    this._removeHiddenClass(wrapper);
+    void wrapper.offsetHeight;
 
     // 3. Animate to target
     wrapper.style.transition = '';
@@ -199,7 +203,9 @@ export class TableSectionComponent {
     this._onTransitionEnd(wrapper, () => {
       // Hide overflow rows after animation completes
       rows.forEach((row, i) => {
-        if (i >= limit) row._hidden.set(true);
+        if (i >= limit) {
+          row._hidden.set(true);
+        }
       });
       wrapper.style.maxHeight = 'none';
       this.expanded.set(false);
@@ -272,14 +278,13 @@ export class TableSectionComponent {
     });
   }
 
-  /** Measure the height of the first `limit` grid row tracks. */
-  private _measureLimitedHeight(
-    wrapper: HTMLDivElement,
-    limit: number,
-  ): number {
-    const trackValues = getComputedStyle(wrapper).gridTemplateRows;
-    const tracks = trackValues.split(/\s+/).map(v => parseFloat(v));
-    return tracks.slice(0, limit).reduce((sum, h) => sum + h, 0);
+  /** Add the hidden class to overflow rows (from `fromIndex` onward). */
+  private _addHiddenClass(wrapper: HTMLDivElement, fromIndex: number): void {
+    wrapper.querySelectorAll('otp-table-row').forEach((el, i) => {
+      if (i >= fromIndex) {
+        el.classList.add('table-row-hidden');
+      }
+    });
   }
 
   /** Listen for transitionend with a fallback timeout. */
@@ -296,7 +301,9 @@ export class TableSectionComponent {
       callback();
     };
     const handler = (e: TransitionEvent) => {
-      if (e.target === wrapper && e.propertyName === 'max-height') resolve();
+      if (e.target === wrapper && e.propertyName === 'max-height') {
+        resolve();
+      }
     };
     wrapper.addEventListener('transitionend', handler);
     const fallback = setTimeout(

@@ -1,24 +1,31 @@
-<div class="table-pagination-inner">
+<div class="table-pagination-wrapper">
   <span class="label-sm text-secondary">
     {{ rangeStart() }} - {{ rangeEnd() }} of {{ total() | number }}
   </span>
 
   <div class="table-pagination-controls">
     <button
-      class="table-pagination-btn"
+      ds-icon-button
+      ariaLabel="Previous page"
+      size="md"
+      color="green"
+      variant="tertiary"
+      icon="OTP-icon-24x24-arrow-left"
       [disabled]="!hasPrevious()"
       (click)="goToPrevious()"
-      aria-label="Previous page"
     >
       <otp-svg name="OTP-icon-24x24-arrow-left" size="1.5rem"></otp-svg>
     </button>
     <button
-      class="table-pagination-btn"
+      ds-icon-button
+      ariaLabel="Next page"
+      size="md"
+      color="green"
+      variant="tertiary"
+      icon="OTP-icon-24x24-arrow-right"
       [disabled]="!hasNext()"
       (click)="goToNext()"
-      aria-label="Next page"
     >
-      <otp-svg name="OTP-icon-24x24-arrow-right" size="1.5rem"></otp-svg>
     </button>
   </div>
 </div>

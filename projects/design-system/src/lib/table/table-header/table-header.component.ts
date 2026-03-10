@@ -4,20 +4,7 @@ import { TableHeaderCellDirective } from '../table-header-cell/table-header-cell
 
 @Component({
   selector: 'otp-table-header',
-  template: `
-    @if (table.selectable()) {
-      <otp-table-header-cell>
-        <input
-          type="checkbox"
-          [checked]="table.allSelected()"
-          [indeterminate]="table.someSelected()"
-          (change)="table.toggleAll()"
-          aria-label="Select all rows"
-        />
-      </otp-table-header-cell>
-    }
-    <ng-content></ng-content>
-  `,
+  templateUrl: './table-header.component.html',
   encapsulation: ViewEncapsulation.None,
   imports: [TableHeaderCellDirective],
   host: {

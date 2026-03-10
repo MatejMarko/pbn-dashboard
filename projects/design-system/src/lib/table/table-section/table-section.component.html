@@ -1,7 +1,6 @@
 <!-- Section header: spans all columns -->
 <div
   class="table-section-header"
-  [style.grid-column]="'1 / -1'"
   role="row"
   (click)="toggleCollapsed()"
   (keydown.enter)="toggleCollapsed()"
@@ -17,18 +16,17 @@
   </span>
 </div>
 
-<!-- Rows wrapper: subgrid for column alignment, overflow hidden for animation -->
 <div
   #rowWrapper
   class="table-section-rows"
 >
   <ng-content></ng-content>
 
-  <!-- Show more / show less (inside wrapper so they animate with the rows) -->
-  @if (showMoreVisible() || showLessVisible()) {
+  <!-- Always in the DOM when there are overflow rows so animations can measure it -->
+  @if (hiddenCount() > 0) {
     <div class="table-section-toggle">
-      <button ds-ghost-button purposeType="navigation" [direction]="showMoreVisible() ? 'down' : 'up'" (click)="toggleExpanded()">
-        @if (showMoreVisible()) {
+      <button ds-ghost-button purposeType="navigation" [direction]="expanded() ? 'up' : 'down'" (click)="toggleExpanded()">
+        @if (!expanded()) {
           Show more ({{ hiddenCount() }})
           <otp-svg name="OTP-icon-16x16-arrow-down" size="1rem"></otp-svg>
         } @else {

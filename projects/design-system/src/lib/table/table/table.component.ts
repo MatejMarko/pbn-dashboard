@@ -34,7 +34,7 @@ export class TableComponent {
   readonly rows = contentChildren(TableRowComponent, { descendants: true });
 
   /** Final grid-template-columns including optional checkbox column. */
-  protected resolvedColumns = computed(() => {
+  protected readonly resolvedColumns = computed(() => {
     const base = this.columns();
     return this.selectable() ? `2.5rem ${base}` : base;
   });
@@ -42,7 +42,9 @@ export class TableComponent {
   /** Whether ALL visible rows are selected. */
   readonly allSelected = computed(() => {
     const rows = this.rows();
-    if (rows.length === 0) return false;
+    if (rows.length === 0) {
+      return false;
+    }
     const sel = this.selected();
     return rows.every(r => sel.has(r.value()));
   });
