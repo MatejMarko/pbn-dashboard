@@ -1,0 +1,41 @@
+<!-- Section header: spans all columns -->
+<div
+  class="table-section-header"
+  [style.grid-column]="'1 / -1'"
+  role="row"
+  (click)="toggleCollapsed()"
+  (keydown.enter)="toggleCollapsed()"
+  (keydown.space)="toggleCollapsed(); $event.preventDefault()"
+  tabindex="0"
+  [attr.aria-expanded]="!collapsed()"
+>
+  <span class="table-section-chevron" [class.collapsed]="collapsed()">
+    <otp-svg name="OTP-icon-16x16-triangle-arrow-down" size="1rem"></otp-svg>
+  </span>
+  <span class="label-md-fixed text-secondary">
+    {{ label() }}
+  </span>
+</div>
+
+<!-- Rows wrapper: subgrid for column alignment, overflow hidden for animation -->
+<div
+  #rowWrapper
+  class="table-section-rows"
+>
+  <ng-content></ng-content>
+
+  <!-- Show more / show less (inside wrapper so they animate with the rows) -->
+  @if (showMoreVisible() || showLessVisible()) {
+    <div class="table-section-toggle">
+      <button ds-ghost-button purposeType="navigation" [direction]="showMoreVisible() ? 'down' : 'up'" (click)="toggleExpanded()">
+        @if (showMoreVisible()) {
+          Show more ({{ hiddenCount() }})
+          <otp-svg name="OTP-icon-16x16-arrow-down" size="1rem"></otp-svg>
+        } @else {
+          Show less
+          <otp-svg name="OTP-icon-16x16-arrow-up" size="1rem"></otp-svg>
+        }
+      </button>
+    </div>
+  }
+</div>

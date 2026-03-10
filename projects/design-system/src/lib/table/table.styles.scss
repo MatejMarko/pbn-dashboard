@@ -1,0 +1,184 @@
+@use '../../styles/mixins/typography-mixins' as typMxn;
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Table container
+// ═══════════════════════════════════════════════════════════════════════════
+otp-table {
+  display: grid;
+  overflow: hidden;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Header
+// ═══════════════════════════════════════════════════════════════════════════
+.table-header {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  column-gap: var(--spacing-fixed-sm);
+  padding: var(--spacing-fixed-lg) var(--spacing-fixed-md) var(--spacing-fixed-xs) var(--spacing-fixed-md);
+  border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
+  border: 1px solid var(--border-light);
+  background: var(--surface-secondary);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Header cells
+// ═══════════════════════════════════════════════════════════════════════════
+.table-header-cell {
+  padding: var(--spacing-fixed-xs) 0;
+  display: flex;
+  align-items: center;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Row
+// ═══════════════════════════════════════════════════════════════════════════
+.table-row {
+  background: var(--surface-primary);
+  padding: var(--spacing-fixed-xs) var(--spacing-fixed-md);
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  column-gap: var(--spacing-fixed-sm);
+  border: 1px solid var(--border-light);
+}
+
+.table-row:hover {
+  background: var(--surface-hover);
+}
+
+.table-row.table-row-selected {
+  background: var(--brand-green-tint-10);
+}
+
+.table-row.table-row-hidden {
+  display: none;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Data cells
+// ═══════════════════════════════════════════════════════════════════════════
+.table-cell {
+  display: flex;
+  align-items: center;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Footer
+// ═══════════════════════════════════════════════════════════════════════════
+.table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 4rem;
+  box-sizing: border-box;
+  padding: var(--spacing-fixed-sm) var(--spacing-fixed-md);
+  row-gap: var(--spacing-fixed-sm);
+  border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
+  border: 1px solid var(--border-light);
+  background: var(--surface-secondary);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Section
+// ═══════════════════════════════════════════════════════════════════════════
+.table-section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-fixed-xs);
+  padding: var(--spacing-fixed-md) var(--spacing-fixed-md);
+  cursor: pointer;
+  border: 1px solid var(--border-light);
+  background: var(--surface-secondary);
+}
+
+.table-section-chevron {
+  display: inline-flex;
+  transition: transform 200ms ease;
+  color: var(--text-icon-secondary);
+
+  &.collapsed {
+    transform: rotate(-90deg);
+  }
+}
+
+.table-section-rows {
+  display: grid;
+  grid-template-columns: subgrid;
+  overflow: hidden;
+  transition: max-height 300ms ease;
+  grid-column: 1 / -1;
+}
+
+.table-section-toggle {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-responsive-2xs) var(--spacing-fixed-md);
+  border: 1px solid var(--border-light);
+  background: var(--surface-primary);
+
+  > button {
+    width: 100%;
+  }
+}
+
+.table-section-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-fixed-2xs);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: var(--spacing-fixed-2xs) var(--spacing-fixed-xs);
+  border-radius: var(--border-radius-xs);
+  @include typMxn.label-md-semibold-fixed;
+  color: var(--brand-green-default);
+
+  &:hover {
+    background: var(--surface-hover);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Pagination
+// ═══════════════════════════════════════════════════════════════════════════
+.table-pagination {
+  grid-column: 1 / -1;
+}
+
+.table-pagination-inner {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-fixed-md);
+  padding: var(--spacing-fixed-sm) var(--spacing-fixed-md);
+}
+
+.table-pagination-controls {
+  display: flex;
+  gap: var(--spacing-fixed-xs);
+}
+
+.table-pagination-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: var(--spacing-fixed-2xs);
+  border-radius: var(--border-radius-full);
+  color: var(--brand-green-default);
+
+  &:hover:not(:disabled) {
+    background: var(--surface-hover);
+  }
+
+  &:disabled {
+    color: var(--text-icon-disabled-dark);
+    cursor: not-allowed;
+  }
+}
