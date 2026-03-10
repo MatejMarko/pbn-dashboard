@@ -1,6 +1,5 @@
-import { Component, ElementRef, HostBinding, inject, Input } from '@angular/core';
+import { Component, ElementRef, HostBinding, inject } from '@angular/core';
 import { NgControl, Validators } from '@angular/forms';
-import { FormField } from '@angular/forms/signals';
 
 let nextUniqueId = 0;
 

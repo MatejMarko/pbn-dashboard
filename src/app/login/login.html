@@ -1,0 +1,15 @@
+<form [formGroup]="loginForm" style="display: flex; flex-direction: column; gap: 12px; width: 400px;" (ngSubmit)="login()">
+  <ds-form-field>
+    <ds-label>Username</ds-label>
+    <input ds-input type="text" formControlName="username" />
+    <ds-error>Username is required</ds-error>
+  </ds-form-field>
+  <ds-form-field>
+    <ds-label>Password</ds-label>
+    <input ds-input type="password" formControlName="password" />
+    <ds-error>Invalid username or password</ds-error>
+  </ds-form-field>
+  <button ds-button type="submit">Log in</button>
+</form>
+
+

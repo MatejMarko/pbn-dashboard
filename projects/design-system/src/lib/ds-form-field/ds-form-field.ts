@@ -1,6 +1,15 @@
-import { AfterContentChecked, AfterContentInit, Component, ContentChild, ElementRef, HostBinding, inject, ViewEncapsulation } from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterContentInit,
+  Component,
+  contentChild,
+  ContentChild,
+  ElementRef,
+  HostBinding,
+  inject,
+  ViewEncapsulation
+} from '@angular/core';
 import { DsInput } from '../ds-input/ds-input';
-import { Validators } from '@angular/forms';
 import { DsLabel } from './directives/ds-label';
 import { DsError } from './directives/ds-error';
 import { DsHint } from './directives/ds-hint';
@@ -18,6 +27,9 @@ export class DsFormField implements AfterContentInit, AfterContentChecked {
   @ContentChild(DsLabel) dsLabel?: DsLabel;
   @ContentChild(DsError) dsError?: DsError;
   @ContentChild(DsHint) dsHint?: DsHint;
+
+  protected error = contentChild(DsError);
+
 
   ngAfterContentInit(): void {
     this.validateUsage();

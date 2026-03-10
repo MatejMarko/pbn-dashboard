@@ -1,9 +1,15 @@
 @use '../../styles/mixins/typography-mixins' as typMxn;
 
-@mixin input-focused($outline-color) {
-  &:has(> input[ds-input]:active, > input[ds-input]:focus, > input[ds-input]:focus-visible) {
-    &:not(:has(> input:disabled)) {
-      outline: 2px solid $outline-color;
+@mixin input-focused($color) {
+  &:has(.input-wrapper > input[ds-input]:active, .input-wrapper > input[ds-input]:focus, .input-wrapper > input[ds-input]:focus-visible) {
+    &:not(:has(.input-wrapper > input:disabled)) {
+      label {
+        color: $color;
+      }
+
+      .input-wrapper {
+        outline: 2px solid $color;
+      }
     }
   }
 }
@@ -47,9 +53,9 @@ ds-form-field {
           @include typMxn.body-md-fixed;
         }
       }
-
-      @include input-focused(var(--text-icon-success));
     }
+
+    @include input-focused(var(--text-icon-success));
 
     .ds-error-wrapper {
       padding: 0 var(--spacing-fixed-2xs);
@@ -79,9 +85,13 @@ ds-form-field {
   }
 
   // error state: host has .ds-error-visible when input is invalid && touched
-  &.ds-error-visible .ds-form-field .input-wrapper {
-    outline-color: var(--text-icon-error);
-
+  &.ds-error-visible .ds-form-field {
+    label {
+      color: var(--text-icon-error);
+    }
+    .input-wrapper {
+      outline-color: var(--text-icon-error);
+    }
     @include input-focused(var(--text-icon-error));
   }
 

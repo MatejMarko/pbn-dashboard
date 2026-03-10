@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
-import { DialogComponent, DsButton, DsDialogCdkService } from '@design-system';
+import { DialogComponent, DsButton, DsDialogCdkService, IconBackground } from '@design-system';
 import { SecondDialog } from './second-dialog';
-import { IconBackground } from '@design-system/lib/icon-background/icon-background';
 
 @Component({
   selector: 'app-first-dialog',

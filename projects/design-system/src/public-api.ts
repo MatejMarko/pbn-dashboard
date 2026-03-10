@@ -10,4 +10,7 @@ export * from './lib/ds-dialog';
 export * from './lib/ds-dialog-cdk';
 export * from './lib/services/screen-size';
 export * from './lib/dialog-component/dialog-component';
-
+export * from './lib/breadcrumbs/breadcrumbs';
+export * from './lib/svg/svg';
+export * from './lib/icon-background/icon-background';
+export * from './lib/table';

@@ -1,0 +1,320 @@
+@if (screenSizeService.size() === 'LG') {
+  lg
+} @else {
+  md/sm
+}
+
+@if (screenSizeService.size() | atMost:'SM') {
+  <!--
+  <otp-menu></otp-menu>
+  -->
+}
+
+ANGULAR ARIA
+
+
+
+<div style="display: flex; align-items: center; gap: 12px;">
+  <button ds-icon-button icon="OTP-icon-32x32-heart" ariaLabel="testni gumb" variant="tertiary" color="green" size="lg" class="testButtonIfStays">test</button>
+  <button ds-button leadingIcon="'nekaj'" class="testButtonIfStays">test</button>
+  <button ds-icon-button icon="OTP-icon-32x32-heart" ariaLabel="this is a test button">test</button>
+  <button ds-button leadingIcon="'nekaj'" size="sm">test</button>
+  <button ds-icon-button icon="OTP-icon-32x32-heart" ariaLabel="this is a test button" size="sm">test</button>
+  <button ds-button leadingIcon="'nekaj'" size="lg" class="testButtonIfStays">test</button>
+  <button ds-icon-button icon="OTP-icon-32x32-heart" ariaLabel="this is a test button" size="lg">test</button>
+  <button ds-button leadingIcon="'nekaj'" size="xl" class="testButtonIfStays">test</button>
+  <button ds-icon-button icon="OTP-icon-32x32-heart" ariaLabel="this is a test button" size="xl">test</button>
+
+  <button ds-ghost-button purposeType="action" icon="OTP-icon-32x32-arrow-up">action</button>
+  <button ds-ghost-button purposeType="navigation" color="orange" direction="left">navigation</button>
+  <button ds-ghost-button purposeType="navigation" direction="up">navigation</button>
+  <button ds-ghost-button purposeType="navigation" color="red" direction="down">navigation</button>
+  <button ds-ghost-button purposeType="navigation" color="blue" direction="right">navigation</button>
+  <button ds-ghost-button purposeType="navigation" color="blue" direction="right" disabled>navigation</button>
+</div>
+<span class="test2">test 2</span>
+
+<br/><br/>
+<button (click)="openDialog()">Open Dialog (CDK)</button>
+
+<ds-form-field>
+  <!-- todo: class shouldnt be defined on every occurance of input, but rather in ds-form-field styles (mixin) -->
+  <label class="label-md-semibold-fixed">This is a label</label>
+  <input placeholder="This is a placeholder" ds-input/>
+  <div ds-input-prefix>
+    this is a test
+  </div>
+  <div ds-input-suffix>
+    this is a test
+  </div>
+  <span ds-hint class="label-md-italic-fixed">This is a hint</span>
+  <ng-container ds-hint-right class="label-md-italic-fixed">10/100</ng-container>
+</ds-form-field>
+
+<div style="width: 300px;">
+  <ds-form-field>
+    <!-- todo: class shouldnt be defined on every occurance of input, but rather in ds-form-field styles (mixin) -->
+    <label class="label-md-semibold-fixed">This is a label</label>
+    <input placeholder="This is a placeholder" ds-input/>
+    <div ds-input-prefix>
+      this is a test
+    </div>
+    <div ds-input-suffix>
+      this is a test
+    </div>
+    <span ds-hint class="label-md-italic-fixed">This is a hint</span>
+    <ng-container ds-hint-right class="label-md-italic-fixed">10/100</ng-container>
+  </ds-form-field>
+</div>
+
+<!-- Reactive Forms Test -->
+<h3 class="heading-sm" style="margin-top: 32px;">Reactive Forms Test</h3>
+<div style="width: 400px; display: flex; flex-direction: column; gap: 12px; margin-top: 16px;">
+  <ds-form-field class="test-if-class-stays">
+    <ds-label>Name (required, min 3 chars)</ds-label>
+    <input placeholder="Enter your name" ds-input [formControl]="nameControl"/>
+    <ds-error>Name is required and must be at least 3 characters.</ds-error>
+    <ds-hint>Try: focus → blur empty → see error</ds-hint>
+  </ds-form-field>
+  <ds-form-field>
+    <ds-label>Name (required, min 3 chars)</ds-label>
+    <input id="testCustomId" placeholder="Enter your name" ds-input [formControl]="nameControl2"/>
+    <ds-error>Name is required and must be at least 3 characters.</ds-error>
+  </ds-form-field>
+  <ds-form-field>
+    <ds-label>Name (required, min 3 chars)</ds-label>
+    <input ds-input [formControl]="nameControl3"/>
+    <ds-error>Name is required and must be at least 3 characters.</ds-error>
+    <ds-hint>Try: focus → blur empty → see error</ds-hint>
+    <ds-hint-right>10/100</ds-hint-right>
+  </ds-form-field>
+  <ds-form-field>
+    <ds-label>Name (required, min 3 chars)</ds-label>
+    <input placeholder="Enter your name" ds-input [formControl]="nameControl4"/>
+    <ds-error>Name is required and must be at least 3 characters.</ds-error>
+    <ds-hint>Try: focus → blur empty → see error</ds-hint>
+    <ds-hint-right>10/100</ds-hint-right>
+  </ds-form-field>
+  <ds-form-field>
+    <ds-label>Name (required, min 3 chars)</ds-label>
+    <input placeholder="Enter your name" ds-input [formControl]="nameControl5"/>
+    <ds-error>Name is required and must be at least 3 characters.</ds-error>
+    <ds-hint>Try: focus → blur empty → see error</ds-hint>
+    <ds-hint-right aria-label="to so">10/100</ds-hint-right>
+  </ds-form-field>
+  <ds-form-field>
+    <ds-label>Name (required, min 3 chars)</ds-label>
+    <input placeholder="Enter your name" ds-input [formControl]="nameControl6" readonly />
+    <ds-error>Name is required and must be at least 3 characters.</ds-error>
+    <ds-hint>Try: focus → blur empty → see error</ds-hint>
+    <ds-hint-right>12/100</ds-hint-right>
+  </ds-form-field>
+</div>
+
+<ds-form-field>
+  <ds-label>Name (required, min 3 chars)</ds-label>
+  <input placeholder="Enter your name" ds-input [formControl]="nameControl2" />
+  <ds-error>Name is required and must be at least 3 characters.</ds-error>
+  <ds-hint>Try: focus → blur empty → see error</ds-hint>
+  <ds-hint-right>12/100</ds-hint-right>
+</ds-form-field>
+
+<ds-form-field>
+  <ds-label>Name (required, min 3 chars)</ds-label>
+  <ng-container ds-input-prefix>
+    <span class="text-success"
+          style="display: flex; align-items: center; margin-right: 8px;"
+          aria-hidden="true">
+          <otp-svg name="OTP-icon-16x16-home" size="1rem"></otp-svg>
+        </span>
+  </ng-container>
+  <input ds-input [formField]="signalForm.test" />
+  <ds-error>Name is required and must be at least 3 characters.</ds-error>
+  <ds-hint>Try: focus → blur empty → see error</ds-hint>
+  <ds-hint-right>12/100</ds-hint-right>
+</ds-form-field>
+
+<lib-breadcrumbs [breadcrumbs]="breadcrumbs"></lib-breadcrumbs>
+
+<div style="display: flex; flex-direction: column; padding: 0 132px;">
+<!-- Cards Table -->
+  <h3 class="heading-sm" style="margin-top: 32px;">Cards</h3>
+  <div style="margin-top: 16px;">
+    <otp-table columns="2fr 1fr 1fr 1fr 1fr 1fr" [selectable]="true" [(selected)]="selectedCards">
+      <otp-table-header>
+        <otp-table-header-cell>Card</otp-table-header-cell>
+        <otp-table-header-cell>Expiry</otp-table-header-cell>
+        <otp-table-header-cell>Status</otp-table-header-cell>
+        <otp-table-header-cell>Monthly limit</otp-table-header-cell>
+        <otp-table-header-cell>Used limit</otp-table-header-cell>
+        <otp-table-header-cell>Available limit</otp-table-header-cell>
+      </otp-table-header>
+
+      <otp-table-section label="Debit cards" [expandLimit]="4">
+        @for (card of debitCards; track card.id) {
+          <otp-table-row [value]="card">
+            <otp-table-cell>
+              <div class="card-info">
+                <img class="card-image" src="https://placehold.co/48x32?text=VISA" alt="Card image" />
+                <div>
+                  <div class="card-name">{{ card.name }}</div>
+                  <div class="card-number">{{ card.number }}</div>
+                </div>
+              </div>
+            </otp-table-cell>
+            <otp-table-cell>{{ card.expiry }}</otp-table-cell>
+            <otp-table-cell>
+              <span class="card-status" [class.active]="card.status === 'Active'" [class.blocked]="card.status === 'Blocked'">
+                {{ card.status }}
+              </span>
+            </otp-table-cell>
+            <otp-table-cell>{{ card.monthlyLimit ?? '/' }}</otp-table-cell>
+            <otp-table-cell>{{ card.usedLimit ?? '/' }}</otp-table-cell>
+            <otp-table-cell class="table-cell-bold">{{ card.availableLimit }}</otp-table-cell>
+          </otp-table-row>
+        }
+      </otp-table-section>
+
+      <otp-table-section label="Credit card" [expandLimit]="4">
+        @for (card of creditCards; track card.id) {
+          <otp-table-row [value]="card">
+            <otp-table-cell>
+              <div class="card-info">
+                <img class="card-image" src="https://placehold.co/48x32?text=VISA" alt="Card image" />
+                <div>
+                  <div class="card-name">{{ card.name }}</div>
+                  <div class="card-number">{{ card.number }}</div>
+                </div>
+              </div>
+            </otp-table-cell>
+            <otp-table-cell>{{ card.expiry }}</otp-table-cell>
+            <otp-table-cell>
+              <span class="card-status" [class.active]="card.status === 'Active'" [class.blocked]="card.status === 'Blocked'">
+                {{ card.status }}
+              </span>
+            </otp-table-cell>
+            <otp-table-cell>{{ card.monthlyLimit ?? '/' }}</otp-table-cell>
+            <otp-table-cell>{{ card.usedLimit ?? '/' }}</otp-table-cell>
+            <otp-table-cell class="table-cell-bold">{{ card.availableLimit }}</otp-table-cell>
+          </otp-table-row>
+        }
+      </otp-table-section>
+
+      <otp-table-section label="Prepaid cards">
+        @for (card of prepaidCards; track card.id) {
+          <otp-table-row [value]="card">
+            <otp-table-cell>
+              <div class="card-info">
+                <img class="card-image" src="https://placehold.co/48x32?text=VISA" alt="Card image" />
+                <div>
+                  <div class="card-name">{{ card.name }}</div>
+                  <div class="card-number">{{ card.number }}</div>
+                </div>
+              </div>
+            </otp-table-cell>
+            <otp-table-cell>{{ card.expiry }}</otp-table-cell>
+            <otp-table-cell>
+              <span class="card-status" [class.active]="card.status === 'Active'" [class.blocked]="card.status === 'Blocked'">
+                {{ card.status }}
+              </span>
+            </otp-table-cell>
+            <otp-table-cell>{{ card.monthlyLimit ?? '/' }}</otp-table-cell>
+            <otp-table-cell>{{ card.usedLimit ?? '/' }}</otp-table-cell>
+            <otp-table-cell class="table-cell-bold">{{ card.availableLimit }}</otp-table-cell>
+          </otp-table-row>
+        }
+      </otp-table-section>
+
+      <otp-table-footer>
+        <button ds-button variant="secondary" color="green" size="sm">Export all</button>
+      </otp-table-footer>
+    </otp-table>
+  </div>
+
+
+  <div style="margin-top: 16px;">
+    <otp-table columns="2fr 1fr 1fr 1fr 1fr 1fr" [selectable]="true" [(selected)]="selectedCards">
+      <otp-table-header>
+        <otp-table-header-cell>Card</otp-table-header-cell>
+        <otp-table-header-cell>Expiry</otp-table-header-cell>
+        <otp-table-header-cell>Status</otp-table-header-cell>
+        <otp-table-header-cell>Monthly limit</otp-table-header-cell>
+        <otp-table-header-cell>Used limit</otp-table-header-cell>
+        <otp-table-header-cell>Available limit</otp-table-header-cell>
+      </otp-table-header>
+
+      @for (card of debitCards; track card.id) {
+        <otp-table-row [value]="card">
+          <otp-table-cell>
+            <div class="card-info">
+              <img class="card-image" src="https://placehold.co/48x32?text=VISA" alt="Card image" />
+              <div>
+                <div class="card-name">{{ card.name }}</div>
+                <div class="card-number">{{ card.number }}</div>
+              </div>
+            </div>
+          </otp-table-cell>
+          <otp-table-cell>{{ card.expiry }}</otp-table-cell>
+          <otp-table-cell>
+            <span class="card-status" [class.active]="card.status === 'Active'" [class.blocked]="card.status === 'Blocked'">
+              {{ card.status }}
+            </span>
+          </otp-table-cell>
+          <otp-table-cell>{{ card.monthlyLimit ?? '/' }}</otp-table-cell>
+          <otp-table-cell>{{ card.usedLimit ?? '/' }}</otp-table-cell>
+          <otp-table-cell class="table-cell-bold">{{ card.availableLimit }}</otp-table-cell>
+        </otp-table-row>
+      }
+
+      @for (card of creditCards; track card.id) {
+        <otp-table-row [value]="card">
+          <otp-table-cell>
+            <div class="card-info">
+              <img class="card-image" src="https://placehold.co/48x32?text=VISA" alt="Card image" />
+              <div>
+                <div class="card-name">{{ card.name }}</div>
+                <div class="card-number">{{ card.number }}</div>
+              </div>
+            </div>
+          </otp-table-cell>
+          <otp-table-cell>{{ card.expiry }}</otp-table-cell>
+          <otp-table-cell>
+            <span class="card-status" [class.active]="card.status === 'Active'" [class.blocked]="card.status === 'Blocked'">
+              {{ card.status }}
+            </span>
+          </otp-table-cell>
+          <otp-table-cell>{{ card.monthlyLimit ?? '/' }}</otp-table-cell>
+          <otp-table-cell>{{ card.usedLimit ?? '/' }}</otp-table-cell>
+          <otp-table-cell class="table-cell-bold">{{ card.availableLimit }}</otp-table-cell>
+        </otp-table-row>
+      }
+
+      @for (card of prepaidCards; track card.id) {
+        <otp-table-row [value]="card">
+          <otp-table-cell>
+            <div class="card-info">
+              <img class="card-image" src="https://placehold.co/48x32?text=VISA" alt="Card image" />
+              <div>
+                <div class="card-name">{{ card.name }}</div>
+                <div class="card-number">{{ card.number }}</div>
+              </div>
+            </div>
+          </otp-table-cell>
+          <otp-table-cell>{{ card.expiry }}</otp-table-cell>
+          <otp-table-cell>
+            <span class="card-status" [class.active]="card.status === 'Active'" [class.blocked]="card.status === 'Blocked'">
+              {{ card.status }}
+            </span>
+          </otp-table-cell>
+          <otp-table-cell>{{ card.monthlyLimit ?? '/' }}</otp-table-cell>
+          <otp-table-cell>{{ card.usedLimit ?? '/' }}</otp-table-cell>
+          <otp-table-cell class="table-cell-bold">{{ card.availableLimit }}</otp-table-cell>
+        </otp-table-row>
+      }
+
+      <otp-table-footer>
+        <otp-table-pagination [page]="page()" [pageSize]="10" [total]="132" (pageChange)="pageChange($event)"></otp-table-pagination>
+      </otp-table-footer>
+    </otp-table>
+  </div>
+</div>

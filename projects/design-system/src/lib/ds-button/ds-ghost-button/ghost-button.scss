@@ -5,6 +5,7 @@
   gap: var(--spacing-fixed-xs);
   background: transparent;
   padding: var(--spacing-fixed-2xs) 0;
+  text-decoration: none; // overriding default styling of anchor tag
 
   &.green {
     color: var(--brand-green-default);

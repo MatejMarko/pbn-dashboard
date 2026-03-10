@@ -4,6 +4,8 @@ import { ComponentType } from '@angular/cdk/overlay';
 
 import { DsDialogCdkConfig } from './ds-dialog-cdk-config';
 
+export type DialogVariant = 'simple' | 'complex';
+
 const DS_DIALOG_DEFAULTS: Partial<DsDialogCdkConfig> = {
   hasBackdrop: true,
   backdropClass: 'otp-dialog-backdrop',
@@ -12,6 +14,7 @@ const DS_DIALOG_DEFAULTS: Partial<DsDialogCdkConfig> = {
   disableClose: false,
   autoFocus: 'first-tabbable',
   restoreFocus: true,
+  dialogVariant: 'simple',
 };
 
 @Injectable({ providedIn: 'root' })
@@ -22,6 +25,9 @@ export class DsDialogCdkService {
     component: ComponentType<C>,
     config?: DsDialogCdkConfig<D>,
   ): DialogRef<R, C> {
+    if (config && !config.width && config?.dialogVariant) {
+      config.width = config.dialogVariant === 'simple' ? '30rem' : '37.5rem';
+    }
     const mergedConfig = { ...DS_DIALOG_DEFAULTS, ...config };
     return this.cdkDialog.open<R, D, C>(component, mergedConfig as any);
   }

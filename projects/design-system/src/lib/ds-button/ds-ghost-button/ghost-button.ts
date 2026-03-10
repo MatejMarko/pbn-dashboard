@@ -3,7 +3,7 @@ import { DsButtonColor } from '../ds-button.types';
 import { SvgComponent } from '../../svg/svg';
 
 @Component({
-  selector: 'button[ds-ghost-button]',
+  selector: 'button[ds-ghost-button], a[ds-ghost-button]',
   templateUrl: './ghost-button.html',
   styleUrl: './ghost-button.scss',
   imports: [SvgComponent],
@@ -26,8 +26,10 @@ export class GhostButton {
       case 'left':
         return 'OTP-icon-32x32-arrow-left';
       case 'right':
-      default:
         return 'OTP-icon-32x32-arrow-right';
+      // no direction => no icon
+      default:
+        return null;
     }
   });
 }

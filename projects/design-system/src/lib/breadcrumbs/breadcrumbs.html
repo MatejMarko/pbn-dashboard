@@ -1,0 +1,40 @@
+@if (breadcrumbs()?.length) {
+  <nav aria-label="Breadcrumb" i18n-aria-label="@@common.breadcrumb">
+    <ol>
+      <li>
+        <!-- todo: same for aria as below -->
+        <!-- todo: if icon is also clickable it must be part of a button (ghost-button updated) -->
+        <span class="text-success"
+              aria-hidden="true">
+          <otp-svg name="OTP-icon-16x16-home" size="1rem"></otp-svg>
+        </span>
+        <a ds-ghost-button color="green" purposeType="action" icon="OTP-icon-16x16-home" [routerLink]="['/']" class="body-md-semibold text-success" i18n="@@common.home">Home</a>
+        <ng-container [ngTemplateOutlet]="chevron" />
+      </li>
+      <!-- todo: do i need some better track prop (perhaps add uuid to Breadcrumb) -->
+      @for (breadcrumb of breadcrumbs(); track breadcrumb.path; let last = $last) {
+        @if (!last) {
+          <li>
+            <a [routerLink]="breadcrumb.path" class="body-md-semibold text-success">{{ breadcrumb.label }}</a>
+            <ng-container [ngTemplateOutlet]="chevron" />
+          </li>
+          <li>
+            <a ds-ghost-button color="green" purposeType="navigation" [routerLink]="breadcrumb.path">{{ breadcrumb.label }}</a>
+            <ng-container [ngTemplateOutlet]="chevron" />
+          </li>
+        } @else {
+          <li><span class="body-md text-secondary" aria-current="page">{{ breadcrumb.label }}</span></li>
+        }
+      }
+    </ol>
+  </nav>
+}
+
+<ng-template #chevron>
+  <!-- todo: is aria-hidden required with svg being only child -->
+  <!--  todo: nope <otp-svg> component needs aria-hidden="true" added -->
+  <span class="text-secondary"
+        aria-hidden="true">
+    <otp-svg name="OTP-icon-16x16-arrow-right" size="1rem"></otp-svg>
+  </span>
+</ng-template>

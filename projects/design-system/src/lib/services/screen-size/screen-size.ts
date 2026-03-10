@@ -43,6 +43,7 @@ export const SIZE_ORDER: Record<ScreenSize, number> = { SM: 0, MD: 1, LG: 2 };
   providedIn: 'root',
 })
 export class ScreenSizeService {
+  // todo: this could ne transformed to min-width
   private readonly LG_BREAKPOINT = '(min-width: 1200px)';
   private readonly MD_BREAKPOINT = '(min-width: 600px)';
 

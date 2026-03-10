@@ -3,6 +3,10 @@
 :host {
   @include btn.button-base;
 
+  &.tertiary {
+    border: none;
+  }
+
   &.xl {
     padding: var(--spacing-fixed-md);
   }
