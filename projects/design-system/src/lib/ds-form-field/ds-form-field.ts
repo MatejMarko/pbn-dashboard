@@ -1,11 +1,10 @@
 import {
   AfterContentChecked,
   AfterContentInit,
+  ChangeDetectionStrategy,
   Component,
   contentChild,
-  ContentChild,
   ElementRef,
-  HostBinding,
   inject,
   ViewEncapsulation
 } from '@angular/core';
@@ -19,17 +18,19 @@ import { DsHint } from './directives/ds-hint';
   templateUrl: './ds-form-field.html',
   styleUrl: './ds-form-field.scss',
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.ds-disabled]': 'dsInput()?.ngControl?.control?.disabled',
+    '[class.ds-error-visible]': 'shouldShowError',
+  },
 })
 export class DsFormField implements AfterContentInit, AfterContentChecked {
   private readonly elementRef = inject(ElementRef);
 
-  @ContentChild(DsInput) dsInput?: DsInput;
-  @ContentChild(DsLabel) dsLabel?: DsLabel;
-  @ContentChild(DsError) dsError?: DsError;
-  @ContentChild(DsHint) dsHint?: DsHint;
-
-  protected error = contentChild(DsError);
-
+  readonly dsInput = contentChild(DsInput);
+  readonly dsLabel = contentChild(DsLabel);
+  readonly dsError = contentChild(DsError);
+  readonly dsHint = contentChild(DsHint);
 
   ngAfterContentInit(): void {
     this.validateUsage();
@@ -40,31 +41,32 @@ export class DsFormField implements AfterContentInit, AfterContentChecked {
   }
 
   get isRequired(): boolean {
-    return this.dsInput?.isRequired ?? false;
+    return this.dsInput()?.isRequired ?? false;
   }
 
   get shouldShowError(): boolean {
-    return this.dsInput?.errorState ?? false;
+    return this.dsInput()?.errorState ?? false;
   }
 
   private syncAriaDescribedBy(): void {
-    if (!this.dsInput) return;
+    const input = this.dsInput();
+    if (!input) return;
 
-    if (this.shouldShowError && this.dsError) {
-      this.dsInput.ariaDescribedBy = this.dsError.id;
-    } else if (this.dsHint) {
-      this.dsInput.ariaDescribedBy = this.dsHint.id;
+    if (this.shouldShowError && this.dsError()) {
+      input.ariaDescribedBy.set(this.dsError()!.id);
+    } else if (this.dsHint()) {
+      input.ariaDescribedBy.set(this.dsHint()!.id);
     } else {
-      this.dsInput.ariaDescribedBy = null;
+      input.ariaDescribedBy.set(null);
     }
   }
 
   private validateUsage(): void {
     if (typeof ngDevMode === 'undefined' || ngDevMode) {
-      if (!this.dsInput) {
+      if (!this.dsInput()) {
         console.warn('ds-form-field: Missing projected <input ds-input> or <textarea ds-input>.');
       }
-      if (!this.dsLabel) {
+      if (!this.dsLabel()) {
         console.warn('ds-form-field: Missing projected <ds-label>. Every form field should have a label for accessibility.');
       }
       const nestedLabel = this.elementRef.nativeElement.querySelector('ds-label label');
@@ -72,26 +74,5 @@ export class DsFormField implements AfterContentInit, AfterContentChecked {
         console.warn('ds-form-field: Avoid nesting a <label> inside <ds-label>. The component already wraps your content in a <label> element.');
       }
     }
-  }
-
-  @HostBinding('class')
-  get hostClasses(): string {
-    const control = this.dsInput?.ngControl?.control;
-    if (!control) return '';
-
-    const classes: string[] = [];
-
-    if (control.disabled) classes.push('ds-disabled');
-    if (this.shouldShowError) classes.push('ds-error-visible');
-
-    // currently not used but can be useful
-    // if (control.invalid) classes.push('ds-invalid');
-    // if (control.valid) classes.push('ds-valid');
-    // if (control.touched) classes.push('ds-touched');
-    // if (control.untouched) classes.push('ds-untouched');
-    // if (control.dirty) classes.push('ds-dirty');
-    // if (control.pristine) classes.push('ds-pristine');
-
-    return classes.join(' ');
   }
 }

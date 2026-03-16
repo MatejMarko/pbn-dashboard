@@ -1,5 +1,5 @@
 <div class="ds-form-field">
-  <label [attr.for]="dsInput?.id">
+  <label [attr.for]="dsInput()?.id">
     <ng-content select="ds-label"></ng-content>
     @if (isRequired) {
       <span>&nbsp;*</span>
