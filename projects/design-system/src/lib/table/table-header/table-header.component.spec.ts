@@ -49,6 +49,11 @@ describe('TableHeaderComponent', () => {
     tableEl = fixture.nativeElement.querySelector('otp-table');
   });
 
+  it('should create', () => {
+    const header = tableEl.querySelector('otp-table-header');
+    expect(header).toBeTruthy();
+  });
+
   it('should have role="rowgroup"', () => {
     const header = tableEl.querySelector('otp-table-header');
     expect(header?.getAttribute('role')).toBe('rowgroup');

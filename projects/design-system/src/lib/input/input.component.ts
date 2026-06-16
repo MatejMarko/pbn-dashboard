@@ -4,9 +4,9 @@ import { NgControl, Validators } from '@angular/forms';
 let nextUniqueId = 0;
 
 @Component({
-  selector: 'input[ds-input], textarea[ds-input]',
+  selector: 'input[otp-input], textarea[otp-input]',
   template: '',
-  styleUrl: './ds-input.scss',
+  styleUrl: './input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.id]': 'id',
@@ -15,11 +15,11 @@ let nextUniqueId = 0;
     '[attr.aria-required]': 'ariaRequired',
   },
 })
-export class DsInput {
+export class InputComponent {
   private readonly elementRef = inject(ElementRef);
 
   readonly ngControl = inject(NgControl, { optional: true, self: true });
-  readonly id: string = this.elementRef.nativeElement.getAttribute('id') || `ds-input-${nextUniqueId++}`;
+  readonly id: string = this.elementRef.nativeElement.getAttribute('id') || `otp-input-${nextUniqueId++}`;
   readonly ariaDescribedBy = signal<string | null>(null);
 
   get ariaRequired(): boolean | null {

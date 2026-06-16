@@ -1,5 +1,6 @@
-import { Component, effect, ElementRef, inject, input } from '@angular/core';
-import { Svg } from '../svg';
+import { Component, effect, ElementRef, inject, input, isDevMode } from '@angular/core';
+import { Svg, SvgSource } from '../svg';
+import { SvgNames } from './svg-names.enum';
 
 @Component({
   selector: 'otp-svg',
@@ -12,10 +13,11 @@ import { Svg } from '../svg';
   },
 })
 export class SvgComponent {
-  name = input.required<string>();
-  size = input<number | string | null>(null);
-  width = input<number | string | null>();
-  height = input<number | string | null>();
+  readonly name = input.required<SvgNames | string>();
+  readonly size = input<number | string | null>(null);
+  readonly width = input<number | string | null>();
+  readonly height = input<number | string | null>();
+  readonly source = input<SvgSource>('lib');
 
   private registry = inject(Svg);
   private el = inject(ElementRef<HTMLElement>);
@@ -25,7 +27,14 @@ export class SvgComponent {
     const iconName = this.name();
     if (!iconName) return;
 
-    this.registry.getImage(iconName).subscribe((svg) => {
+    if (isDevMode() && !Object.values(SvgNames).includes(iconName as SvgNames)) {
+      console.warn(
+        `[otp-svg] "${iconName}" is not a known SvgNames value. ` +
+        `Consider using a value from the SvgNames enum for type safety.`
+      );
+    }
+
+    this.registry.getImage(iconName, this.source()).subscribe((svg) => {
       this.renderSvg(svg);
     });
   };

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Dialog, DialogRef } from '@angular/cdk/dialog';
+import { Dialog, DialogConfig, DialogRef } from '@angular/cdk/dialog';
 import { ComponentType } from '@angular/cdk/overlay';
 
 import { DsDialogCdkConfig } from './ds-dialog-cdk-config';
@@ -29,7 +29,7 @@ export class DsDialogCdkService {
       config.width = config.dialogVariant === 'simple' ? '30rem' : '37.5rem';
     }
     const mergedConfig = { ...DS_DIALOG_DEFAULTS, ...config };
-    return this.cdkDialog.open<R, D, C>(component, mergedConfig as any);
+    return this.cdkDialog.open<R, D, C>(component, mergedConfig as DialogConfig<D, DialogRef<R, C>>);
   }
 
   /*

@@ -3,12 +3,12 @@ import { Directive, ElementRef, inject } from '@angular/core';
 let nextUniqueId = 0;
 
 @Directive({
-  selector: 'ds-error',
+  selector: 'otp-error',
   host: {
     '[attr.id]': 'id',
   },
 })
-export class DsError {
+export class ErrorDirective {
   private readonly elementRef = inject(ElementRef);
-  readonly id = this.elementRef.nativeElement.getAttribute('id') || `ds-error-${nextUniqueId++}`;
+  readonly id = this.elementRef.nativeElement.getAttribute('id') || `otp-error-${nextUniqueId++}`;
 }

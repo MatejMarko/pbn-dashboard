@@ -1,0 +1,60 @@
+<div class="datepicker-panel" cdkTrapFocus cdkTrapFocusAutoCapture>
+  <div class="datepicker-header">
+    <button type="button"
+            class="nav-button"
+            [attr.aria-label]="prevButtonLabel()"
+            (click)="onPrev()">
+      <otp-svg [name]="SvgNames.ARROW_LEFT_16" [size]="16" aria-hidden="true" />
+    </button>
+
+    <button type="button"
+            class="header-label"
+            [class.clickable]="isHeaderClickable()"
+            [disabled]="!isHeaderClickable()"
+            (click)="onHeaderLabelClick()">
+      {{ headerLabel() }}
+    </button>
+
+    <button type="button"
+            class="nav-button"
+            [attr.aria-label]="nextButtonLabel()"
+            (click)="onNext()">
+      <otp-svg [name]="SvgNames.ARROW_RIGHT_16" [size]="16" aria-hidden="true" />
+    </button>
+  </div>
+
+  <div class="datepicker-body">
+    @switch (currentView()) {
+      @case ('day') {
+        <otp-day-view
+          [activeDate]="activeDate()"
+          [selected]="selected()"
+          [min]="min()"
+          [max]="max()"
+          [fixedWeeks]="fixedWeeks()"
+          (dateSelected)="onDateSelected($event)"
+          (activeDateChange)="onActiveDateChange($event)" />
+      }
+      @case ('month') {
+        <otp-month-view
+          [activeDate]="activeDate()"
+          [selected]="selected()"
+          [min]="min()"
+          [max]="max()"
+          (monthSelected)="onMonthSelected($event)" />
+      }
+      @case ('year') {
+        <otp-year-view
+          [activeDate]="activeDate()"
+          [selected]="selected()"
+          [min]="min()"
+          [max]="max()"
+          (yearSelected)="onYearSelected($event)" />
+      }
+    }
+  </div>
+
+  <div class="cdk-visually-hidden" aria-live="polite">
+    {{ liveAnnouncement() }}
+  </div>
+</div>

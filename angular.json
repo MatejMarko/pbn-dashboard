@@ -33,9 +33,9 @@
                 "input": "public"
               },
               {
-                "glob": "icons-*.svg",
+                "glob": "*.svg",
                 "input": "projects/design-system/src/assets/icons",
-                "output": "otp-ds/assets/icons"
+                "output": "/assets/otp-design-system/svg"
               }
             ],
             "styles": [
@@ -85,7 +85,10 @@
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:unit-test"
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "setupFiles": ["src/test-setup.ts"]
+          }
         }
       }
     },

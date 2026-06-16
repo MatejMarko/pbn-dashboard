@@ -1,7 +1,7 @@
 @use '../../styles/mixins/typography-mixins' as typMxn;
 
 @mixin input-focused($color) {
-  &:has(.input-wrapper > input[ds-input]:active, .input-wrapper > input[ds-input]:focus, .input-wrapper > input[ds-input]:focus-visible) {
+  &:has(.input-wrapper > input[otp-input]:active, .input-wrapper > input[otp-input]:focus, .input-wrapper > input[otp-input]:focus-visible) {
     &:not(:has(.input-wrapper > input:disabled)) {
       label {
         color: $color;
@@ -14,10 +14,10 @@
   }
 }
 
-ds-form-field {
+otp-form-field {
   display: block;
 
-  .ds-form-field {
+  .form-field {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-fixed-2xs);
@@ -41,7 +41,7 @@ ds-form-field {
       box-sizing: border-box;
       display: flex;
 
-      input[ds-input] {
+      input[otp-input] {
         background-color: transparent;
         color: var(--text-icon-primary);
         @include typMxn.body-md-bold-fixed;
@@ -57,14 +57,14 @@ ds-form-field {
 
     @include input-focused(var(--text-icon-success));
 
-    .ds-error-wrapper {
+    .error-wrapper {
       padding: 0 var(--spacing-fixed-2xs);
       display: flex;
       align-items: center;
       justify-content: flex-start;
       gap: var(--spacing-fixed-2xs, 4px);
 
-      ds-error {
+      otp-error {
         @include typMxn.body-md-fixed;
         color: var(--text-icon-error);
       }
@@ -77,15 +77,15 @@ ds-form-field {
       gap: var(--spacing-fixed-md);
       padding: var(--spacing-fixed-3xs) var(--spacing-fixed-md) var(--spacing-fixed-3xs) var(--spacing-fixed-lg);
 
-      ds-hint, ds-hint-right {
+      otp-hint, otp-hint-right {
         @include typMxn.label-md-italic-fixed;
         color: var(--text-icon-secondary);
       }
     }
   }
 
-  // error state: host has .ds-error-visible when input is invalid && touched
-  &.ds-error-visible .ds-form-field {
+  // error state: host has .error-visible when input is invalid && touched
+  &.error-visible .form-field {
     label {
       color: var(--text-icon-error);
     }
@@ -95,9 +95,9 @@ ds-form-field {
     @include input-focused(var(--text-icon-error));
   }
 
-  // disabled state: host has .ds-disabled when input is disabled
-  &.ds-disabled .ds-form-field {
-    label,  .hint-wrapper > *, .input-wrapper > input[ds-input] {
+  // disabled state: host has .disabled when input is disabled
+  &.disabled .form-field {
+    label,  .hint-wrapper > *, .input-wrapper > input[otp-input] {
       color: var(--text-icon-disabled-dark);
     }
     .input-wrapper {
@@ -106,4 +106,3 @@ ds-form-field {
     }
   }
 }
-

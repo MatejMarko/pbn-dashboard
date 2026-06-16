@@ -1,0 +1,32 @@
+<table role="grid" [attr.aria-label]="gridLabel()">
+  <thead>
+    <tr>
+      @for (day of weekdays; track day) {
+        <th scope="col" abbr="{{ day }}">{{ day }}</th>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (week of grid(); track $index) {
+      <tr [class.filler-week]="isFillerWeek(week)">
+        @for (date of week; track $index) {
+          <td>
+            <button #dayBtn
+                    type="button"
+                    [class.outside-month]="!isCurrentMonth(date)"
+                    [class.selected]="isSelected(date)"
+                    [class.today]="isToday(date)"
+                    [attr.aria-selected]="isSelected(date)"
+                    [attr.aria-current]="isToday(date) ? 'date' : null"
+                    [attr.aria-disabled]="isDisabled(date) || null"
+                    [attr.tabindex]="getTabIndex(date)"
+                    [disabled]="isDisabled(date)"
+                    (click)="onDayClick(date)">
+              {{ date.getDate() }}
+            </button>
+          </td>
+        }
+      </tr>
+    }
+  </tbody>
+</table>

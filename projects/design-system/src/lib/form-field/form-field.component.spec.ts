@@ -2,24 +2,24 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { DsFormField } from './ds-form-field';
-import { DsInput } from '../ds-input/ds-input';
-import { DsLabel } from './directives/ds-label';
-import { DsError } from './directives/ds-error';
-import { DsHint } from './directives/ds-hint';
-import { DsHintRight } from './directives/ds-hint-right';
+import { FormFieldComponent } from './form-field.component';
+import { InputComponent } from '../input/input.component';
+import { LabelDirective } from './directives/label.directive';
+import { ErrorDirective } from './directives/error.directive';
+import { HintDirective } from './directives/hint.directive';
+import { HintRightDirective } from './directives/hint-right.directive';
 
 @Component({
   template: `
-    <ds-form-field>
-      <ds-label>Username</ds-label>
-      <input ds-input [formControl]="control" />
-      <ds-error>This field is required</ds-error>
-      <ds-hint>Enter your username</ds-hint>
-      <ds-hint-right>0/50</ds-hint-right>
-    </ds-form-field>
+    <otp-form-field>
+      <otp-label>Username</otp-label>
+      <input otp-input [formControl]="control" />
+      <otp-error>This field is required</otp-error>
+      <otp-hint>Enter your username</otp-hint>
+      <otp-hint-right>0/50</otp-hint-right>
+    </otp-form-field>
   `,
-  imports: [DsFormField, DsInput, DsLabel, DsError, DsHint, DsHintRight, ReactiveFormsModule],
+  imports: [FormFieldComponent, InputComponent, LabelDirective, ErrorDirective, HintDirective, HintRightDirective, ReactiveFormsModule],
 })
 class FullFormFieldHost {
   control = new FormControl('', [Validators.required]);
@@ -27,13 +27,13 @@ class FullFormFieldHost {
 
 @Component({
   template: `
-    <ds-form-field>
-      <ds-label>Optional</ds-label>
-      <input ds-input [formControl]="control" />
-      <ds-hint>A helpful hint</ds-hint>
-    </ds-form-field>
+    <otp-form-field>
+      <otp-label>Optional</otp-label>
+      <input otp-input [formControl]="control" />
+      <otp-hint>A helpful hint</otp-hint>
+    </otp-form-field>
   `,
-  imports: [DsFormField, DsInput, DsLabel, DsHint, ReactiveFormsModule],
+  imports: [FormFieldComponent, InputComponent, LabelDirective, HintDirective, ReactiveFormsModule],
 })
 class NoValidationHost {
   control = new FormControl('');
@@ -41,12 +41,12 @@ class NoValidationHost {
 
 @Component({
   template: `
-    <ds-form-field>
-      <ds-label>Disabled</ds-label>
-      <input ds-input [formControl]="control" />
-    </ds-form-field>
+    <otp-form-field>
+      <otp-label>Disabled</otp-label>
+      <input otp-input [formControl]="control" />
+    </otp-form-field>
   `,
-  imports: [DsFormField, DsInput, DsLabel, ReactiveFormsModule],
+  imports: [FormFieldComponent, InputComponent, LabelDirective, ReactiveFormsModule],
 })
 class DisabledHost {
   control = new FormControl({ value: 'test', disabled: true });
@@ -54,38 +54,38 @@ class DisabledHost {
 
 @Component({
   template: `
-    <ds-form-field>
-      <ds-label>With prefix/suffix</ds-label>
-      <div ds-input-prefix>PREFIX</div>
-      <input ds-input [formControl]="control" />
-      <div ds-input-suffix>SUFFIX</div>
-    </ds-form-field>
+    <otp-form-field>
+      <otp-label>With prefix/suffix</otp-label>
+      <div otp-input-prefix>PREFIX</div>
+      <input otp-input [formControl]="control" />
+      <div otp-input-suffix>SUFFIX</div>
+    </otp-form-field>
   `,
-  imports: [DsFormField, DsInput, DsLabel, ReactiveFormsModule],
+  imports: [FormFieldComponent, InputComponent, LabelDirective, ReactiveFormsModule],
 })
 class PrefixSuffixHost {
   control = new FormControl('');
 }
 
 @Component({
-  template: `<ds-form-field></ds-form-field>`,
-  imports: [DsFormField],
+  template: `<otp-form-field></otp-form-field>`,
+  imports: [FormFieldComponent],
 })
 class EmptyHost {}
 
 @Component({
   template: `
-    <ds-form-field>
-      <input ds-input [formControl]="control" />
-    </ds-form-field>
+    <otp-form-field>
+      <input otp-input [formControl]="control" />
+    </otp-form-field>
   `,
-  imports: [DsFormField, DsInput, ReactiveFormsModule],
+  imports: [FormFieldComponent, InputComponent, ReactiveFormsModule],
 })
 class NoLabelHost {
   control = new FormControl('');
 }
 
-describe('DsFormField', () => {
+describe('FormFieldComponent', () => {
 
   describe('content projection', () => {
     let fixture: ComponentFixture<FullFormFieldHost>;
@@ -101,25 +101,25 @@ describe('DsFormField', () => {
       el = fixture.nativeElement;
     });
 
-    it('should project ds-label', () => {
-      const label = el.querySelector('ds-label');
+    it('should project otp-label', () => {
+      const label = el.querySelector('otp-label');
       expect(label).toBeTruthy();
       expect(label!.textContent).toContain('Username');
     });
 
-    it('should project ds-input', () => {
-      const input = el.querySelector('input[ds-input]');
+    it('should project otp-input', () => {
+      const input = el.querySelector('input[otp-input]');
       expect(input).toBeTruthy();
     });
 
-    it('should project ds-hint', () => {
-      const hint = el.querySelector('ds-hint');
+    it('should project otp-hint', () => {
+      const hint = el.querySelector('otp-hint');
       expect(hint).toBeTruthy();
       expect(hint!.textContent).toContain('Enter your username');
     });
 
-    it('should project ds-hint-right', () => {
-      const hintRight = el.querySelector('ds-hint-right');
+    it('should project otp-hint-right', () => {
+      const hintRight = el.querySelector('otp-hint-right');
       expect(hintRight).toBeTruthy();
       expect(hintRight!.textContent).toContain('0/50');
     });
@@ -162,7 +162,7 @@ describe('DsFormField', () => {
 
     it('should link label "for" to input "id"', () => {
       const label = el.querySelector('label');
-      const input = el.querySelector('input[ds-input]');
+      const input = el.querySelector('input[otp-input]');
       expect(label!.getAttribute('for')).toBe(input!.getAttribute('id'));
     });
   });
@@ -207,26 +207,26 @@ describe('DsFormField', () => {
 
     it('should show hint when control is untouched', () => {
       expect(el.querySelector('.hint-wrapper')).toBeTruthy();
-      expect(el.querySelector('.ds-error-wrapper')).toBeFalsy();
+      expect(el.querySelector('.error-wrapper')).toBeFalsy();
     });
 
     it('should show error when control is invalid and touched', () => {
       host.control.markAsTouched();
       fixture.detectChanges();
 
-      expect(el.querySelector('.ds-error-wrapper')).toBeTruthy();
+      expect(el.querySelector('.error-wrapper')).toBeTruthy();
       expect(el.querySelector('.hint-wrapper')).toBeFalsy();
-      expect(el.querySelector('ds-error')!.textContent).toContain('This field is required');
+      expect(el.querySelector('otp-error')!.textContent).toContain('This field is required');
     });
 
     it('should switch back to hint when control becomes valid', () => {
       host.control.markAsTouched();
       fixture.detectChanges();
-      expect(el.querySelector('.ds-error-wrapper')).toBeTruthy();
+      expect(el.querySelector('.error-wrapper')).toBeTruthy();
 
       host.control.setValue('valid value');
       fixture.detectChanges();
-      expect(el.querySelector('.ds-error-wrapper')).toBeFalsy();
+      expect(el.querySelector('.error-wrapper')).toBeFalsy();
       expect(el.querySelector('.hint-wrapper')).toBeTruthy();
     });
   });
@@ -248,8 +248,8 @@ describe('DsFormField', () => {
     });
 
     it('should point to hint id when no error', () => {
-      const input = el.querySelector('input[ds-input]');
-      const hint = el.querySelector('ds-hint');
+      const input = el.querySelector('input[otp-input]');
+      const hint = el.querySelector('otp-hint');
       expect(input!.getAttribute('aria-describedby')).toBe(hint!.getAttribute('id'));
     });
 
@@ -257,8 +257,8 @@ describe('DsFormField', () => {
       host.control.markAsTouched();
       fixture.detectChanges();
 
-      const input = el.querySelector('input[ds-input]');
-      const error = el.querySelector('ds-error');
+      const input = el.querySelector('input[otp-input]');
+      const error = el.querySelector('otp-error');
       expect(input!.getAttribute('aria-describedby')).toBe(error!.getAttribute('id'));
     });
 
@@ -269,51 +269,51 @@ describe('DsFormField', () => {
       host.control.setValue('valid');
       fixture.detectChanges();
 
-      const input = el.querySelector('input[ds-input]');
-      const hint = el.querySelector('ds-hint');
+      const input = el.querySelector('input[otp-input]');
+      const hint = el.querySelector('otp-hint');
       expect(input!.getAttribute('aria-describedby')).toBe(hint!.getAttribute('id'));
     });
   });
 
   describe('host class binding', () => {
-    it('should add ds-error-visible when in error state', async () => {
+    it('should add error-visible when in error state', async () => {
       const fixture = TestBed.configureTestingModule({
         imports: [FullFormFieldHost],
       }).createComponent(FullFormFieldHost);
       fixture.detectChanges();
 
-      const formField = fixture.nativeElement.querySelector('ds-form-field');
-      expect(formField.classList.contains('ds-error-visible')).toBe(false);
+      const formField = fixture.nativeElement.querySelector('otp-form-field');
+      expect(formField.classList.contains('error-visible')).toBe(false);
 
       fixture.componentInstance.control.markAsTouched();
       fixture.detectChanges();
 
-      expect(formField.classList.contains('ds-error-visible')).toBe(true);
+      expect(formField.classList.contains('error-visible')).toBe(true);
     });
 
-    it('should add ds-disabled when control is disabled', async () => {
+    it('should add disabled when control is disabled', async () => {
       const fixture = TestBed.configureTestingModule({
         imports: [DisabledHost],
       }).createComponent(DisabledHost);
       fixture.detectChanges();
 
-      const formField = fixture.nativeElement.querySelector('ds-form-field');
-      expect(formField.classList.contains('ds-disabled')).toBe(true);
+      const formField = fixture.nativeElement.querySelector('otp-form-field');
+      expect(formField.classList.contains('disabled')).toBe(true);
     });
 
-    it('should not have ds-disabled when control is enabled', async () => {
+    it('should not have disabled when control is enabled', async () => {
       const fixture = TestBed.configureTestingModule({
         imports: [FullFormFieldHost],
       }).createComponent(FullFormFieldHost);
       fixture.detectChanges();
 
-      const formField = fixture.nativeElement.querySelector('ds-form-field');
-      expect(formField.classList.contains('ds-disabled')).toBe(false);
+      const formField = fixture.nativeElement.querySelector('otp-form-field');
+      expect(formField.classList.contains('disabled')).toBe(false);
     });
   });
 
   describe('dev mode warnings', () => {
-    it('should warn when ds-input is missing', async () => {
+    it('should warn when otp-input is missing', async () => {
       const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
       const fixture = TestBed.configureTestingModule({
@@ -322,12 +322,12 @@ describe('DsFormField', () => {
       fixture.detectChanges();
 
       expect(warnSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Missing projected <input ds-input>')
+        expect.stringContaining('Missing projected <input otp-input>')
       );
       warnSpy.mockRestore();
     });
 
-    it('should warn when ds-label is missing', async () => {
+    it('should warn when otp-label is missing', async () => {
       const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
       const fixture = TestBed.configureTestingModule({
@@ -336,12 +336,12 @@ describe('DsFormField', () => {
       fixture.detectChanges();
 
       expect(warnSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Missing projected <ds-label>')
+        expect.stringContaining('Missing projected <otp-label>')
       );
       warnSpy.mockRestore();
     });
 
-    it('should not warn when both ds-input and ds-label are present', async () => {
+    it('should not warn when both otp-input and otp-label are present', async () => {
       const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
       const fixture = TestBed.configureTestingModule({
@@ -371,7 +371,7 @@ describe('DsFormField', () => {
     });
 
     it('should not set aria-invalid when untouched', () => {
-      const input = el.querySelector('input[ds-input]');
+      const input = el.querySelector('input[otp-input]');
       expect(input!.getAttribute('aria-invalid')).toBe('false');
     });
 
@@ -379,7 +379,7 @@ describe('DsFormField', () => {
       host.control.markAsTouched();
       fixture.detectChanges();
 
-      const input = el.querySelector('input[ds-input]');
+      const input = el.querySelector('input[otp-input]');
       expect(input!.getAttribute('aria-invalid')).toBe('true');
     });
   });
@@ -391,7 +391,7 @@ describe('DsFormField', () => {
       }).createComponent(FullFormFieldHost);
       fixture.detectChanges();
 
-      const input = fixture.nativeElement.querySelector('input[ds-input]');
+      const input = fixture.nativeElement.querySelector('input[otp-input]');
       expect(input!.getAttribute('aria-required')).toBe('true');
     });
 
@@ -401,7 +401,7 @@ describe('DsFormField', () => {
       }).createComponent(NoValidationHost);
       fixture.detectChanges();
 
-      const input = fixture.nativeElement.querySelector('input[ds-input]');
+      const input = fixture.nativeElement.querySelector('input[otp-input]');
       expect(input!.getAttribute('aria-required')).toBeNull();
     });
   });

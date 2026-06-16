@@ -1,0 +1,50 @@
+@use '../../../styles/mixins/typography-mixins' as typMxn;
+
+:host {
+  display: block;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td {
+  padding: var(--spacing-fixed-3xs);
+  text-align: center;
+}
+
+button {
+  @include typMxn.body-md-fixed;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 2.5rem;
+  border: none;
+  border-radius: var(--border-radius-2xs);
+  background: transparent;
+  color: var(--text-icon-primary);
+  cursor: pointer;
+  outline: none;
+
+  &:hover:not(:disabled):not(.selected) {
+    background: var(--surface-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-green-default);
+    outline-offset: 2px;
+  }
+
+  &.selected {
+    background: var(--brand-green-default);
+    color: var(--text-icon-inverse);
+    font-weight: 600;
+  }
+
+  &:disabled {
+    color: var(--text-icon-disabled-dark);
+    cursor: default;
+  }
+}

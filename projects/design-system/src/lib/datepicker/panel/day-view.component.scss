@@ -1,0 +1,71 @@
+@use '../../../styles/mixins/typography-mixins' as typMxn;
+
+:host {
+  display: block;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  @include typMxn.label-md-semibold-fixed;
+  color: var(--text-icon-secondary);
+  padding: var(--spacing-fixed-3xs) 0;
+  text-align: center;
+  font-weight: 600;
+}
+
+tr.filler-week {
+  visibility: hidden;
+}
+
+td {
+  padding: 0;
+  text-align: center;
+}
+
+button {
+  @include typMxn.body-md-fixed;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: var(--border-radius-full);
+  background: transparent;
+  color: var(--text-icon-primary);
+  cursor: pointer;
+  outline: none;
+  position: relative;
+
+  &:hover:not(:disabled):not(.selected) {
+    background: var(--surface-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-green-default);
+    outline-offset: 2px;
+  }
+
+  &.outside-month {
+    color: var(--text-icon-disabled-dark);
+  }
+
+  &.today:not(.selected) {
+    border: 2px solid var(--brand-green-default);
+  }
+
+  &.selected {
+    background: var(--brand-green-default);
+    color: var(--text-icon-inverse);
+    font-weight: 600;
+  }
+
+  &:disabled {
+    color: var(--text-icon-disabled-dark);
+    cursor: default;
+  }
+}

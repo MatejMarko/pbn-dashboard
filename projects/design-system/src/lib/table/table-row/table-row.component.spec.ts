@@ -44,6 +44,11 @@ describe('TableRowComponent', () => {
     tableEl = fixture.nativeElement.querySelector('otp-table');
   });
 
+  it('should create', () => {
+    const row = tableEl.querySelector('otp-table-row');
+    expect(row).toBeTruthy();
+  });
+
   it('should have role="row"', () => {
     const row = tableEl.querySelector('otp-table-row');
     expect(row?.getAttribute('role')).toBe('row');

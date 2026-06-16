@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { DsButton, DsError, DsFormField, DsInput, DsLabel } from '@design-system';
+import { DsButton, ErrorDirective, FormFieldComponent, InputComponent, LabelDirective } from '@design-system';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '../shared/services/user/user';
 import { Login as LoginService, LoginStatus } from '../shared/services/login/login';
@@ -12,10 +12,10 @@ import { ROUTES } from '../app.routes';
   imports: [
     ReactiveFormsModule,
     DsButton,
-    DsError,
-    DsFormField,
-    DsInput,
-    DsLabel,
+    ErrorDirective,
+    FormFieldComponent,
+    InputComponent,
+    LabelDirective,
   ],
   templateUrl: './login.html',
   styleUrl: './login.scss',

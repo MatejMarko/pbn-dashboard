@@ -1,0 +1,81 @@
+<span
+  #triggerHost
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  class="dropdown-trigger-host"
+  [attr.aria-haspopup]="'listbox'"
+  [attr.aria-expanded]="open()"
+  [attr.aria-controls]="open() ? listboxId : null"
+  (click)="onTriggerClick()"
+  (pointerenter)="onTriggerEnter()"
+  (pointerleave)="onTriggerLeave()"
+  (keydown)="onTriggerKeydown($event)"
+>
+  <ng-content />
+</span>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="open()"
+  [cdkConnectedOverlayHasBackdrop]="openMode() === 'click'"
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayPositions]="positions()"
+  [cdkConnectedOverlayPush]="true"
+  (backdropClick)="close()"
+  (overlayOutsideClick)="openMode() === 'click' && close()"
+>
+  @if (open() && !disabled()) {
+    <div class="dropdown-panel" (pointerenter)="onPanelEnter()" (pointerleave)="onPanelLeave()">
+      <div class="scroll-wrapper">
+        <ul
+          #listboxRef
+          cdkListbox
+          class="dropdown-menu"
+          [tabindex]="0"
+          [attr.id]="listboxId"
+          [attr.aria-label]="ariaLabel() ?? null"
+          [attr.aria-labelledby]="ariaLabelledBy() ?? null"
+          (keydown.escape)="onListboxEscape()"
+          (cdkListboxValueChange)="onSelect($event)"
+        >
+          @for (option of orderedOptions(); track $index) {
+            <li
+              [cdkOption]="option.value"
+              class="dropdown-item"
+              [class.readonly]="isReadonly()"
+              [class.selected]="option.value === selected()"
+            >
+              @if (rowTemplate()) {
+                <ng-container
+                  [ngTemplateOutlet]="rowTemplate()!"
+                  [ngTemplateOutletContext]="{ $implicit: option, selected: option.value === selected() }"
+                ></ng-container>
+              } @else {
+                @if (option.icon) {
+                  <otp-svg [name]="option.icon" size="1.5rem"></otp-svg>
+                }
+                <div class="dropdown-item-text">
+                  <span
+                    class="label-md-bold-fixed"
+                    [class.text-primary]="option.value !== selected()"
+                    [class.text-success]="option.value === selected()"
+                  >{{ option.title }}</span>
+                  @if (option.description) {
+                    <span
+                      class="label-md-fixed"
+                      [class.text-secondary]="option.value !== selected()"
+                      [class.text-success]="option.value === selected()"
+                    >{{ option.description }}</span>
+                  }
+                </div>
+              }
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  }
+</ng-template>
+
+

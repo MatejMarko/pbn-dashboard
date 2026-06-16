@@ -1,6 +1,6 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: 'ds-hint-right',
+  selector: 'otp-label',
 })
-export class DsHintRight {}
+export class LabelDirective {}

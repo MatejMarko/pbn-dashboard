@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, signal } from '@angular/core';
 import { GhostButton } from './ghost-button';
 import { DsButtonColor } from '../ds-button.types';
+import { SvgNames } from '../../svg/svg-names.enum';
 import { provideMockSvg } from '../../../test-utils/mock-svg';
 
 @Component({
@@ -10,6 +11,8 @@ import { provideMockSvg } from '../../../test-utils/mock-svg';
       [purposeType]="purposeType()"
       [color]="color()"
       [icon]="icon()"
+      [navigationIcon]="navigationIcon()"
+      [ariaLabel]="ariaLabel()"
       [direction]="direction()"
       [disabled]="disabled()"
       (click)="onClick()">
@@ -22,6 +25,8 @@ class TestHostComponent {
   purposeType = signal<'action' | 'navigation'>('action');
   color = signal<DsButtonColor>('green');
   icon = signal<string | null>(null);
+  navigationIcon = signal<SvgNames | null>(null);
+  ariaLabel = signal<string | null>(null);
   direction = signal<'up' | 'down' | 'right' | 'left'>('right');
   disabled = signal(false);
   onClick = vi.fn();
@@ -179,6 +184,83 @@ describe('GhostButton', () => {
       await fixture.whenStable();
       const otpSvgs = buttonEl.querySelectorAll('otp-svg');
       expect(otpSvgs.length).toBe(1);
+    });
+  });
+
+  // 4b. Template rendering — navigation mode with navigationIcon
+  describe('template rendering (navigation with navigationIcon)', () => {
+    beforeEach(async () => {
+      host.purposeType.set('navigation');
+      host.ariaLabel.set('Next item');
+      host.navigationIcon.set(
+        'OTP-icon-16x16-triangle-arrow-down' as unknown as SvgNames,
+      );
+      await fixture.whenStable();
+    });
+
+    it('should not render the projected text span when navigationIcon is set', () => {
+      const span = buttonEl.querySelector('span.body-md-semibold-fixed');
+      expect(span).toBeNull();
+    });
+
+    it('should render the navigation icon in the body', () => {
+      const otpSvgs = Array.from(buttonEl.querySelectorAll('otp-svg'));
+      const names = otpSvgs.map(el =>
+        fixture.debugElement
+          .query(de => de.nativeElement === el)
+          .componentInstance.name(),
+      );
+      expect(names).toContain('OTP-icon-16x16-triangle-arrow-down');
+    });
+
+    it('should still render the direction arrow alongside the icon', async () => {
+      host.direction.set('right');
+      await fixture.whenStable();
+      const otpSvgs = buttonEl.querySelectorAll('otp-svg');
+      expect(otpSvgs.length).toBe(2);
+    });
+
+    it('should order [body-icon, arrow] for non-left directions', async () => {
+      host.direction.set('right');
+      await fixture.whenStable();
+      const children = Array.from(buttonEl.children).filter(
+        el => el.tagName === 'OTP-SVG',
+      );
+      const firstName = fixture.debugElement
+        .query(de => de.nativeElement === children[0])
+        .componentInstance.name();
+      const secondName = fixture.debugElement
+        .query(de => de.nativeElement === children[1])
+        .componentInstance.name();
+      expect(firstName).toBe('OTP-icon-16x16-triangle-arrow-down');
+      expect(secondName).toBe('OTP-icon-32x32-arrow-right');
+    });
+
+    it('should order [arrow, body-icon] for left direction', async () => {
+      host.direction.set('left');
+      await fixture.whenStable();
+      const children = Array.from(buttonEl.children).filter(
+        el => el.tagName === 'OTP-SVG',
+      );
+      const firstName = fixture.debugElement
+        .query(de => de.nativeElement === children[0])
+        .componentInstance.name();
+      const secondName = fixture.debugElement
+        .query(de => de.nativeElement === children[1])
+        .componentInstance.name();
+      expect(firstName).toBe('OTP-icon-32x32-arrow-left');
+      expect(secondName).toBe('OTP-icon-16x16-triangle-arrow-down');
+    });
+
+    it('should expose the aria-label on the host element', () => {
+      expect(buttonEl.getAttribute('aria-label')).toBe('Next item');
+    });
+
+    it('should throw when navigationIcon is set without an ariaLabel', async () => {
+      host.ariaLabel.set(null);
+      await expect(fixture.whenStable()).rejects.toThrow(
+        /navigationIcon requires an ariaLabel/,
+      );
     });
   });
 

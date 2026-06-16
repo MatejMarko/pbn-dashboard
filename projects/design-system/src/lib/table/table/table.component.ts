@@ -16,8 +16,6 @@ import { TableRowComponent } from '../table-row/table-row.component';
   host: {
     'role': 'table',
     '[style.grid-template-columns]': 'resolvedColumns()',
-    '[class.table]': 'true',
-    '[class.table-selectable]': 'selectable()',
   },
 })
 export class TableComponent {
@@ -35,8 +33,20 @@ export class TableComponent {
 
   /** Final grid-template-columns including optional checkbox column. */
   protected readonly resolvedColumns = computed(() => {
-    const base = this.columns();
-    return this.selectable() ? `2.5rem ${base}` : base;
+    const sections: string[] = (this.selectable() ? `2.5rem ${this.columns()}` : this.columns()).split(' ');
+    const adjusted = sections.map((col, i) => {
+      if (i !== 0 && i !== sections.length - 1) {
+        return col;
+      }
+      if (col.includes('fr')) {
+        return col;
+      } // fr can't be inside calc()
+      return `calc(${col} + var(--spacing-fixed-md))`;
+    });
+    return adjusted.join(' ');
+
+    //const base = this.columns();
+    // return this.selectable() ? `2.5rem ${base}` : base;
   });
 
   /** Whether ALL visible rows are selected. */

@@ -1,3 +1,207 @@
+<!-- Expandable Section Examples -->
+<h3 class="heading-sm" style="margin-top: 32px;">Expandable Section Examples</h3>
+<div style="display: flex; flex-direction: column; gap: 24px; margin-top: 16px; max-width: 700px;">
+
+  <!-- 1. Expandable (default collapsed) -->
+  <ds-expandable-section>
+    <ds-header>
+      <h3 class="heading-sm">SEPA information</h3>
+      <span class="label-md text-secondary">Optional</span>
+    </ds-header>
+    <ds-expandable>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <ds-form-field>
+          <ds-label>Purpose category</ds-label>
+          <input placeholder="Choose payment category" ds-input [formControl]="nameControl3"/>
+        </ds-form-field>
+        <ds-form-field>
+          <ds-label>Reference code</ds-label>
+          <input placeholder="Reference code" ds-input [formControl]="nameControl4"/>
+        </ds-form-field>
+      </div>
+    </ds-expandable>
+  </ds-expandable-section>
+
+  <!-- 2. Expandable (default expanded) -->
+  <ds-expandable-section [expanded]="true">
+    <ds-header>
+      <h3 class="heading-sm">Payer information</h3>
+      <span class="label-md text-secondary">Optional</span>
+    </ds-header>
+    <ds-expandable>
+      <ds-form-field>
+        <ds-label>Entry type</ds-label>
+        <input placeholder="Choose entry type" ds-input [formControl]="nameControl2"/>
+      </ds-form-field>
+    </ds-expandable>
+  </ds-expandable-section>
+
+  <!-- 3. Expandable with custom show/hide labels -->
+  <ds-expandable-section showLabel="Show details" hideLabel="Hide details">
+    <ds-header>
+      <h3 class="heading-sm">Final debtor</h3>
+    </ds-header>
+    <ds-expandable>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <ds-form-field>
+          <ds-label>Final debtor name</ds-label>
+          <input placeholder="Final debtor name" ds-input [formControl]="nameControl"/>
+        </ds-form-field>
+        <ds-form-field>
+          <ds-label>Entry type</ds-label>
+          <input placeholder="Choose entry type" ds-input [formControl]="nameControl2"/>
+        </ds-form-field>
+      </div>
+    </ds-expandable>
+  </ds-expandable-section>
+
+  <!-- 4. Partially expandable (always-visible + expandable) -->
+  <ds-expandable-section showLabel="Show more" hideLabel="Show less">
+    <ds-header>
+      <h3 class="heading-sm">Recipient</h3>
+    </ds-header>
+    <ds-always-visible>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <ds-form-field>
+          <ds-label>Recipient title</ds-label>
+          <input placeholder="Title" ds-input [formControl]="nameControl"/>
+        </ds-form-field>
+        <ds-form-field>
+          <ds-label>Account number</ds-label>
+          <input placeholder="SI56 0110 0600 0000 290" ds-input [formControl]="nameControl2"/>
+        </ds-form-field>
+      </div>
+    </ds-always-visible>
+    <ds-expandable>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <ds-form-field>
+          <ds-label>Bank BIC/SWIFT</ds-label>
+          <input placeholder="HAABSI22" ds-input [formControl]="nameControl3"/>
+        </ds-form-field>
+        <ds-form-field>
+          <ds-label>Recipient address</ds-label>
+          <input placeholder="Address" ds-input [formControl]="nameControl4"/>
+        </ds-form-field>
+        <ds-form-field>
+          <ds-label>Building Number</ds-label>
+          <input placeholder="Building number" ds-input [formControl]="nameControl"/>
+        </ds-form-field>
+        <ds-form-field>
+          <ds-label>Post code</ds-label>
+          <input placeholder="Post code" ds-input [formControl]="nameControl2"/>
+        </ds-form-field>
+        <ds-form-field>
+          <ds-label>City</ds-label>
+          <input placeholder="City" ds-input [formControl]="nameControl3"/>
+        </ds-form-field>
+        <ds-form-field>
+          <ds-label>Country</ds-label>
+          <input placeholder="Country" ds-input [formControl]="nameControl4"/>
+        </ds-form-field>
+      </div>
+    </ds-expandable>
+  </ds-expandable-section>
+
+  <!-- 5. Header-only (no extra content in header, just title) -->
+  <ds-expandable-section>
+    <ds-header>
+      <h3 class="heading-sm">Additional settings</h3>
+    </ds-header>
+    <ds-expandable>
+      <p class="body-md">Some expandable content without always-visible fields.</p>
+    </ds-expandable>
+  </ds-expandable-section>
+</div>
+
+<span>Filters</span>
+<div class="pbn-card">
+  <form>
+    <div class="transaction-filters">
+      <div class="filters-wrapper">
+        <otp-form-field>
+          <input
+            otp-input
+            type="search"
+            placeholder="Search"
+            i18n-placeholder="@@common.search"
+            [value]="searchQuery()"
+            (input)="searchQuery.set($any($event.target).value)"
+          />
+          <button
+            ds-icon-button
+            variant="tertiary"
+            size="sm"
+            color="green"
+            ariaLabel="search"
+            i18n-ariaLabel="@@common.search"
+            [icon]="SvgNames.ARROW_DOWN_16"
+            otp-input-suffix
+          ></button>
+        </otp-form-field>
+        <otp-chip-filter
+          label="Date range"
+          i18n-label="@@transactions.filters.dates.dateRange"
+          [options]="dateRangeFilterOptions"
+          [(value)]="dateRangeSelected"
+        ></otp-chip-filter>
+        <otp-chip-filter
+          label="All amounts"
+          i18n-label="@@transactions.filters.amounts.allAmounts"
+          [options]="amountRangeFilterOptions"
+          [(value)]="amountRangeSelected"
+        ></otp-chip-filter>
+        <otp-chip-filter
+          label="All types"
+          i18n-label="@@transactions.filters.type.allTypes"
+          [options]="typeFilterOptions"
+          [(value)]="typeSelected"
+        ></otp-chip-filter>
+        <otp-chip-filter
+          label="All currencies"
+          i18n-label="@@transactions.filters.currencies.allCurrencies"
+          [options]="typeFilterOptions"
+          [(value)]="typeSelected"
+        ></otp-chip-filter>
+      </div>
+      @if (hasActiveFilters()) {
+        <button ds-button variant="primary" size="sm" color="orange" (click)="onReset()">Reset</button>
+      }
+      <button ds-button variant="primary" size="sm" color="green">Apply</button>
+    </div>
+  </form>
+</div>
+
+
+
+<h3>Chip Filter Examples</h3>
+<div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;">
+  <otp-chip-filter
+    label="Time"
+    [options]="timeOptions"
+    [(value)]="selectedTime"
+  />
+  <otp-chip-filter
+    label="Amount"
+    [options]="amountOptions"
+    [(value)]="selectedAmount"
+  />
+  <otp-chip-filter
+    label="All types"
+    [options]="typeOptions"
+    [(value)]="selectedType"
+  />
+  <otp-chip-filter
+    label="All currencies"
+    [options]="currencyOptions"
+    [multiselect]="true"
+    [(value)]="selectedCurrencies"
+  />
+</div>
+
+<!--
+"customAmountRange signal holds the result from the custom dialog — the consumer reads it alongside selectedAmount()[0]?.value when building API params:" i have a question about this. shouldn't consumer simply check if dialog was closed in this case do nothing and keep the currently
+-->
+
 @if (screenSizeService.size() === 'LG') {
   lg
 } @else {
@@ -12,7 +216,28 @@
 
 ANGULAR ARIA
 
+<h3>Datepicker Example</h3>
+<otp-form-field>
+  <otp-label>Select a date</otp-label>
+  <input otp-input [otpDatepickerTrigger]="picker" [formControl]="dateControl" placeholder="dd.MM.yyyy" />
+  <otp-hint>Click the input to open the calendar</otp-hint>
+</otp-form-field>
+<otp-calendar #picker
+              [min]="minDate"
+              [max]="maxDate"
+              (dateSelected)="onDateSelected($event)" />
 
+<h3>Datepicker Example (fixedWeeks: false)</h3>
+<otp-form-field>
+  <otp-label>Select a date</otp-label>
+  <input otp-input [otpDatepickerTrigger]="pickerNoFixed" [formControl]="dateControl2" placeholder="dd.MM.yyyy" />
+  <otp-hint>Filler weeks are hidden but height is preserved</otp-hint>
+</otp-form-field>
+<otp-calendar #pickerNoFixed
+              [min]="minDate"
+              [max]="maxDate"
+              [fixedWeeks]="false"
+              (dateSelected)="onDateSelected($event)" />
 
 <div style="display: flex; align-items: center; gap: 12px;">
   <button ds-icon-button icon="OTP-icon-32x32-heart" ariaLabel="testni gumb" variant="tertiary" color="green" size="lg" class="testButtonIfStays">test</button>
@@ -37,110 +262,131 @@ ANGULAR ARIA
 <br/><br/>
 <button (click)="openDialog()">Open Dialog (CDK)</button>
 
-<ds-form-field>
-  <!-- todo: class shouldnt be defined on every occurance of input, but rather in ds-form-field styles (mixin) -->
+<otp-form-field>
+  <!-- todo: class shouldnt be defined on every occurance of input, but rather in otp-form-field styles (mixin) -->
   <label class="label-md-semibold-fixed">This is a label</label>
-  <input placeholder="This is a placeholder" ds-input/>
-  <div ds-input-prefix>
+  <input placeholder="This is a placeholder" otp-input/>
+  <div otp-input-prefix>
     this is a test
   </div>
-  <div ds-input-suffix>
+  <div otp-input-suffix>
     this is a test
   </div>
-  <span ds-hint class="label-md-italic-fixed">This is a hint</span>
-  <ng-container ds-hint-right class="label-md-italic-fixed">10/100</ng-container>
-</ds-form-field>
+  <span otp-hint class="label-md-italic-fixed">This is a hint</span>
+  <ng-container otp-hint-right class="label-md-italic-fixed">10/100</ng-container>
+</otp-form-field>
 
 <div style="width: 300px;">
-  <ds-form-field>
-    <!-- todo: class shouldnt be defined on every occurance of input, but rather in ds-form-field styles (mixin) -->
+  <otp-form-field>
+    <!-- todo: class shouldnt be defined on every occurance of input, but rather in otp-form-field styles (mixin) -->
     <label class="label-md-semibold-fixed">This is a label</label>
-    <input placeholder="This is a placeholder" ds-input/>
-    <div ds-input-prefix>
+    <input placeholder="This is a placeholder" otp-input/>
+    <div otp-input-prefix>
       this is a test
     </div>
-    <div ds-input-suffix>
+    <div otp-input-suffix>
       this is a test
     </div>
-    <span ds-hint class="label-md-italic-fixed">This is a hint</span>
-    <ng-container ds-hint-right class="label-md-italic-fixed">10/100</ng-container>
-  </ds-form-field>
+    <span otp-hint class="label-md-italic-fixed">This is a hint</span>
+    <ng-container otp-hint-right class="label-md-italic-fixed">10/100</ng-container>
+  </otp-form-field>
 </div>
 
 <!-- Reactive Forms Test -->
 <h3 class="heading-sm" style="margin-top: 32px;">Reactive Forms Test</h3>
 <div style="width: 400px; display: flex; flex-direction: column; gap: 12px; margin-top: 16px;">
-  <ds-form-field class="test-if-class-stays">
-    <ds-label>Name (required, min 3 chars)</ds-label>
-    <input placeholder="Enter your name" ds-input [formControl]="nameControl"/>
-    <ds-error>Name is required and must be at least 3 characters.</ds-error>
-    <ds-hint>Try: focus → blur empty → see error</ds-hint>
-  </ds-form-field>
-  <ds-form-field>
-    <ds-label>Name (required, min 3 chars)</ds-label>
-    <input id="testCustomId" placeholder="Enter your name" ds-input [formControl]="nameControl2"/>
-    <ds-error>Name is required and must be at least 3 characters.</ds-error>
-  </ds-form-field>
-  <ds-form-field>
-    <ds-label>Name (required, min 3 chars)</ds-label>
-    <input ds-input [formControl]="nameControl3"/>
-    <ds-error>Name is required and must be at least 3 characters.</ds-error>
-    <ds-hint>Try: focus → blur empty → see error</ds-hint>
-    <ds-hint-right>10/100</ds-hint-right>
-  </ds-form-field>
-  <ds-form-field>
-    <ds-label>Name (required, min 3 chars)</ds-label>
-    <input placeholder="Enter your name" ds-input [formControl]="nameControl4"/>
-    <ds-error>Name is required and must be at least 3 characters.</ds-error>
-    <ds-hint>Try: focus → blur empty → see error</ds-hint>
-    <ds-hint-right>10/100</ds-hint-right>
-  </ds-form-field>
-  <ds-form-field>
-    <ds-label>Name (required, min 3 chars)</ds-label>
-    <input placeholder="Enter your name" ds-input [formControl]="nameControl5"/>
-    <ds-error>Name is required and must be at least 3 characters.</ds-error>
-    <ds-hint>Try: focus → blur empty → see error</ds-hint>
-    <ds-hint-right aria-label="to so">10/100</ds-hint-right>
-  </ds-form-field>
-  <ds-form-field>
-    <ds-label>Name (required, min 3 chars)</ds-label>
-    <input placeholder="Enter your name" ds-input [formControl]="nameControl6" readonly />
-    <ds-error>Name is required and must be at least 3 characters.</ds-error>
-    <ds-hint>Try: focus → blur empty → see error</ds-hint>
-    <ds-hint-right>12/100</ds-hint-right>
-  </ds-form-field>
+  <otp-form-field class="test-if-class-stays">
+    <otp-label>Name (required, min 3 chars)</otp-label>
+    <input placeholder="Enter your name" otp-input [formControl]="nameControl"/>
+    <otp-error>Name is required and must be at least 3 characters.</otp-error>
+    <otp-hint>Try: focus → blur empty → see error</otp-hint>
+  </otp-form-field>
+  <otp-form-field>
+    <otp-label>Name (required, min 3 chars)</otp-label>
+    <input id="testCustomId" placeholder="Enter your name" otp-input [formControl]="nameControl2"/>
+    <otp-error>Name is required and must be at least 3 characters.</otp-error>
+  </otp-form-field>
+  <otp-form-field>
+    <otp-label>Name (required, min 3 chars)</otp-label>
+    <input otp-input [formControl]="nameControl3"/>
+    <otp-error>Name is required and must be at least 3 characters.</otp-error>
+    <otp-hint>Try: focus → blur empty → see error</otp-hint>
+    <otp-hint-right>10/100</otp-hint-right>
+  </otp-form-field>
+  <otp-form-field>
+    <otp-label>Name (required, min 3 chars)</otp-label>
+    <input placeholder="Enter your name" otp-input [formControl]="nameControl4"/>
+    <otp-error>Name is required and must be at least 3 characters.</otp-error>
+    <otp-hint>Try: focus → blur empty → see error</otp-hint>
+    <otp-hint-right>10/100</otp-hint-right>
+  </otp-form-field>
+  <otp-form-field>
+    <otp-label>Name (required, min 3 chars)</otp-label>
+    <input placeholder="Enter your name" otp-input [formControl]="nameControl5"/>
+    <otp-error>Name is required and must be at least 3 characters.</otp-error>
+    <otp-hint>Try: focus → blur empty → see error</otp-hint>
+    <otp-hint-right aria-label="to so">10/100</otp-hint-right>
+  </otp-form-field>
+  <otp-form-field>
+    <otp-label>Name (required, min 3 chars)</otp-label>
+    <input placeholder="Enter your name" otp-input [formControl]="nameControl6" readonly />
+    <otp-error>Name is required and must be at least 3 characters.</otp-error>
+    <otp-hint>Try: focus → blur empty → see error</otp-hint>
+    <otp-hint-right>12/100</otp-hint-right>
+  </otp-form-field>
 </div>
 
-<ds-form-field>
-  <ds-label>Name (required, min 3 chars)</ds-label>
-  <input placeholder="Enter your name" ds-input [formControl]="nameControl2" />
-  <ds-error>Name is required and must be at least 3 characters.</ds-error>
-  <ds-hint>Try: focus → blur empty → see error</ds-hint>
-  <ds-hint-right>12/100</ds-hint-right>
-</ds-form-field>
+<otp-form-field>
+  <otp-label>Name (required, min 3 chars)</otp-label>
+  <input placeholder="Enter your name" otp-input [formControl]="nameControl2" />
+  <otp-error>Name is required and must be at least 3 characters.</otp-error>
+  <otp-hint>Try: focus → blur empty → see error</otp-hint>
+  <otp-hint-right>12/100</otp-hint-right>
+</otp-form-field>
 
-<ds-form-field>
-  <ds-label>Name (required, min 3 chars)</ds-label>
-  <ng-container ds-input-prefix>
+<otp-form-field>
+  <otp-label>Name (required, min 3 chars)</otp-label>
+  <ng-container otp-input-prefix>
     <span class="text-success"
           style="display: flex; align-items: center; margin-right: 8px;"
           aria-hidden="true">
           <otp-svg name="OTP-icon-16x16-home" size="1rem"></otp-svg>
         </span>
   </ng-container>
-  <input ds-input [formField]="signalForm.test" />
-  <ds-error>Name is required and must be at least 3 characters.</ds-error>
-  <ds-hint>Try: focus → blur empty → see error</ds-hint>
-  <ds-hint-right>12/100</ds-hint-right>
-</ds-form-field>
+  <input otp-input [formField]="signalForm.test" />
+  <otp-error>Name is required and must be at least 3 characters.</otp-error>
+  <otp-hint>Try: focus → blur empty → see error</otp-hint>
+  <otp-hint-right>12/100</otp-hint-right>
+</otp-form-field>
+
+<otp-form-field>
+  <otp-label>Name (required, min 3 chars)</otp-label>
+  <ng-container otp-input-prefix>
+    <span class="text-success"
+          style="display: flex; align-items: center; margin-right: 8px;"
+          aria-hidden="true">
+          <otp-svg name="OTP-icon-16x16-home" size="1rem"></otp-svg>
+        </span>
+  </ng-container>
+  <input otp-input type="password" />
+  <otp-error>Name is required and must be at least 3 characters.</otp-error>
+  <otp-hint>Try: focus → blur empty → see error</otp-hint>
+  <otp-hint-right>12/100</otp-hint-right>
+</otp-form-field>
 
 <lib-breadcrumbs [breadcrumbs]="breadcrumbs"></lib-breadcrumbs>
+
+<img src="assets/svg/OTP-icon-32x32-heart.svg" />
+<img src="assets/svg/OTP-icon-32x32-heart.svg" />
+<img src="assets/svg/OTP-icon-32x32-heart.svg" />
+<img src="otp-ds/assets/icons/test-close.svg" />
+<img src="otp-ds/assets/icons/test-home.svg" />
 
 <div style="display: flex; flex-direction: column; padding: 0 132px;">
 <!-- Cards Table -->
   <h3 class="heading-sm" style="margin-top: 32px;">Cards</h3>
   <div style="margin-top: 16px;">
-    <otp-table columns="2fr 1fr 1fr 1fr 1fr 1fr" [selectable]="true" [(selected)]="selectedCards">
+    <otp-table columns="200px 120px 120px 120px 120px 120px" [selectable]="false" [(selected)]="selectedCards">
       <otp-table-header>
         <otp-table-header-cell>Card</otp-table-header-cell>
         <otp-table-header-cell>Expiry</otp-table-header-cell>

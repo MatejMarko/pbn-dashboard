@@ -5,6 +5,7 @@
 // ═══════════════════════════════════════════════════════════════════════════
 otp-table {
   display: grid;
+  column-gap: var(--spacing-fixed-sm);
   overflow: hidden;
 }
 
@@ -15,7 +16,6 @@ otp-table {
   display: grid;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
-  column-gap: var(--spacing-fixed-sm);
   padding: var(--spacing-fixed-lg) var(--spacing-fixed-md) var(--spacing-fixed-xs) var(--spacing-fixed-md);
   border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
   border: 1px solid var(--border-light);
@@ -40,7 +40,6 @@ otp-table {
   display: grid;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
-  column-gap: var(--spacing-fixed-sm);
   border: 1px solid var(--border-light);
 
   &:hover {

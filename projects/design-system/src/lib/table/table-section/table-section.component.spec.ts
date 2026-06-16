@@ -66,6 +66,11 @@ describe('TableSectionComponent', () => {
     tableEl = fixture.nativeElement.querySelector('otp-table');
   });
 
+  it('should create', () => {
+    const section = tableEl.querySelector('otp-table-section');
+    expect(section).toBeTruthy();
+  });
+
   it('should render section header with label', () => {
     const header = tableEl.querySelector('.table-section-header');
     expect(header?.textContent).toContain('Group A');

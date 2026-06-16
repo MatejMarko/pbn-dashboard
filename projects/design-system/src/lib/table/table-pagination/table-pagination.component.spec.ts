@@ -40,8 +40,13 @@ describe('TablePaginationComponent', () => {
     el = fixture.nativeElement;
   });
 
+  it('should create', () => {
+    const pagination = el.querySelector('otp-table-pagination');
+    expect(pagination).toBeTruthy();
+  });
+
   it('should display range text', () => {
-    const range = el.querySelector('.table-pagination-range');
+    const range = el.querySelector('.table-pagination-wrapper .label-sm');
     expect(range?.textContent).toContain('1 - 10');
     expect(range?.textContent).toContain('100');
   });
@@ -85,7 +90,7 @@ describe('TablePaginationComponent', () => {
     host.page.set(2);
     await fixture.whenStable();
 
-    const range = el.querySelector('.table-pagination-range');
+    const range = el.querySelector('.table-pagination-wrapper .label-sm');
     expect(range?.textContent).toContain('21 - 30');
   });
 
@@ -94,7 +99,7 @@ describe('TablePaginationComponent', () => {
     host.page.set(9);
     await fixture.whenStable();
 
-    const range = el.querySelector('.table-pagination-range');
+    const range = el.querySelector('.table-pagination-wrapper .label-sm');
     expect(range?.textContent).toContain('91 - 95');
   });
 });

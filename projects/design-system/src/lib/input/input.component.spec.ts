@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { DsInput } from './ds-input';
+import { InputComponent } from './input.component';
 
 @Component({
-  template: `<input ds-input />`,
-  imports: [DsInput],
+  template: `<input otp-input />`,
+  imports: [InputComponent],
 })
 class TestHostComponent {}
 
-describe('DsInput', () => {
+describe('InputComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(async () => {

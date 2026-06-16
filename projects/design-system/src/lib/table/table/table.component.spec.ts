@@ -10,6 +10,7 @@ import {
   TableRowComponent,
   TableCellDirective,
   TableFooterComponent,
+  TableFooterActionsDirective,
 } from '../index';
 
 // ── Basic table ─────────────────────────────────────────────────────────────
@@ -72,11 +73,13 @@ class SelectableTableHost {
         <otp-table-cell>A</otp-table-cell>
       </otp-table-row>
       <otp-table-footer>
-        <button>Export</button>
+        <otp-table-footer-actions>
+          <button>Export</button>
+        </otp-table-footer-actions>
       </otp-table-footer>
     </otp-table>
   `,
-  imports: [TableComponent, TableHeaderComponent, TableHeaderCellDirective, TableRowComponent, TableCellDirective, TableFooterComponent],
+  imports: [TableComponent, TableHeaderComponent, TableHeaderCellDirective, TableRowComponent, TableCellDirective, TableFooterComponent, TableFooterActionsDirective],
 })
 class FooterTableHost {}
 
@@ -99,6 +102,10 @@ describe('TableComponent', () => {
       fixture.autoDetectChanges();
       await fixture.whenStable();
       tableEl = fixture.nativeElement.querySelector('otp-table');
+    });
+
+    it('should create', () => {
+      expect(tableEl).toBeTruthy();
     });
 
     it('should render with role="table"', () => {

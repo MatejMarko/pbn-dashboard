@@ -1,0 +1,22 @@
+<table role="grid" [attr.aria-label]="rangeLabel()">
+  <tbody>
+    @for (row of grid(); track $index) {
+      <tr>
+        @for (year of row; track year) {
+          <td>
+            <button #yearBtn
+                    type="button"
+                    [class.selected]="isSelected(year)"
+                    [attr.aria-selected]="isSelected(year)"
+                    [attr.aria-disabled]="isDisabled(year) || null"
+                    [attr.tabindex]="getTabIndex(year)"
+                    [disabled]="isDisabled(year)"
+                    (click)="onYearClick(year)">
+              {{ year }}
+            </button>
+          </td>
+        }
+      </tr>
+    }
+  </tbody>
+</table>

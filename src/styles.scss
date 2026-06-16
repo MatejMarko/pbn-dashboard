@@ -2,3 +2,14 @@
 body {
   background: var(--surface-primary);
 }
+
+.pbn-parent-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 0;
+  gap: var(--spacing-responsive-md);
+  padding: var(--spacing-responsive-lg);
+  border-radius: var(--border-radius-responsive-lg);
+  background: var(--surface-primary);
+}

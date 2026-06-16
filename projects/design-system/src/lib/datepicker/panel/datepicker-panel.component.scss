@@ -1,0 +1,71 @@
+@use '../../../styles/mixins/typography-mixins' as typMxn;
+
+.datepicker-panel {
+  background: var(--surface-primary);
+  border-radius: var(--border-radius-2xs);
+  box-shadow: var(--box-shadow-medium-neutral);
+  padding: var(--spacing-fixed-md);
+  min-width: 18rem;
+}
+
+.datepicker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-fixed-sm);
+}
+
+.nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: var(--border-radius-full);
+  background: transparent;
+  color: var(--text-icon-primary);
+  cursor: pointer;
+  outline: none;
+
+  &:hover {
+    background: var(--surface-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-green-default);
+    outline-offset: 2px;
+  }
+}
+
+.header-label {
+  @include typMxn.label-md-semibold-fixed;
+  border: none;
+  background: transparent;
+  color: var(--text-icon-primary);
+  cursor: default;
+  outline: none;
+  padding: var(--spacing-fixed-3xs) var(--spacing-fixed-xs);
+  border-radius: var(--border-radius-2xs);
+
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      background: var(--surface-hover);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-green-default);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.datepicker-body {
+  min-height: 15rem;
+}
