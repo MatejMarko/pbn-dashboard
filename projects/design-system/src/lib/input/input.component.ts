@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, inject, signal } from '@angular/core';
 import { NgControl, Validators } from '@angular/forms';
+import { OTP_ERROR_STATE_MATCHER } from '../form-field/error-state-matcher';
 
 let nextUniqueId = 0;
 
@@ -27,9 +28,14 @@ export class InputComponent {
     return isRequired || null;
   }
 
+  private readonly errorStateMatcher = inject(OTP_ERROR_STATE_MATCHER);
+
+  /**
+   * Whether the field renders as invalid. The rule comes from the injected
+   * {@link OTP_ERROR_STATE_MATCHER}, so a form can defer errors until submit.
+   */
   get errorState(): boolean {
-    const control = this.ngControl?.control;
-    return !!control && control.invalid && control.touched;
+    return this.errorStateMatcher.isErrorState(this.ngControl?.control ?? null);
   }
 
   get isRequired() {

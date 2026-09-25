@@ -13,3 +13,9 @@ export * from './directives/hint-right.directive';
 
 /** All form field directives needed to use `<otp-form-field>`. */
 export const OTP_FORM_FIELD = [FormFieldComponent, InputComponent, LabelDirective, ErrorDirective, HintDirective, HintRightDirective] as const;
+
+export {
+  OTP_ERROR_STATE_MATCHER,
+  defaultErrorStateMatcher,
+  type ErrorStateMatcher,
+} from './error-state-matcher';

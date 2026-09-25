@@ -1,0 +1,31 @@
+@use '../calendar-grid' as grid;
+
+/**
+ * A single 64px column, centred. Rows are 24px with 4px gaps, so six years fill
+ * the same 164px as the month view and the 5-week day view; anything beyond
+ * that scrolls.
+ */
+:host {
+  --otp-calendar-columns: 1;
+  --otp-calendar-cell-width: 4rem;       /* 64px */
+  --otp-calendar-cell-height: 1.5rem;    /* 24px */
+  --otp-calendar-button-width: 4rem;
+  --otp-calendar-button-height: 1.5rem;
+  --otp-calendar-gap-x: 0rem;
+  --otp-calendar-gap-y: 0.25rem;         /* 4px */
+  --otp-calendar-selected-background: var(--brand-green-tint-20);
+}
+
+@include grid.calendar-grid;
+
+.calendar-grid--year {
+  margin-inline: auto;
+}
+
+.year-scroll {
+  /* Reserving the scrollbar on both sides keeps the column centred. */
+  scrollbar-gutter: stable both-edges;
+  height: var(--otp-datepicker-content-height);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}

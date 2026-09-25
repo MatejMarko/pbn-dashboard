@@ -11,9 +11,10 @@ import {
   clampDate,
   formatDate,
   parseDate,
-  getYearRange,
   isMonthDisabled,
   isYearDisabled,
+  formatIsoWithOffset,
+  parseIsoDate,
 } from './date-utils';
 
 describe('date-utils', () => {
@@ -274,20 +275,6 @@ describe('date-utils', () => {
     });
   });
 
-  describe('getYearRange', () => {
-    it('should return range starting at nearest multiple of pageSize', () => {
-      expect(getYearRange(2026)).toEqual({ start: 2024, end: 2035 });
-    });
-
-    it('should return range for exact multiple', () => {
-      expect(getYearRange(2024)).toEqual({ start: 2024, end: 2035 });
-    });
-
-    it('should support custom page size', () => {
-      expect(getYearRange(2026, 10)).toEqual({ start: 2020, end: 2029 });
-    });
-  });
-
   describe('isMonthDisabled', () => {
     it('should return true when entire month is before min', () => {
       expect(isMonthDisabled(2026, 0, new Date(2026, 1, 1), null)).toBe(true);
@@ -325,6 +312,52 @@ describe('date-utils', () => {
 
     it('should return false when no constraints', () => {
       expect(isYearDisabled(2026, null, null)).toBe(false);
+    });
+  });
+
+  describe('formatIsoWithOffset', () => {
+    it('should format a local date with its offset', () => {
+      const date = new Date(2026, 8, 24);
+      expect(formatIsoWithOffset(date)).toMatch(/^2026-09-24T00:00:00\.000[+-]\d{2}:\d{2}$/);
+    });
+
+    it('should keep the calendar day that toISOString would move', () => {
+      const date = new Date(2026, 8, 24);
+      const day = formatIsoWithOffset(date).slice(0, 10);
+      expect(day).toBe('2026-09-24');
+    });
+
+    it('should pad every component', () => {
+      expect(formatIsoWithOffset(new Date(2026, 0, 5, 9, 7, 3, 4))).toMatch(
+        /^2026-01-05T09:07:03\.004[+-]\d{2}:\d{2}$/
+      );
+    });
+  });
+
+  describe('parseIsoDate', () => {
+    it('should read the calendar day as a local date', () => {
+      const date = parseIsoDate('2026-09-24T00:00:00.000+02:00')!;
+      expect(date.getFullYear()).toBe(2026);
+      expect(date.getMonth()).toBe(8);
+      expect(date.getDate()).toBe(24);
+      expect(date.getHours()).toBe(0);
+    });
+
+    it('should accept a date-only string', () => {
+      const date = parseIsoDate('2026-09-24')!;
+      expect(date.getDate()).toBe(24);
+      expect(date.getHours()).toBe(0);
+    });
+
+    it('should round-trip with formatIsoWithOffset', () => {
+      const original = new Date(2026, 8, 24);
+      const parsed = parseIsoDate(formatIsoWithOffset(original))!;
+      expect(parsed.getTime()).toBe(original.getTime());
+    });
+
+    it('should return null for text that is not an ISO date', () => {
+      expect(parseIsoDate('24.09.2026')).toBeNull();
+      expect(parseIsoDate('nope')).toBeNull();
     });
   });
 });

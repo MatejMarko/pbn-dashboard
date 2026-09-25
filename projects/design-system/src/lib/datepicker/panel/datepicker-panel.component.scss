@@ -1,71 +1,105 @@
 @use '../../../styles/mixins/typography-mixins' as typMxn;
 
 .datepicker-panel {
+  /* Sizing shared by the day, month and year views. */
+  --otp-datepicker-width: 16rem;
+  /* Distance from the panel's right edge to the caret's tip. The overlay is
+     positioned from this value (CARET_INSET_REM in datepicker.service.ts), so
+     the two must stay in step. */
+  --otp-datepicker-caret-inset: 3.625rem;
+  --otp-datepicker-caret-width: 1.5rem;
+  --otp-datepicker-caret-height: 0.75rem;
+  /* The notch marking the active header segment. */
+  --otp-datepicker-marker-width: 1rem;
+  --otp-datepicker-marker-height: 0.5rem;
+  /* Shared by the header's padding and the marker's offset, so the notch always
+     sits exactly on the header's lower edge. */
+  --otp-datepicker-header-padding-y: var(--spacing-fixed-xs);
+  /* Height of a 5-week day grid: the month and year views match it, and the day
+     view grows or shrinks by one row (28px) around it. */
+  --otp-datepicker-content-height: 10.25rem;
+
   background: var(--surface-primary);
-  border-radius: var(--border-radius-2xs);
+  border-radius: var(--border-radius-xs);
   box-shadow: var(--box-shadow-medium-neutral);
-  padding: var(--spacing-fixed-md);
-  min-width: 18rem;
+  width: var(--otp-datepicker-width);
+  /* No `overflow: hidden` here: the caret sticks out past the top edge, so the
+     header rounds its own corners instead. */
+  position: relative;
+}
+
+.datepicker-caret {
+  position: absolute;
+  /* Overlaps the header by a pixel so the two shapes read as one. */
+  top: calc(1px - var(--otp-datepicker-caret-height));
+  right: calc(var(--otp-datepicker-caret-inset) - var(--otp-datepicker-caret-width) / 2);
+  width: var(--otp-datepicker-caret-width);
+  height: var(--otp-datepicker-caret-height);
+  color: var(--brand-green-default);
+  display: block;
+  pointer-events: none;
+}
+
+/* Opened above its trigger: the caret would point away from it, so it goes. */
+.datepicker-panel--above .datepicker-caret {
+  display: none;
 }
 
 .datepicker-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--spacing-fixed-sm);
+  background: var(--brand-green-default);
+  border-radius: var(--border-radius-xs) var(--border-radius-xs) 0 0;
+  padding: var(--otp-datepicker-header-padding-y) var(--spacing-fixed-sm);
+  gap: var(--spacing-fixed-xs);
 }
 
-.nav-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
+/**
+ * Reads as plain text, behaves as a button: no hover or pressed styling, the
+ * active segment is shown by the notch below it instead. The focus ring stays
+ * — it is the only cue keyboard users get.
+ */
+.header-segment {
+  @include typMxn.label-md-semibold-fixed;
+  position: relative;
   border: none;
-  border-radius: var(--border-radius-full);
   background: transparent;
-  color: var(--text-icon-primary);
+  color: var(--text-icon-inverse);
   cursor: pointer;
   outline: none;
-
-  &:hover {
-    background: var(--surface-hover);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--brand-green-default);
-    outline-offset: 2px;
-  }
-}
-
-.header-label {
-  @include typMxn.label-md-semibold-fixed;
-  border: none;
-  background: transparent;
-  color: var(--text-icon-primary);
-  cursor: default;
-  outline: none;
   padding: var(--spacing-fixed-3xs) var(--spacing-fixed-xs);
-  border-radius: var(--border-radius-2xs);
+  white-space: nowrap;
 
-  &.clickable {
-    cursor: pointer;
-
-    &:hover {
-      background: var(--surface-hover);
-    }
+  &--month {
+    text-align: center;
+    /* The separators between the segments. */
+    border-inline: 1px solid rgb(255 255 255 / 40%);
   }
 
   &:focus-visible {
-    outline: 2px solid var(--brand-green-default);
+    outline: 2px solid var(--text-icon-inverse);
     outline-offset: 2px;
-  }
-
-  &:disabled {
-    cursor: default;
   }
 }
 
+.header-marker {
+  position: absolute;
+  left: 50%;
+  /* Reaches past the header's padding so it sits on the header's lower edge. */
+  bottom: calc(-1 * var(--otp-datepicker-header-padding-y));
+  transform: translateX(-50%);
+  width: var(--otp-datepicker-marker-width);
+  height: var(--otp-datepicker-marker-height);
+  color: var(--surface-primary);
+  display: block;
+  pointer-events: none;
+}
+
+/* Height follows the grid inside: 5 weeks matches the month and year views,
+   6 weeks makes the panel taller, 4 makes it shorter. */
 .datepicker-body {
-  min-height: 15rem;
+  padding: var(--spacing-responsive-md);
+  border-radius: 0 0 var(--border-radius-xs) var(--border-radius-xs);
+  background: var(--surface-primary);
 }

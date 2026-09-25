@@ -1,0 +1,47 @@
+<div class="date-range__fields">
+  <otp-form-field [describedBy]="fromDescribedBy()">
+    <otp-label>{{ fromLabel() }}</otp-label>
+    <input otp-input
+           [otpDatepickerInput]="fromPicker"
+           [dateFormat]="dateFormat()"
+           [formControl]="fromControl()" />
+    <button otp-input-suffix
+            ds-icon-button
+            variant="tertiary"
+            color="green"
+            size="sm"
+            [ariaLabel]="intl.calendarLabel()"
+            [icon]="SvgNames.CALENDAR_32"
+            [otpDatepickerToggle]="fromPicker"></button>
+  </otp-form-field>
+
+  <otp-form-field [describedBy]="toDescribedBy()">
+    <otp-label>{{ toLabel() }}</otp-label>
+    <input otp-input
+           [otpDatepickerInput]="toPicker"
+           [dateFormat]="dateFormat()"
+           [formControl]="toControl()" />
+    <button otp-input-suffix
+            ds-icon-button
+            variant="tertiary"
+            color="green"
+            size="sm"
+            [ariaLabel]="intl.calendarLabel()"
+            [icon]="SvgNames.CALENDAR_32"
+            [otpDatepickerToggle]="toPicker"></button>
+  </otp-form-field>
+</div>
+
+@if (messages().length) {
+  <div class="date-range__errors" role="alert">
+    @for (message of messages(); track message.id) {
+      <p class="date-range__error" [attr.id]="message.id">
+        <otp-svg class="date-range__error-icon" [name]="SvgNames.ERROR_24" [size]="16" aria-hidden="true" />
+        {{ message.text }}
+      </p>
+    }
+  </div>
+}
+
+<otp-calendar #fromPicker [min]="min()" [max]="max()" [fixedWeeks]="false" />
+<otp-calendar #toPicker [min]="min()" [max]="max()" [fixedWeeks]="false" />

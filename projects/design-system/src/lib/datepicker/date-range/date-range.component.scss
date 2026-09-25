@@ -1,0 +1,29 @@
+otp-date-range {
+  display: block;
+}
+
+.date-range__fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-fixed-md);
+}
+
+.date-range__errors {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-fixed-3xs);
+  margin-top: var(--spacing-fixed-xs);
+}
+
+.date-range__error {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-fixed-3xs);
+  margin: 0;
+  color: var(--text-icon-error);
+}
+
+.date-range__error-icon {
+  flex: none;
+  color: var(--text-icon-error);
+}

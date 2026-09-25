@@ -7,15 +7,14 @@ import {
   viewChild,
   ViewEncapsulation,
 } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { A11yModule } from '@angular/cdk/a11y';
 import { DATEPICKER_DATA } from '../datepicker-context';
 import { DatepickerIntl } from '../datepicker-intl';
-import { addMonths, addYears, getYearRange } from '../date-utils';
-import { SvgComponent } from '../../svg/svg';
-import { SvgNames } from '../../svg/svg-names.enum';
-import { DayViewComponent } from './day-view.component';
-import { MonthViewComponent } from './month-view.component';
-import { YearViewComponent } from './year-view.component';
+import { withMonth, withYear } from '../date-utils';
+import { DayViewComponent } from './day-view/day-view.component';
+import { MonthViewComponent } from './month-view/month-view.component';
+import { YearViewComponent } from './year-view/year-view.component';
 
 type PanelView = 'day' | 'month' | 'year';
 
@@ -25,11 +24,11 @@ type PanelView = 'day' | 'month' | 'year';
   styleUrl: './datepicker-panel.component.scss',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [A11yModule, SvgComponent, DayViewComponent, MonthViewComponent, YearViewComponent],
+  imports: [NgTemplateOutlet, A11yModule, DayViewComponent, MonthViewComponent, YearViewComponent],
   host: {
     'role': 'dialog',
     'aria-modal': 'true',
-    '[attr.aria-label]': 'intl.calendarLabel',
+    '[attr.aria-label]': 'intl.calendarLabel()',
     '(keydown.escape)': 'onEscape()',
   },
 })
@@ -37,7 +36,11 @@ export class DatepickerPanelComponent {
   readonly intl = inject(DatepickerIntl);
   private readonly data = inject(DATEPICKER_DATA);
 
-  readonly SvgNames = SvgNames;
+  /**
+   * Where the panel ended up relative to its trigger. Set by the service from
+   * the overlay's position changes; the caret only shows when it opened below.
+   */
+  readonly placement = signal<'below' | 'above'>('below');
 
   readonly currentView = signal<PanelView>('day');
   readonly activeDate = signal(new Date());
@@ -53,32 +56,26 @@ export class DatepickerPanelComponent {
   private readonly monthView = viewChild(MonthViewComponent);
   private readonly yearView = viewChild(YearViewComponent);
 
+  /** Spoken summary of what the panel currently shows. */
   readonly headerLabel = computed(() => {
     const d = this.activeDate();
-    const view = this.currentView();
-    if (view === 'day') {
-      return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-    }
-    if (view === 'month') {
-      return d.getFullYear().toString();
-    }
-    const { start, end } = getYearRange(d.getFullYear());
-    return `${start} – ${end}`;
+    return this.currentView() === 'day'
+      ? this.intl.formatMonthYear(d)
+      : d.getFullYear().toString();
   });
 
-  readonly prevButtonLabel = computed(() => {
-    const view = this.currentView();
-    if (view === 'day') return this.intl.prevMonthLabel;
-    if (view === 'month') return this.intl.prevYearLabel;
-    return this.intl.prevYearRangeLabel;
-  });
+  /** Day segment of the header, e.g. `01`. */
+  readonly headerDay = computed(() =>
+    this.activeDate().getDate().toString().padStart(2, '0')
+  );
 
-  readonly nextButtonLabel = computed(() => {
-    const view = this.currentView();
-    if (view === 'day') return this.intl.nextMonthLabel;
-    if (view === 'month') return this.intl.nextYearLabel;
-    return this.intl.nextYearRangeLabel;
-  });
+  /** Month segment of the header, e.g. `January`. */
+  readonly headerMonth = computed(() =>
+    this.intl.monthsLong()[this.activeDate().getMonth()]
+  );
+
+  /** Year segment of the header, e.g. `2026`. */
+  readonly headerYear = computed(() => this.activeDate().getFullYear().toString());
 
   constructor() {
     const sel = this.data.selected();
@@ -87,41 +84,22 @@ export class DatepickerPanelComponent {
     }
   }
 
-  onHeaderLabelClick(): void {
-    const view = this.currentView();
-    if (view === 'day') {
-      this.currentView.set('month');
-      this.announce(this.intl.switchToMonthViewLabel);
-      queueMicrotask(() => this.monthView()?.focusInitial());
-    } else if (view === 'month') {
-      this.currentView.set('year');
-      this.announce(this.intl.switchToYearViewLabel);
-      queueMicrotask(() => this.yearView()?.focusInitial());
-    }
-  }
+  /**
+   * Switches straight to the requested view. Each header segment
+   * (day / month / year) opens its own picker, so a year can be chosen
+   * without going through the month picker first.
+   */
+  setView(view: PanelView): void {
+    if (this.currentView() === view) return;
 
-  onPrev(): void {
-    const view = this.currentView();
-    if (view === 'day') {
-      this.activeDate.update(d => addMonths(d, -1));
-    } else if (view === 'month') {
-      this.activeDate.update(d => addYears(d, -1));
-    } else {
-      this.yearView()?.prevPage();
-    }
-    this.announce(this.headerLabel());
-  }
+    this.currentView.set(view);
+    this.announce(this.segmentLabel(view));
 
-  onNext(): void {
-    const view = this.currentView();
-    if (view === 'day') {
-      this.activeDate.update(d => addMonths(d, 1));
-    } else if (view === 'month') {
-      this.activeDate.update(d => addYears(d, 1));
-    } else {
-      this.yearView()?.nextPage();
-    }
-    this.announce(this.headerLabel());
+    queueMicrotask(() => {
+      if (view === 'day') this.dayView()?.focusInitial();
+      else if (view === 'month') this.monthView()?.focusInitial();
+      else this.yearView()?.focusInitial();
+    });
   }
 
   onDateSelected(date: Date): void {
@@ -130,7 +108,7 @@ export class DatepickerPanelComponent {
 
   onMonthSelected(month: number): void {
     const d = this.activeDate();
-    this.activeDate.set(new Date(d.getFullYear(), month, 1));
+    this.activeDate.set(withMonth(d, month));
     this.currentView.set('day');
     this.announce(this.headerLabel());
     queueMicrotask(() => this.dayView()?.focusInitial());
@@ -138,10 +116,10 @@ export class DatepickerPanelComponent {
 
   onYearSelected(year: number): void {
     const d = this.activeDate();
-    this.activeDate.set(new Date(year, d.getMonth(), 1));
-    this.currentView.set('month');
+    this.activeDate.set(withYear(d, year));
+    this.currentView.set('day');
     this.announce(this.headerLabel());
-    queueMicrotask(() => this.monthView()?.focusInitial());
+    queueMicrotask(() => this.dayView()?.focusInitial());
   }
 
   onActiveDateChange(date: Date): void {
@@ -157,8 +135,14 @@ export class DatepickerPanelComponent {
     queueMicrotask(() => this.dayView()?.focusInitial());
   }
 
-  isHeaderClickable(): boolean {
-    return this.currentView() !== 'year';
+  isViewActive(view: PanelView): boolean {
+    return this.currentView() === view;
+  }
+
+  segmentLabel(view: PanelView): string {
+    if (view === 'day') return this.intl.switchToDayViewLabel();
+    if (view === 'month') return this.intl.switchToMonthViewLabel();
+    return this.intl.switchToYearViewLabel();
   }
 
   private announce(message: string): void {

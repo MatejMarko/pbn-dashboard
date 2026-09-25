@@ -231,6 +231,38 @@ describe('FormFieldComponent', () => {
     });
   });
 
+  describe('error state without a projected message', () => {
+    @Component({
+      template: `
+        <otp-form-field>
+          <otp-label>Label</otp-label>
+          <input otp-input [formControl]="control" />
+        </otp-form-field>
+      `,
+      imports: [FormFieldComponent, InputComponent, LabelDirective, ReactiveFormsModule],
+    })
+    class NoErrorMessageHost {
+      control = new FormControl('', Validators.required);
+    }
+
+    it('should not render the error icon when there is nothing to show', () => {
+      const fixture = TestBed.configureTestingModule({
+        imports: [NoErrorMessageHost],
+      }).createComponent(NoErrorMessageHost);
+      fixture.detectChanges();
+
+      fixture.componentInstance.control.markAsTouched();
+      fixture.detectChanges();
+
+      const el: HTMLElement = fixture.nativeElement;
+      // The field still styles itself as invalid...
+      expect(el.querySelector('otp-form-field')!.classList).toContain('error-visible');
+      // ...but shows no lone icon.
+      expect(el.querySelector('.error-wrapper')).toBeFalsy();
+      expect(el.querySelector('svg')).toBeFalsy();
+    });
+  });
+
   describe('aria-describedby sync', () => {
     let fixture: ComponentFixture<FullFormFieldHost>;
     let host: FullFormFieldHost;

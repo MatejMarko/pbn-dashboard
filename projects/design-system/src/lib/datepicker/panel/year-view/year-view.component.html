@@ -1,0 +1,26 @@
+<div class="year-scroll">
+  <table class="calendar-grid calendar-grid--year" role="grid" [attr.aria-label]="rangeLabel()">
+    <tbody>
+      @for (year of years(); track year) {
+        <tr>
+          <td class="calendar-cell"
+              role="gridcell"
+              [attr.aria-selected]="isSelected(year)">
+            <button #yearBtn
+                    type="button"
+                    class="calendar-cell__button"
+                    [class.is-selected]="isSelected(year)"
+                    [class.is-today]="isCurrent(year)"
+                    [attr.aria-current]="isCurrent(year) ? 'date' : null"
+                    [class.is-disabled]="isDisabled(year)"
+                    [attr.aria-disabled]="isDisabled(year) || null"
+                    [attr.tabindex]="getTabIndex(year)"
+                    (click)="onYearClick(year)">
+              {{ year }}
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

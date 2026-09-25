@@ -1,25 +1,56 @@
-<div class="datepicker-panel" cdkTrapFocus cdkTrapFocusAutoCapture>
-  <div class="datepicker-header">
+<div class="datepicker-panel"
+     [class.datepicker-panel--above]="placement() === 'above'"
+     cdkTrapFocus
+     cdkTrapFocusAutoCapture>
+  <!-- Flared tail: the sides curve out into the header's edge so the two read
+       as one shape. Drawn at the design's 24x12 and scaled by the tokens. -->
+  <svg class="datepicker-caret"
+       viewBox="0 0 24 12"
+       preserveAspectRatio="none"
+       focusable="false"
+       aria-hidden="true">
+    <!-- Path taken verbatim from the design. -->
+    <path fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M9.683 1.97053C9.91856 0.864886 10.8695 0 12 0C13.1305 0 14.0814 0.864886 14.317 1.97054C15.0425 5.37562 17.3131 12 24 12H0C6.68689 12 8.95754 5.37562 9.683 1.97053Z"
+          fill="currentColor" />
+  </svg>
+
+  <div class="datepicker-header" role="group" [attr.aria-label]="intl.calendarLabel()">
     <button type="button"
-            class="nav-button"
-            [attr.aria-label]="prevButtonLabel()"
-            (click)="onPrev()">
-      <otp-svg [name]="SvgNames.ARROW_LEFT_16" [size]="16" aria-hidden="true" />
+            class="header-segment header-segment--day"
+            [class.active]="isViewActive('day')"
+            [attr.aria-label]="segmentLabel('day')"
+            [attr.aria-pressed]="isViewActive('day')"
+            (click)="setView('day')">
+      {{ headerDay() }}
+      @if (isViewActive('day')) {
+        <ng-container [ngTemplateOutlet]="modeMarker" />
+      }
     </button>
 
     <button type="button"
-            class="header-label"
-            [class.clickable]="isHeaderClickable()"
-            [disabled]="!isHeaderClickable()"
-            (click)="onHeaderLabelClick()">
-      {{ headerLabel() }}
+            class="header-segment header-segment--month"
+            [class.active]="isViewActive('month')"
+            [attr.aria-label]="segmentLabel('month')"
+            [attr.aria-pressed]="isViewActive('month')"
+            (click)="setView('month')">
+      {{ headerMonth() }}
+      @if (isViewActive('month')) {
+        <ng-container [ngTemplateOutlet]="modeMarker" />
+      }
     </button>
 
     <button type="button"
-            class="nav-button"
-            [attr.aria-label]="nextButtonLabel()"
-            (click)="onNext()">
-      <otp-svg [name]="SvgNames.ARROW_RIGHT_16" [size]="16" aria-hidden="true" />
+            class="header-segment header-segment--year"
+            [class.active]="isViewActive('year')"
+            [attr.aria-label]="segmentLabel('year')"
+            [attr.aria-pressed]="isViewActive('year')"
+            (click)="setView('year')">
+      {{ headerYear() }}
+      @if (isViewActive('year')) {
+        <ng-container [ngTemplateOutlet]="modeMarker" />
+      }
     </button>
   </div>
 
@@ -58,3 +89,16 @@
     {{ liveAnnouncement() }}
   </div>
 </div>
+
+<!-- Marks which of day / month / year the panel is showing: a notch in the
+     header's lower edge, sitting under the active segment. -->
+<ng-template #modeMarker>
+  <svg class="header-marker"
+       viewBox="0 0 16 8"
+       preserveAspectRatio="none"
+       focusable="false"
+       aria-hidden="true">
+    <path d="M6.55279 2.89443C6.82687 2.34626 7.38713 2 8 2C8.61287 2 9.17313 2.34626 9.44721 2.89443L10.3416 4.68328C11.358 6.71599 13.4356 8 15.7082 8H16H0H0.291796C2.56443 8 4.64201 6.71599 5.65836 4.68328L6.55279 2.89443Z"
+          fill="currentColor" />
+  </svg>
+</ng-template>

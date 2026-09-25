@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   contentChild,
+  input,
   ElementRef,
   inject,
   signal,
@@ -27,6 +28,13 @@ import { HintDirective } from './directives/hint.directive';
 })
 export class FormFieldComponent implements AfterContentInit, AfterContentChecked {
   private readonly elementRef = inject(ElementRef);
+
+  /**
+   * Id of an element describing the field that lives outside it, e.g. a shared
+   * error block under a group of fields. A projected `otp-error` or `otp-hint`
+   * takes precedence.
+   */
+  readonly describedBy = input<string | null>(null);
 
   // todo: remove ds prefix
   readonly dsInput = contentChild(InputComponent);
@@ -56,7 +64,7 @@ export class FormFieldComponent implements AfterContentInit, AfterContentChecked
     } else if (this.dsHint()) {
       input.ariaDescribedBy.set(this.dsHint()!.id);
     } else {
-      input.ariaDescribedBy.set(null);
+      input.ariaDescribedBy.set(this.describedBy());
     }
   }
 

@@ -1,0 +1,27 @@
+<table class="calendar-grid calendar-grid--month" role="grid" [attr.aria-label]="gridLabel()">
+  <tbody>
+    @for (row of grid(); track $index) {
+      <tr>
+        @for (cell of row; track cell.month) {
+          <td class="calendar-cell"
+              role="gridcell"
+              [attr.aria-selected]="isSelected(cell.month)">
+            <button #monthBtn
+                    type="button"
+                    class="calendar-cell__button"
+                    [attr.aria-label]="cell.fullLabel"
+                    [class.is-selected]="isSelected(cell.month)"
+                    [class.is-today]="isCurrent(cell.month)"
+                    [attr.aria-current]="isCurrent(cell.month) ? 'date' : null"
+                    [class.is-disabled]="isDisabled(cell.month)"
+                    [attr.aria-disabled]="isDisabled(cell.month) || null"
+                    [attr.tabindex]="getTabIndex(cell.month)"
+                    (click)="onMonthClick(cell.month)">
+              {{ cell.label }}
+            </button>
+          </td>
+        }
+      </tr>
+    }
+  </tbody>
+</table>

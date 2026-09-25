@@ -1,16 +1,17 @@
 import {
+  afterRenderEffect,
   ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
+  inject,
   input,
   output,
   signal,
   viewChildren,
 } from '@angular/core';
-import { getMonthGrid, isSameDay, isSameMonth, isDateInRange, addMonths } from '../date-utils';
-
-const WEEKDAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+import { getMonthGrid, isSameDay, isSameMonth, isDateInRange, addMonths } from '../../date-utils';
+import { DatepickerIntl } from '../../datepicker-intl';
 
 @Component({
   selector: 'otp-day-view',
@@ -33,24 +34,87 @@ export class DayViewComponent {
 
   readonly focusedDate = signal<Date | null>(null);
 
-  readonly weekdays = WEEKDAY_LABELS;
+  private readonly intl = inject(DatepickerIntl);
+
+  /** Weekday headers, Monday first: short label plus the full name for screen readers. */
+  readonly weekdays = computed(() =>
+    this.intl.weekdaysShort().map((short, i) => ({
+      short,
+      long: this.intl.weekdaysLong()[i],
+    }))
+  );
 
   readonly grid = computed(() => {
     const d = this.activeDate();
     return getMonthGrid(d.getFullYear(), d.getMonth());
   });
 
-  readonly gridLabel = computed(() => {
-    const d = this.activeDate();
-    return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  readonly gridLabel = computed(() => this.intl.formatMonthYear(this.activeDate()));
+
+  /**
+   * Weeks actually rendered. With `fixedWeeks` off, a week made up entirely of
+   * the neighbouring months' days is dropped, so February starting on a Monday
+   * renders four rows and the panel shrinks to fit.
+   */
+  readonly weeks = computed(() => {
+    const grid = this.grid();
+    if (this.fixedWeeks()) return grid;
+
+    return grid.filter(week => week.some(date => isSameMonth(date, this.activeDate())));
+  });
+
+  /**
+   * Dates that render a button. With `fixedWeeks` off, days from the
+   * neighbouring months leave an empty cell instead, so the grid keeps its
+   * shape without offering days outside the month.
+   */
+  readonly visibleDates = computed(() =>
+    this.weeks().flat().filter(date => this.isDateVisible(date))
+  );
+
+  /** The single day that carries `tabindex="0"`; it is always a rendered one. */
+  readonly tabbableDate = computed(() => {
+    const visible = this.visibleDates();
+    const isRendered = (date: Date) => visible.some(d => isSameDay(d, date));
+
+    const focused = this.focusedDate();
+    if (focused && isRendered(focused)) return focused;
+
+    const sel = this.selected();
+    if (sel && isSameMonth(sel, this.activeDate()) && isRendered(sel)) return sel;
+
+    if (isSameMonth(this.today, this.activeDate()) && isRendered(this.today)) return this.today;
+
+    const active = this.activeDate();
+    const firstOfMonth = new Date(active.getFullYear(), active.getMonth(), 1);
+    return isRendered(firstOfMonth) ? firstOfMonth : visible[0] ?? null;
   });
 
   private readonly dayButtons = viewChildren<ElementRef<HTMLButtonElement>>('dayBtn');
 
+  /** Date waiting to receive DOM focus once its button is on screen. */
+  private readonly pendingFocus = signal<Date | null>(null);
+
   readonly today = new Date();
 
-  isFillerWeek(week: Date[]): boolean {
-    return !this.fixedWeeks() && week.every(d => !isSameMonth(d, this.activeDate()));
+  constructor() {
+    // Runs after the grid has rendered, so focus lands correctly even when the
+    // keystroke moved the panel to another month.
+    afterRenderEffect(() => {
+      const target = this.pendingFocus();
+      if (!target) return;
+
+      const index = this.visibleDates().findIndex(date => isSameDay(date, target));
+      const button = this.dayButtons()[index];
+      if (button) {
+        button.nativeElement.focus();
+        this.pendingFocus.set(null);
+      }
+    });
+  }
+
+  isDateVisible(date: Date): boolean {
+    return this.fixedWeeks() || isSameMonth(date, this.activeDate());
   }
 
   isCurrentMonth(date: Date): boolean {
@@ -70,20 +134,14 @@ export class DayViewComponent {
     return !isDateInRange(date, this.min(), this.max());
   }
 
+  /** Full, localized date used as the accessible name of a day cell. */
+  dayLabel(date: Date): string {
+    return this.intl.formatFullDate(date);
+  }
+
   getTabIndex(date: Date): number {
-    const focused = this.focusedDate();
-    if (focused) {
-      return isSameDay(date, focused) ? 0 : -1;
-    }
-    const sel = this.selected();
-    if (sel && isSameMonth(sel, this.activeDate())) {
-      return isSameDay(date, sel) ? 0 : -1;
-    }
-    if (isSameMonth(this.today, this.activeDate())) {
-      return isSameDay(date, this.today) ? 0 : -1;
-    }
-    // Default: first day of month
-    return date.getDate() === 1 && this.isCurrentMonth(date) ? 0 : -1;
+    const tabbable = this.tabbableDate();
+    return tabbable && isSameDay(date, tabbable) ? 0 : -1;
   }
 
   onDayClick(date: Date): void {
@@ -138,31 +196,28 @@ export class DayViewComponent {
     event.preventDefault();
 
     if (next) {
+      // Moving out of the month asks the panel to switch; the focus request is
+      // queued and applied once the new grid has rendered.
       if (!isSameMonth(next, this.activeDate())) {
         this.activeDateChange.emit(next);
       }
       this.focusedDate.set(next);
-      this.focusDayButton(next);
+      this.pendingFocus.set(next);
     }
   }
 
   focusInitial(): void {
     const target = this.getFocusedOrDefault();
     this.focusedDate.set(target);
-    // Defer to next microtask so buttons are rendered
-    queueMicrotask(() => this.focusDayButton(target));
+    this.pendingFocus.set(target);
   }
 
   private getFocusedOrDefault(): Date {
-    const focused = this.focusedDate();
-    if (focused) return focused;
+    const tabbable = this.tabbableDate();
+    if (tabbable) return tabbable;
 
-    const sel = this.selected();
-    if (sel && isSameMonth(sel, this.activeDate())) return sel;
-
-    if (isSameMonth(this.today, this.activeDate())) return this.today;
-
-    return new Date(this.activeDate().getFullYear(), this.activeDate().getMonth(), 1);
+    const active = this.activeDate();
+    return new Date(active.getFullYear(), active.getMonth(), 1);
   }
 
   private addDays(date: Date, days: number): Date {
@@ -185,14 +240,5 @@ export class DayViewComponent {
     const diff = day === 0 ? 0 : 7 - day; // Sunday is end of week
     result.setDate(result.getDate() + diff);
     return result;
-  }
-
-  private focusDayButton(date: Date): void {
-    const buttons = this.dayButtons();
-    const flatGrid = this.grid().flat();
-    const index = flatGrid.findIndex(d => isSameDay(d, date));
-    if (index >= 0 && buttons[index]) {
-      buttons[index].nativeElement.focus();
-    }
   }
 }

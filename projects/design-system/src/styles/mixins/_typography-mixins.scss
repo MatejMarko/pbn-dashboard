@@ -17,6 +17,18 @@
   font-style: italic;
 }
 
+@mixin label-md-fixed {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-fixed-sm);
+  line-height: var(--line-height-fixed-sm);
+}
+
+@mixin label-md-bold-fixed {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-fixed-sm);
+  line-height: var(--line-height-fixed-sm);
+}
+
 @mixin label-md-semibold-fixed {
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-fixed-sm);

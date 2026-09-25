@@ -3,17 +3,14 @@ import {
   Component,
   computed,
   ElementRef,
+  inject,
   input,
   output,
   signal,
   viewChildren,
 } from '@angular/core';
-import { isMonthDisabled } from '../date-utils';
-
-const MONTH_LABELS = [
-  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-];
+import { isMonthDisabled } from '../../date-utils';
+import { DatepickerIntl } from '../../datepicker-intl';
 
 @Component({
   selector: 'otp-month-view',
@@ -36,13 +33,19 @@ export class MonthViewComponent {
 
   private readonly monthButtons = viewChildren<ElementRef<HTMLButtonElement>>('monthBtn');
 
-  readonly grid = computed((): { label: string; month: number }[][] => {
-    const rows: { label: string; month: number }[][] = [];
+  private readonly intl = inject(DatepickerIntl);
+
+  private readonly today = new Date();
+
+  readonly grid = computed((): { label: string; fullLabel: string; month: number }[][] => {
+    const short = this.intl.monthsShort();
+    const long = this.intl.monthsLong();
+    const rows: { label: string; fullLabel: string; month: number }[][] = [];
     for (let row = 0; row < 4; row++) {
-      const cols: { label: string; month: number }[] = [];
+      const cols: { label: string; fullLabel: string; month: number }[] = [];
       for (let col = 0; col < 3; col++) {
         const month = row * 3 + col;
-        cols.push({ label: MONTH_LABELS[month], month });
+        cols.push({ label: short[month], fullLabel: long[month], month });
       }
       rows.push(cols);
     }
@@ -53,11 +56,22 @@ export class MonthViewComponent {
     return this.activeDate().getFullYear().toString();
   });
 
+  /**
+   * The month the header is showing, which is either the value's month or the
+   * one the user navigated to. It carries the pill, so picking August and
+   * coming back finds August still marked.
+   */
   isSelected(month: number): boolean {
-    const sel = this.selected();
-    return sel !== null
-      && sel.getFullYear() === this.activeDate().getFullYear()
-      && sel.getMonth() === month;
+    return month === this.activeDate().getMonth();
+  }
+
+  /**
+   * The month we are in, marked the way the day grid marks today — only while
+   * the current year is on screen, and never instead of the pill.
+   */
+  isCurrent(month: number): boolean {
+    return this.activeDate().getFullYear() === this.today.getFullYear()
+      && month === this.today.getMonth();
   }
 
   isDisabled(month: number): boolean {
@@ -68,10 +82,6 @@ export class MonthViewComponent {
     const focused = this.focusedMonth();
     if (focused !== null) return month === focused ? 0 : -1;
 
-    const sel = this.selected();
-    if (sel && sel.getFullYear() === this.activeDate().getFullYear()) {
-      return month === sel.getMonth() ? 0 : -1;
-    }
     return month === this.activeDate().getMonth() ? 0 : -1;
   }
 

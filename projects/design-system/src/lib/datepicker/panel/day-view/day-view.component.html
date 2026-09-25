@@ -1,0 +1,39 @@
+<table class="calendar-grid calendar-grid--day" role="grid" [attr.aria-label]="gridLabel()">
+  <thead>
+    <tr>
+      @for (weekday of weekdays(); track weekday.long) {
+        <th class="calendar-grid__weekday" scope="col" [attr.abbr]="weekday.long">
+          {{ weekday.short }}
+        </th>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (week of weeks(); track $index) {
+      <tr>
+        @for (date of week; track $index) {
+          <td class="calendar-cell"
+              role="gridcell"
+              [attr.aria-selected]="isDateVisible(date) ? isSelected(date) : null">
+            @if (isDateVisible(date)) {
+              <button #dayBtn
+                      type="button"
+                      class="calendar-cell__button"
+                      [class.is-outside]="!isCurrentMonth(date)"
+                      [class.is-selected]="isSelected(date)"
+                      [class.is-today]="isToday(date)"
+                      [class.is-disabled]="isDisabled(date)"
+                      [attr.aria-label]="dayLabel(date)"
+                      [attr.aria-current]="isToday(date) ? 'date' : null"
+                      [attr.aria-disabled]="isDisabled(date) || null"
+                      [attr.tabindex]="getTabIndex(date)"
+                      (click)="onDayClick(date)">
+                {{ date.getDate() }}
+              </button>
+            }
+          </td>
+        }
+      </tr>
+    }
+  </tbody>
+</table>

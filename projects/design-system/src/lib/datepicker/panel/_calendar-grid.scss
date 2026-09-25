@@ -1,0 +1,92 @@
+@use '../../../styles/mixins/typography-mixins' as typMxn;
+
+/**
+ * Structure shared by the day, month and year grids. Each view supplies its own
+ * cell size and gaps through the custom properties below; everything else —
+ * typography, colours, states — is defined once here.
+ *
+ * The gaps come from `border-spacing`, which also adds space outside the first
+ * and last cells; the negative margin cancels exactly that, so a row spans the
+ * content box edge to edge (the design's `justify-content: space-between`).
+ */
+@mixin calendar-grid {
+  :host {
+    display: block;
+  }
+
+  .calendar-grid {
+    border-collapse: separate;
+    border-spacing: var(--otp-calendar-gap-x) var(--otp-calendar-gap-y);
+    margin: calc(-1 * var(--otp-calendar-gap-y)) calc(-1 * var(--otp-calendar-gap-x));
+    /* Fixed layout keeps every column at the cell width even when a label (Th,
+       Su) would otherwise be wide enough to stretch it. */
+    table-layout: fixed;
+    width: calc(
+      var(--otp-calendar-columns) * var(--otp-calendar-cell-width)
+      + (var(--otp-calendar-columns) + 1) * var(--otp-calendar-gap-x)
+    );
+  }
+
+  .calendar-grid__weekday {
+    @include typMxn.label-md-bold-fixed;
+    width: var(--otp-calendar-cell-width);
+    height: var(--otp-calendar-cell-height);
+    padding: 0;
+    color: var(--text-icon-primary);
+    text-align: center;
+  }
+
+  .calendar-cell {
+    width: var(--otp-calendar-cell-width);
+    height: var(--otp-calendar-cell-height);
+    padding: 0;
+    text-align: center;
+  }
+
+  .calendar-cell__button {
+    @include typMxn.label-md-fixed;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--otp-calendar-button-width);
+    height: var(--otp-calendar-button-height);
+    /* A pill wider than its cell (the day view's 24px pill in a 20px column)
+       overhangs instead of widening the column, keeping the grid on its rhythm. */
+    margin-inline: calc((var(--otp-calendar-cell-width) - var(--otp-calendar-button-width)) / 2);
+    border: none;
+    border-radius: var(--border-radius-full);
+    background: transparent;
+    color: var(--text-icon-primary);
+    cursor: pointer;
+    outline: none;
+
+    &:hover:not(.is-disabled):not(.is-selected) {
+      background: var(--brand-green-tint-10);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--brand-green-default);
+      outline-offset: 2px;
+    }
+
+    /* Today is only tinted; the selected day gets the filled pill. */
+    &.is-today:not(.is-selected) {
+      color: var(--text-icon-success);
+    }
+
+    &.is-selected {
+      @include typMxn.label-md-bold-fixed;
+      background: var(--otp-calendar-selected-background);
+      color: var(--text-icon-success);
+    }
+
+    &.is-outside {
+      color: var(--text-icon-secondary);
+    }
+
+    &.is-disabled {
+      color: var(--text-icon-disabled-dark);
+      cursor: default;
+    }
+  }
+}

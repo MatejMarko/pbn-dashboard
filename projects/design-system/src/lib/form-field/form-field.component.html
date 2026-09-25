@@ -12,7 +12,9 @@
     <ng-content select="[otp-input-suffix]"></ng-content>
   </div>
 
-  @if (shouldShowError()) {
+  <!-- The icon belongs to the message: without a projected otp-error there is
+       nothing to announce, so the field shows its error styling only. -->
+  @if (shouldShowError() && dsError()) {
     <div class="error-wrapper">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path d="M5.5 10.5L10.5 5.5M10.5 10.5L5.5 5.5M12.9497 3.05025C15.6834 5.78392 15.6834 10.2161 12.9497 12.9497C10.2161 15.6834 5.78392 15.6834 3.05025 12.9497C0.316582 10.2161 0.316582 5.78392 3.05025 3.05025C5.78392 0.316582 10.2161 0.316582 12.9497 3.05025Z" stroke="#F0323D" stroke-linecap="round" stroke-linejoin="round"/>

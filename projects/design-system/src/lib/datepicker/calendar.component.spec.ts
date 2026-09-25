@@ -35,4 +35,36 @@ describe('CalendarComponent', () => {
   it('should have dateSelected output', () => {
     expect(component.dateSelected).toBeDefined();
   });
+
+  it('should start closed', () => {
+    expect(component.isOpen()).toBe(false);
+  });
+
+  it('should fall back to the field anchor when no toggle is registered', () => {
+    const element = document.createElement('input');
+    document.body.appendChild(element);
+
+    component.registerInput({
+      element,
+      disabled: false,
+      readDate: () => null,
+      writeDate: () => {},
+    });
+    component.open();
+
+    // No DatepickerService mock here, so just assert it opened at all.
+    expect(component.isOpen()).toBe(true);
+    component.close();
+    element.remove();
+  });
+
+  it('should not open without an input or an origin', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    component.open();
+
+    expect(component.isOpen()).toBe(false);
+    expect(warn).toHaveBeenCalled();
+    warn.mockRestore();
+  });
 });
