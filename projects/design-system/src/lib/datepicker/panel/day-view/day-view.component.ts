@@ -10,7 +10,7 @@ import {
   signal,
   viewChildren,
 } from '@angular/core';
-import { getMonthGrid, isSameDay, isSameMonth, isDateInRange, addMonths } from '../../date-utils';
+ import { getMonthGrid, isSameDay, isSameMonth, isDateInRange, addMonths, addYears } from '../../date-utils';
 import { DatepickerIntl } from '../../datepicker-intl';
 
 @Component({
@@ -173,14 +173,10 @@ export class DayViewComponent {
         next = this.getEndOfWeek(current);
         break;
       case 'PageUp':
-        next = event.shiftKey
-          ? new Date(current.getFullYear() - 1, current.getMonth(), current.getDate())
-          : addMonths(current, -1);
+        next = event.shiftKey ? addYears(current, -1) : addMonths(current, -1);
         break;
       case 'PageDown':
-        next = event.shiftKey
-          ? new Date(current.getFullYear() + 1, current.getMonth(), current.getDate())
-          : addMonths(current, 1);
+        next = event.shiftKey ? addYears(current, 1) : addMonths(current, 1);
         break;
       case 'Enter':
       case ' ':

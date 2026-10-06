@@ -1,6 +1,6 @@
 import { afterNextRender, Directive, ElementRef, inject, input, OnDestroy, OnInit } from '@angular/core';
-import { CalendarComponent } from './calendar.component';
-import { DatepickerIntl } from './datepicker-intl';
+import { CalendarComponent } from '../calendar/calendar.component';
+import { DatepickerIntl } from '../datepicker-intl';
 
 /**
  * Opens an `<otp-calendar>` from whatever element it sits on — usually a suffix

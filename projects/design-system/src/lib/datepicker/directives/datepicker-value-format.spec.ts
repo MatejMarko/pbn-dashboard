@@ -1,7 +1,7 @@
 import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { CalendarComponent } from './calendar.component';
+import { CalendarComponent } from '../calendar/calendar.component';
 import { DatepickerInputDirective, DatepickerValueFormat } from './datepicker-input.directive';
 
 @Component({
@@ -66,6 +66,6 @@ describe('DatepickerInputDirective valueFormat', () => {
 
     host.dateCtrl.setValue(stored);
     fixture.detectChanges();
-    expect(input().value).toBe('24.09.2026');
+    expect(input().value).toBe('24.9.2026');
   });
 });

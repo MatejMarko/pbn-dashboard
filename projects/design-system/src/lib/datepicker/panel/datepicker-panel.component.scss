@@ -71,6 +71,19 @@
   padding: var(--spacing-fixed-3xs) var(--spacing-fixed-xs);
   white-space: nowrap;
 
+  &--day {
+    /* Sized for two digits so swapping the day for the icon moves nothing. */
+    min-width: 2.5rem;
+    text-align: center;
+  }
+
+  &__icon {
+    display: inline-flex;
+    vertical-align: middle;
+    /* The asset strokes with currentColor, so it follows the segment. */
+    color: inherit;
+  }
+
   &--month {
     text-align: center;
     /* The separators between the segments. */

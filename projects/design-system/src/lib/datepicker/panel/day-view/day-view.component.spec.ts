@@ -246,5 +246,16 @@ describe('DayViewComponent', () => {
       expect(host.newActiveDate?.getMonth()).toBe(1);
       expect(host.dayView().focusedDate()?.getDate()).toBe(15);
     });
+
+    it('should keep the month on Shift+PageDown from a leap day', () => {
+      host.activeDate.set(new Date(2028, 1, 1));
+      fixture.detectChanges();
+      host.dayView().focusedDate.set(new Date(2028, 1, 29));
+      fixture.detectChanges();
+
+      pressKey('PageDown', true);
+
+      expect(host.newActiveDate).toEqual(new Date(2029, 1, 28));
+    });
   });
 });

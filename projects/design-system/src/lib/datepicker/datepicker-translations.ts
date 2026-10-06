@@ -14,24 +14,9 @@ export interface DatepickerTranslation {
   dayNumberSuffix: string;
 
   calendarLabel: string;
-  prevMonthLabel: string;
-  nextMonthLabel: string;
-  prevYearLabel: string;
-  nextYearLabel: string;
-  prevYearRangeLabel: string;
-  nextYearRangeLabel: string;
   switchToDayViewLabel: string;
   switchToMonthViewLabel: string;
   switchToYearViewLabel: string;
-
-  /** Field is empty. */
-  requiredError: string;
-  /** Text does not match the expected pattern; `{format}` is replaced. */
-  formatError: string;
-  /** Pattern matches but the day does not exist. */
-  invalidDateError: string;
-  /** "From" is after "To" in a date range. */
-  rangeOrderError: string;
 }
 
 const EN: DatepickerTranslation = {
@@ -47,19 +32,9 @@ const EN: DatepickerTranslation = {
   ],
   dayNumberSuffix: '',
   calendarLabel: 'Choose date',
-  prevMonthLabel: 'Previous month',
-  nextMonthLabel: 'Next month',
-  prevYearLabel: 'Previous year',
-  nextYearLabel: 'Next year',
-  prevYearRangeLabel: 'Previous 12 years',
-  nextYearRangeLabel: 'Next 12 years',
   switchToDayViewLabel: 'Switch to day view',
   switchToMonthViewLabel: 'Switch to month view',
   switchToYearViewLabel: 'Switch to year view',
-  requiredError: 'Please enter a date.',
-  formatError: 'Please enter date in the {format} format.',
-  invalidDateError: 'Please enter a valid date.',
-  rangeOrderError: 'From date must be before the To date.',
 };
 
 const SL: DatepickerTranslation = {
@@ -75,19 +50,9 @@ const SL: DatepickerTranslation = {
   ],
   dayNumberSuffix: '.',
   calendarLabel: 'Izberite datum',
-  prevMonthLabel: 'Prejšnji mesec',
-  nextMonthLabel: 'Naslednji mesec',
-  prevYearLabel: 'Prejšnje leto',
-  nextYearLabel: 'Naslednje leto',
-  prevYearRangeLabel: 'Prejšnjih 12 let',
-  nextYearRangeLabel: 'Naslednjih 12 let',
   switchToDayViewLabel: 'Preklopi na izbiro dneva',
   switchToMonthViewLabel: 'Preklopi na izbiro meseca',
   switchToYearViewLabel: 'Preklopi na izbiro leta',
-  requiredError: 'Vnesite datum.',
-  formatError: 'Vnesite datum v obliki {format}.',
-  invalidDateError: 'Vnesite veljaven datum.',
-  rangeOrderError: 'Datum Od mora biti pred datumom Do.',
 };
 
 export const DATEPICKER_TRANSLATIONS: Record<DatepickerLocale, DatepickerTranslation> = {

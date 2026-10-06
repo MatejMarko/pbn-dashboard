@@ -26,27 +26,12 @@ export class DatepickerIntl {
   readonly monthsShort = computed(() => this.translation().monthsShort);
 
   readonly calendarLabel = computed(() => this.translation().calendarLabel);
-  readonly prevMonthLabel = computed(() => this.translation().prevMonthLabel);
-  readonly nextMonthLabel = computed(() => this.translation().nextMonthLabel);
-  readonly prevYearLabel = computed(() => this.translation().prevYearLabel);
-  readonly nextYearLabel = computed(() => this.translation().nextYearLabel);
-  readonly prevYearRangeLabel = computed(() => this.translation().prevYearRangeLabel);
-  readonly nextYearRangeLabel = computed(() => this.translation().nextYearRangeLabel);
   readonly switchToDayViewLabel = computed(() => this.translation().switchToDayViewLabel);
   readonly switchToMonthViewLabel = computed(() => this.translation().switchToMonthViewLabel);
   readonly switchToYearViewLabel = computed(() => this.translation().switchToYearViewLabel);
 
-  readonly requiredError = computed(() => this.translation().requiredError);
-  readonly invalidDateError = computed(() => this.translation().invalidDateError);
-  readonly rangeOrderError = computed(() => this.translation().rangeOrderError);
-
   setLocale(locale: DatepickerLocale): void {
     this.locale.set(locale);
-  }
-
-  /** `Please enter date in the D.M.YYYY format.` */
-  formatError(humanFormat: string): string {
-    return this.translation().formatError.replace('{format}', humanFormat);
   }
 
   /** `January 2026` / `januar 2026`. */

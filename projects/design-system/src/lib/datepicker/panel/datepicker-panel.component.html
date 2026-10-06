@@ -23,7 +23,14 @@
             [attr.aria-label]="segmentLabel('day')"
             [attr.aria-pressed]="isViewActive('day')"
             (click)="setView('day')">
-      {{ headerDay() }}
+      @if (showDay()) {
+        {{ headerDay() }}
+      } @else {
+        <otp-svg class="header-segment__icon"
+                 [name]="SvgNames.CALENDAR_32"
+                 [size]="16"
+                 aria-hidden="true" />
+      }
       @if (isViewActive('day')) {
         <ng-container [ngTemplateOutlet]="modeMarker" />
       }

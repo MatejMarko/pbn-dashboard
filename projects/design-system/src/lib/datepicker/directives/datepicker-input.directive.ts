@@ -7,7 +7,7 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
-import { CalendarComponent, DatepickerInputHost } from './calendar.component';
+import { CalendarComponent, DatepickerInputHost } from '../calendar/calendar.component';
 import {
   compareDates,
   DateParseStatus,
@@ -16,7 +16,7 @@ import {
   parseDate,
   parseDateDetailed,
   parseIsoDate,
-} from './date-utils';
+} from '../date-utils';
 
 /**
  * Shape of the value the form control holds.
@@ -68,7 +68,7 @@ export class DatepickerInputDirective
   implements ControlValueAccessor, Validator, DatepickerInputHost, OnInit, OnDestroy {
   readonly calendar = input.required<CalendarComponent>({ alias: 'otpDatepickerInput' });
   /** How the date is shown in the field. */
-  readonly dateFormat = input('dd.MM.yyyy');
+  readonly dateFormat = input('d.M.yyyy');
   /** How the date is stored in the form control. */
   readonly valueFormat = input<DatepickerValueFormat>('iso');
 

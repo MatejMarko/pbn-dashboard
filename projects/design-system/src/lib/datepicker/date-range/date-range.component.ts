@@ -12,11 +12,11 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { merge } from 'rxjs';
-import { CalendarComponent } from '../calendar.component';
+import { CalendarComponent } from '../calendar/calendar.component';
 import { compareDates } from '../date-utils';
-import { DatepickerInputDirective } from '../datepicker-input.directive';
+import { DatepickerInputDirective } from '../directives/datepicker-input.directive';
 import { DatepickerIntl } from '../datepicker-intl';
-import { DatepickerToggleDirective } from '../datepicker-toggle.directive';
+import { DatepickerToggleDirective } from '../directives/datepicker-toggle.directive';
 import { FormFieldComponent } from '../../form-field/form-field.component';
 import { LabelDirective } from '../../form-field/directives/label.directive';
 import { InputComponent } from '../../input/input.component';
@@ -106,6 +106,7 @@ export class DateRangeComponent implements ErrorStateMatcher, OnInit {
       messages.push({ id: `otp-date-range-${this.id}-to-error`, text: toMessage, fields: ['to'] });
     }
 
+    /*
     if (this.hasRangeError()) {
       messages.push({
         id: `otp-date-range-${this.id}-order-error`,
@@ -113,6 +114,7 @@ export class DateRangeComponent implements ErrorStateMatcher, OnInit {
         fields: ['from', 'to'],
       });
     }
+    */
 
     return messages;
   });
@@ -168,12 +170,14 @@ export class DateRangeComponent implements ErrorStateMatcher, OnInit {
     const errors = control.errors;
     if (!errors) return null;
 
+    /*
     // Unparseable text also leaves the value null, so `required` would fire
     // alongside it. What the user typed is the more useful message.
     if (errors['otpDatepickerFormat']) return this.intl.formatError(this.formatLabel());
     if (errors['otpDatepickerInvalidDate']) return this.intl.invalidDateError();
     if (errors['required']) return this.intl.requiredError();
     if (errors['otpDatepickerMin'] || errors['otpDatepickerMax']) return this.intl.invalidDateError();
+    */
 
     return null;
   }

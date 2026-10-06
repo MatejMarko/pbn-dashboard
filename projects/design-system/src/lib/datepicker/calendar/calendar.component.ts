@@ -8,8 +8,8 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { DatepickerRef } from './datepicker-ref';
-import { DatepickerService } from './datepicker.service';
+import { DatepickerRef } from '../datepicker-ref';
+import { DatepickerService } from '../datepicker.service';
 
 /** What the calendar needs from the input it writes into. */
 export interface DatepickerInputHost {

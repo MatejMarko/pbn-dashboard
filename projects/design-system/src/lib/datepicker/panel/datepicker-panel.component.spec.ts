@@ -7,13 +7,14 @@ import { provideMockSvg } from '../../../test-utils/mock-svg';
 describe('DatepickerPanelComponent', () => {
   let fixture: ComponentFixture<DatepickerPanelComponent>;
   let component: DatepickerPanelComponent;
+  let data: DatepickerData;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let closeSpy: any;
 
   beforeEach(async () => {
     closeSpy = vi.fn();
 
-    const data: DatepickerData = {
+    data = {
       selected: signal<Date | null>(new Date(2026, 0, 15)),
       min: signal<Date | null>(null),
       max: signal<Date | null>(null),
@@ -56,6 +57,95 @@ describe('DatepickerPanelComponent', () => {
       fixture.nativeElement.querySelectorAll('.header-segment')
     );
     expect(segments.map(s => s.textContent!.trim())).toEqual(['15', 'January', '2026']);
+  });
+
+  describe('the day segment', () => {
+    function daySegment(): HTMLButtonElement {
+      return fixture.nativeElement.querySelector('.header-segment--day');
+    }
+
+    function showsIcon(): boolean {
+      return !!daySegment().querySelector('otp-svg');
+    }
+
+    it('should show a day only while the month holding the value is on screen', () => {
+      expect(component.showDay()).toBe(true);
+      expect(daySegment().textContent!.trim()).toBe('15');
+      expect(showsIcon()).toBe(false);
+    });
+
+    it('should show the calendar icon when nothing has been chosen', () => {
+      data.selected.set(null);
+      fixture.detectChanges();
+
+      expect(component.showDay()).toBe(false);
+      expect(showsIcon()).toBe(true);
+      expect(daySegment().textContent!.trim()).toBe('');
+    });
+
+    it('should swap the day for the icon once the month changes', () => {
+      component.onMonthSelected(7); // August; the value is in January
+      fixture.detectChanges();
+
+      expect(showsIcon()).toBe(true);
+    });
+
+    it('should swap the day for the icon once the year changes', () => {
+      component.onYearSelected(2030);
+      fixture.detectChanges();
+
+      expect(showsIcon()).toBe(true);
+    });
+
+    it('should bring the day back when the value\'s month is shown again', () => {
+      component.onMonthSelected(7);
+      fixture.detectChanges();
+      expect(showsIcon()).toBe(true);
+
+      component.onMonthSelected(0); // back to January 2026
+      fixture.detectChanges();
+
+      expect(daySegment().textContent!.trim()).toBe('15');
+      expect(showsIcon()).toBe(false);
+    });
+
+    it('should still open the day view while showing the icon', () => {
+      data.selected.set(null);
+      component.setView('year');
+      fixture.detectChanges();
+
+      daySegment().click();
+      fixture.detectChanges();
+
+      expect(component.currentView()).toBe('day');
+    });
+  });
+
+  describe('the month cursor', () => {
+    it('should keep the first of the month, so a 31st cannot overflow', () => {
+      data.selected.set(new Date(2026, 2, 31)); // 31 March
+      fixture = TestBed.createComponent(DatepickerPanelComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      component.onMonthSelected(3); // April has 30 days
+
+      expect(component.activeDate().getMonth()).toBe(3);
+      expect(component.activeDate().getDate()).toBe(1);
+    });
+
+    it('should not trip over a leap day when the year changes', () => {
+      data.selected.set(new Date(2024, 1, 29)); // 29 February 2024
+      fixture = TestBed.createComponent(DatepickerPanelComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      component.onYearSelected(2025); // 2025 has no 29 February
+
+      expect(component.activeDate().getFullYear()).toBe(2025);
+      expect(component.activeDate().getMonth()).toBe(1);
+      expect(component.activeDate().getDate()).toBe(1);
+    });
   });
 
   it('should switch to month view on the month segment click', () => {
@@ -117,14 +207,15 @@ describe('DatepickerPanelComponent', () => {
     expect(yearSegment.getAttribute('aria-pressed')).toBe('false');
   });
 
-  it('should return to day view after picking a year, keeping the month', () => {
+  it('should go to month view after picking a year, keeping the month', () => {
     component.setView('year');
     fixture.detectChanges();
 
     component.onYearSelected(2030);
     fixture.detectChanges();
 
-    expect(component.currentView()).toBe('day');
+    expect(component.currentView()).toBe('month');
+    expect(fixture.nativeElement.querySelector('otp-month-view')).toBeTruthy();
     expect(component.activeDate().getFullYear()).toBe(2030);
     expect(component.activeDate().getMonth()).toBe(0);
   });

@@ -2,10 +2,6 @@ export function getDaysInMonth(year: number, month: number): number {
   return new Date(year, month + 1, 0).getDate();
 }
 
-export function getFirstDayOfWeek(year: number, month: number): number {
-  return new Date(year, month, 1).getDay();
-}
-
 /**
  * Returns a 6x7 grid of Date objects for the given month,
  * including leading/trailing days from adjacent months.
@@ -33,21 +29,12 @@ export function getMonthGrid(year: number, month: number, firstDayOfWeek = 1): D
 }
 
 /**
- * Returns the date moved to the given month, keeping the day of month
- * where possible (31 Jan -> 28/29 Feb).
+ * First day of the date's month. The panel browses by month, so it keeps its
+ * cursor here: no day component means no overflow (31 + "April" would roll into
+ * May) and no leap-year special case.
  */
-export function withMonth(date: Date, month: number): Date {
-  const day = Math.min(date.getDate(), getDaysInMonth(date.getFullYear(), month));
-  return new Date(date.getFullYear(), month, day);
-}
-
-/**
- * Returns the date moved to the given year, keeping the day of month
- * where possible (29 Feb -> 28 Feb in a non-leap year).
- */
-export function withYear(date: Date, year: number): Date {
-  const day = Math.min(date.getDate(), getDaysInMonth(year, date.getMonth()));
-  return new Date(year, date.getMonth(), day);
+export function startOfMonth(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth(), 1);
 }
 
 export function isSameDay(a: Date, b: Date): boolean {
@@ -85,12 +72,6 @@ export function addMonths(date: Date, amount: number): Date {
 
 export function addYears(date: Date, amount: number): Date {
   return addMonths(date, amount * 12);
-}
-
-export function clampDate(date: Date, min: Date | null, max: Date | null): Date {
-  if (min && compareDates(date, min) < 0) return new Date(min);
-  if (max && compareDates(date, max) > 0) return new Date(max);
-  return new Date(date);
 }
 
 /**

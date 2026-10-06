@@ -2,11 +2,11 @@ import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { CalendarComponent } from './calendar.component';
+import { CalendarComponent } from '../calendar/calendar.component';
 import { DatepickerInputDirective } from './datepicker-input.directive';
 import { DatepickerToggleDirective } from './datepicker-toggle.directive';
-import { DatepickerRef } from './datepicker-ref';
-import { DatepickerService } from './datepicker.service';
+import { DatepickerRef } from '../datepicker-ref';
+import { DatepickerService } from '../datepicker.service';
 
 @Component({
   template: `
@@ -115,6 +115,7 @@ describe('datepicker input / toggle', () => {
       input().dispatchEvent(new Event('input'));
       fixture.detectChanges();
 
+      // Padded input is valid and is not rewritten mid-typing; blur normalizes.
       expect(input().value).toBe('16.04.2026');
     });
 
@@ -125,13 +126,13 @@ describe('datepicker input / toggle', () => {
       host.dateCtrl.setValue(new Date(2026, 3, 16));
       fixture.detectChanges();
 
-      expect(input().value).toBe('16.04.2026');
+      expect(input().value).toBe('16.4.2026');
     });
 
     it('should format values written from code', () => {
       host.dateCtrl.patchValue(new Date(2026, 0, 5));
       fixture.detectChanges();
-      expect(input().value).toBe('05.01.2026');
+      expect(input().value).toBe('5.1.2026');
 
       host.dateCtrl.reset();
       fixture.detectChanges();
@@ -181,7 +182,7 @@ describe('datepicker input / toggle', () => {
       host.dateCtrl.setValue('2026-09-24T00:00:00.000+02:00');
       fixture.detectChanges();
 
-      expect(input().value).toBe('24.09.2026');
+      expect(input().value).toBe('24.9.2026');
       expect(host.dateCtrl.errors).toBeNull();
     });
 
@@ -204,8 +205,37 @@ describe('datepicker input / toggle', () => {
 
       expect(host.dateCtrl.value).toBeNull();
       expect(host.dateCtrl.errors).toEqual({
-        otpDatepickerFormat: { text: '2025/12/2', format: 'dd.MM.yyyy' },
+        otpDatepickerFormat: { text: '2025/12/2', format: 'd.M.yyyy' },
       });
+    });
+
+    it('should accept both padded and plain input under the default format', () => {
+      input().value = '01.01.2026';
+      input().dispatchEvent(new Event('input'));
+      expect(host.dateCtrl.errors).toBeNull();
+
+      // Normalized once the field is left, not while typing.
+      input().dispatchEvent(new Event('blur'));
+      expect(input().value).toBe('1.1.2026');
+    });
+
+    it('should reject a separator that is not part of the format', () => {
+      input().value = '1/1/1994';
+      input().dispatchEvent(new Event('input'));
+
+      expect(host.dateCtrl.value).toBeNull();
+      expect(host.dateCtrl.hasError('otpDatepickerFormat')).toBe(true);
+      expect(host.dateCtrl.hasError('otpDatepickerInvalidDate')).toBe(false);
+    });
+
+    it('should tell a day that cannot exist apart from a wrong format', () => {
+      // The shape is right, April simply has 30 days.
+      input().value = '31.4.2024';
+      input().dispatchEvent(new Event('input'));
+
+      expect(host.dateCtrl.value).toBeNull();
+      expect(host.dateCtrl.hasError('otpDatepickerInvalidDate')).toBe(true);
+      expect(host.dateCtrl.hasError('otpDatepickerFormat')).toBe(false);
     });
 
     it('should report an invalid-date error for a day that does not exist', () => {
@@ -273,7 +303,7 @@ describe('datepicker input / toggle', () => {
 
       expect(host.dateCtrl.value).toMatch(/^2026-01-20T00:00:00\.000[+-]\d{2}:\d{2}$/);
       expect(host.dateCtrl.touched).toBe(true);
-      expect(input().value).toBe('20.01.2026');
+      expect(input().value).toBe('20.1.2026');
       expect(host.selectedDate!.getDate()).toBe(20);
     });
 

@@ -11,7 +11,9 @@ import { NgTemplateOutlet } from '@angular/common';
 import { A11yModule } from '@angular/cdk/a11y';
 import { DATEPICKER_DATA } from '../datepicker-context';
 import { DatepickerIntl } from '../datepicker-intl';
-import { withMonth, withYear } from '../date-utils';
+import { isSameMonth, startOfMonth } from '../date-utils';
+import { SvgComponent } from '../../svg/svg';
+import { SvgNames } from '../../svg/svg-names.enum';
 import { DayViewComponent } from './day-view/day-view.component';
 import { MonthViewComponent } from './month-view/month-view.component';
 import { YearViewComponent } from './year-view/year-view.component';
@@ -24,7 +26,14 @@ type PanelView = 'day' | 'month' | 'year';
   styleUrl: './datepicker-panel.component.scss',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgTemplateOutlet, A11yModule, DayViewComponent, MonthViewComponent, YearViewComponent],
+  imports: [
+    NgTemplateOutlet,
+    A11yModule,
+    SvgComponent,
+    DayViewComponent,
+    MonthViewComponent,
+    YearViewComponent,
+  ],
   host: {
     'role': 'dialog',
     'aria-modal': 'true',
@@ -35,6 +44,8 @@ type PanelView = 'day' | 'month' | 'year';
 export class DatepickerPanelComponent {
   readonly intl = inject(DatepickerIntl);
   private readonly data = inject(DATEPICKER_DATA);
+
+  readonly SvgNames = SvgNames;
 
   /**
    * Where the panel ended up relative to its trigger. Set by the service from
@@ -64,10 +75,21 @@ export class DatepickerPanelComponent {
       : d.getFullYear().toString();
   });
 
-  /** Day segment of the header, e.g. `01`. */
-  readonly headerDay = computed(() =>
-    this.activeDate().getDate().toString().padStart(2, '0')
-  );
+  /**
+   * A day is only shown once it has actually been chosen — and only while the
+   * month holding it is on screen. Browsing elsewhere, or opening with an empty
+   * field, shows the calendar icon instead of claiming a day nobody picked.
+   */
+  readonly showDay = computed(() => {
+    const selected = this.selected();
+    return selected !== null && isSameMonth(selected, this.activeDate());
+  });
+
+  /** Day segment of the header, e.g. `01`. Only rendered when {@link showDay}. */
+  readonly headerDay = computed(() => {
+    const selected = this.selected();
+    return selected ? selected.getDate().toString().padStart(2, '0') : '';
+  });
 
   /** Month segment of the header, e.g. `January`. */
   readonly headerMonth = computed(() =>
@@ -80,7 +102,7 @@ export class DatepickerPanelComponent {
   constructor() {
     const sel = this.data.selected();
     if (sel) {
-      this.activeDate.set(new Date(sel));
+      this.activeDate.set(startOfMonth(sel));
     }
   }
 
@@ -108,7 +130,7 @@ export class DatepickerPanelComponent {
 
   onMonthSelected(month: number): void {
     const d = this.activeDate();
-    this.activeDate.set(withMonth(d, month));
+    this.activeDate.set(new Date(d.getFullYear(), month, 1));
     this.currentView.set('day');
     this.announce(this.headerLabel());
     queueMicrotask(() => this.dayView()?.focusInitial());
@@ -116,14 +138,14 @@ export class DatepickerPanelComponent {
 
   onYearSelected(year: number): void {
     const d = this.activeDate();
-    this.activeDate.set(withYear(d, year));
-    this.currentView.set('day');
+    this.activeDate.set(new Date(year, d.getMonth(), 1));
+    this.currentView.set('month');
     this.announce(this.headerLabel());
-    queueMicrotask(() => this.dayView()?.focusInitial());
+    queueMicrotask(() => this.monthView()?.focusInitial());
   }
 
   onActiveDateChange(date: Date): void {
-    this.activeDate.set(date);
+    this.activeDate.set(startOfMonth(date));
     this.announce(this.headerLabel());
   }
 

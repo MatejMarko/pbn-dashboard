@@ -1,6 +1,5 @@
 import {
   getDaysInMonth,
-  getFirstDayOfWeek,
   getMonthGrid,
   isSameDay,
   isSameMonth,
@@ -8,7 +7,6 @@ import {
   isDateInRange,
   addMonths,
   addYears,
-  clampDate,
   formatDate,
   parseDate,
   isMonthDisabled,
@@ -33,13 +31,6 @@ describe('date-utils', () => {
 
     it('should return 30 for April', () => {
       expect(getDaysInMonth(2026, 3)).toBe(30);
-    });
-  });
-
-  describe('getFirstDayOfWeek', () => {
-    it('should return the correct day of week for the first of the month', () => {
-      // 2026-01-01 is a Thursday (4)
-      expect(getFirstDayOfWeek(2026, 0)).toBe(4);
     });
   });
 
@@ -187,26 +178,6 @@ describe('date-utils', () => {
       const result = addYears(new Date(2024, 1, 29), 1);
       expect(result.getMonth()).toBe(1);
       expect(result.getDate()).toBe(28);
-    });
-  });
-
-  describe('clampDate', () => {
-    it('should return the date when in range', () => {
-      const date = new Date(2026, 0, 15);
-      const result = clampDate(date, new Date(2026, 0, 1), new Date(2026, 0, 31));
-      expect(isSameDay(result, date)).toBe(true);
-    });
-
-    it('should return min when date is before min', () => {
-      const min = new Date(2026, 0, 10);
-      const result = clampDate(new Date(2026, 0, 5), min, null);
-      expect(isSameDay(result, min)).toBe(true);
-    });
-
-    it('should return max when date is after max', () => {
-      const max = new Date(2026, 0, 20);
-      const result = clampDate(new Date(2026, 0, 25), null, max);
-      expect(isSameDay(result, max)).toBe(true);
     });
   });
 
