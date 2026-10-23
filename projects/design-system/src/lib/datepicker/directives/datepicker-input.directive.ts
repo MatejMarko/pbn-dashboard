@@ -8,6 +8,7 @@ import {
   Validator,
 } from '@angular/forms';
 import { CalendarComponent, DatepickerInputHost } from '../calendar/calendar.component';
+import { OTP_DATEPICKER_VALUE_ADAPTER } from '../datepicker-value-adapter';
 import {
   compareDates,
   DateParseStatus,
@@ -26,6 +27,12 @@ import {
  * - `date`: a `Date` at local midnight.
  */
 export type DatepickerValueFormat = 'iso' | 'date';
+
+/** Best-effort type name for the dev-mode warning above. */
+function describeType(value: unknown): string {
+  if (typeof value !== 'object' || value === null) return typeof value;
+  return value.constructor?.name ?? 'object';
+}
 
 /**
  * Connects an input to an `<otp-calendar>`.
@@ -73,6 +80,7 @@ export class DatepickerInputDirective
   readonly valueFormat = input<DatepickerValueFormat>('iso');
 
   private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private readonly valueAdapter = inject(OTP_DATEPICKER_VALUE_ADAPTER);
 
   readonly isInput: boolean;
 
@@ -147,6 +155,15 @@ export class DatepickerInputDirective
     const date = this.coerceDate(value);
     this.value = date;
 
+    if (value != null && date === null && (typeof ngDevMode === 'undefined' || ngDevMode)) {
+      // Silently clearing the field here is what makes an unsupported value
+      // type look like "the datepicker ignores my value".
+      console.warn(
+        `otpDatepickerInput: cannot read a value of type ${describeType(value)}. `
+        + 'Provide an OTP_DATEPICKER_VALUE_ADAPTER for it, or use a Date or an ISO string.',
+      );
+    }
+
     if (date) {
       this.parseFailureText = null;
       this.setText(formatDate(date, this.dateFormat()));
@@ -187,12 +204,12 @@ export class DatepickerInputDirective
     const value = this.coerceDate(control.value);
     if (!value) return null;
 
-    const min = this.calendarRef?.min() ?? null;
+    const min = this.calendarRef?.minDate() ?? null;
     if (min && compareDates(value, min) < 0) {
       return { otpDatepickerMin: { min, actual: value } };
     }
 
-    const max = this.calendarRef?.max() ?? null;
+    const max = this.calendarRef?.maxDate() ?? null;
     if (max && compareDates(value, max) > 0) {
       return { otpDatepickerMax: { max, actual: value } };
     }
@@ -242,8 +259,14 @@ export class DatepickerInputDirective
 
   // --- Internals -----------------------------------------------------------
 
-  /** Pushes the current value to the form control in the configured shape. */
+  /** Pushes the current value to the form control in the app's date type. */
   private emitValue(): void {
+    const adapter = this.valueAdapter;
+    if (adapter) {
+      this.onChange(adapter.fromDate(this.value) as string | Date | null);
+      return;
+    }
+
     if (!this.value) {
       this.onChange(null);
       return;
@@ -254,12 +277,27 @@ export class DatepickerInputDirective
   }
 
   private coerceDate(value: unknown): Date | null {
-    if (value instanceof Date) {
-      return isNaN(value.getTime()) ? null : value;
+    if (value == null) return null;
+
+    const adapter = this.valueAdapter;
+    if (adapter) {
+      // The app owns the model type; text typed into the field is parsed below.
+      const fromAdapter = adapter.toDate(value);
+      if (fromAdapter) return fromAdapter;
+    } else {
+      if (value instanceof Date) {
+        return isNaN(value.getTime()) ? null : value;
+      }
+      if (typeof value === 'string' && value !== '') {
+        // An ISO string may come from the control.
+        const iso = parseIsoDate(value);
+        if (iso) return iso;
+      }
     }
+
+    // A value written as display text, e.g. '6.10.2026'.
     if (typeof value === 'string' && value !== '') {
-      // An ISO string may come from the control; the display format from typing.
-      return parseIsoDate(value) ?? parseDate(value, this.dateFormat());
+      return parseDate(value, this.dateFormat());
     }
     return null;
   }

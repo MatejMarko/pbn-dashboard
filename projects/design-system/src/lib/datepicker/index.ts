@@ -12,6 +12,11 @@ export { DatepickerService, type DatepickerConfig } from './datepicker.service';
 export { DatepickerRef } from './datepicker-ref';
 export { DatepickerIntl } from './datepicker-intl';
 export {
+  OTP_DATEPICKER_VALUE_ADAPTER,
+  provideDatepickerValueAdapter,
+  type DatepickerValueAdapter,
+} from './datepicker-value-adapter';
+export {
   DATEPICKER_TRANSLATIONS,
   resolveDatepickerLocale,
   type DatepickerLocale,

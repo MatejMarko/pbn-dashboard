@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   ElementRef,
   inject,
   input,
@@ -9,6 +10,8 @@ import {
   signal,
 } from '@angular/core';
 import { DatepickerRef } from '../datepicker-ref';
+import { OTP_DATEPICKER_VALUE_ADAPTER } from '../datepicker-value-adapter';
+import { parseIsoDate } from '../date-utils';
 import { DatepickerService } from '../datepicker.service';
 
 /** What the calendar needs from the input it writes into. */
@@ -34,14 +37,26 @@ export interface DatepickerInputHost {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent implements OnDestroy {
-  readonly selected = input<Date | null>(null);
-  readonly min = input<Date | null>(null);
-  readonly max = input<Date | null>(null);
+  /**
+   * `selected`, `min` and `max` accept whatever date type the application uses
+   * — a `Date`, an ISO string, or its own type when an
+   * {@link OTP_DATEPICKER_VALUE_ADAPTER} is provided.
+   */
+  readonly selected = input<unknown>(null);
+  readonly min = input<unknown>(null);
+  readonly max = input<unknown>(null);
   readonly fixedWeeks = input(true);
 
-  readonly dateSelected = output<Date>();
+  /** The picked day, in the application's date type. */
+  readonly dateSelected = output<unknown>();
 
   private readonly datepickerService = inject(DatepickerService);
+  private readonly valueAdapter = inject(OTP_DATEPICKER_VALUE_ADAPTER);
+
+  /** The inputs above as native dates, which is what the panel works with. */
+  readonly selectedDate = computed(() => this.toDate(this.selected()));
+  readonly minDate = computed(() => this.toDate(this.min()));
+  readonly maxDate = computed(() => this.toDate(this.max()));
 
   private readonly openState = signal(false);
   readonly isOpen = this.openState.asReadonly();
@@ -102,9 +117,9 @@ export class CalendarComponent implements OnDestroy {
     this.datepickerRef = this.datepickerService.open({
       origin,
       anchor: trigger ? 'trigger' : 'field',
-      selected: host?.readDate() ?? this.selected(),
-      min: this.min(),
-      max: this.max(),
+      selected: host?.readDate() ?? this.selectedDate(),
+      min: this.minDate(),
+      max: this.maxDate(),
       fixedWeeks: this.fixedWeeks(),
     });
 
@@ -115,7 +130,7 @@ export class CalendarComponent implements OnDestroy {
       this.datepickerRef = null;
 
       if (date) {
-        this.dateSelected.emit(date);
+        this.dateSelected.emit(this.valueAdapter ? this.valueAdapter.fromDate(date) : date);
         host?.writeDate(date);
       }
     });
@@ -135,6 +150,15 @@ export class CalendarComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.datepickerRef?.close(null);
+  }
+
+  /** Reads an input value through the adapter, falling back to Date / ISO. */
+  private toDate(value: unknown): Date | null {
+    if (value == null) return null;
+    if (this.valueAdapter) return this.valueAdapter.toDate(value);
+    if (value instanceof Date) return isNaN(value.getTime()) ? null : value;
+    if (typeof value === 'string' && value !== '') return parseIsoDate(value);
+    return null;
   }
 
   /** The form field around the input, so the panel clears the whole field. */

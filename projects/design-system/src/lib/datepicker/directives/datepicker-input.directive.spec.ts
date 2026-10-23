@@ -33,8 +33,9 @@ class Host {
 
   calendar = viewChild.required(CalendarComponent);
 
-  onDateSelected(date: Date): void {
-    this.selectedDate = date;
+  // The output carries the app's date type; without an adapter that is a Date.
+  onDateSelected(date: unknown): void {
+    this.selectedDate = date as Date;
   }
 }
 

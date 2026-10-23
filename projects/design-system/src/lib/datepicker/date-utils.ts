@@ -78,12 +78,15 @@ export function addYears(date: Date, amount: number): Date {
  * Supported pattern tokens: `yyyy`, `MM`/`M` (padded / plain month),
  * `dd`/`d` (padded / plain day). Anything else is a literal.
  */
-const FORMAT_TOKENS = /yyyy|MM|M|dd|d/g;
+const FORMAT_TOKENS = /yyyy|y|MM|M|dd|d/g;
 
 export function formatDate(date: Date, format: string): string {
   return format.replace(FORMAT_TOKENS, token => {
     switch (token) {
+      // `y` is Luxon's spelling of the same thing, so one format string can be
+      // shared with apps that already use it.
       case 'yyyy':
+      case 'y':
         return date.getFullYear().toString();
       case 'MM':
         return (date.getMonth() + 1).toString().padStart(2, '0');
@@ -154,6 +157,11 @@ function buildPattern(format: string): { pattern: RegExp; order: ('d' | 'M' | 'y
       source += '(\\d{4})';
       order.push('y');
       index += 4;
+    } else if (rest.startsWith('y')) {
+      // Four digits, unlike Luxon's `y`, which would read `1.1.26` as year 26.
+      source += '(\\d{4})';
+      order.push('y');
+      index += 1;
     } else if (rest.startsWith('MM')) {
       source += '(\\d{2})';
       order.push('M');
