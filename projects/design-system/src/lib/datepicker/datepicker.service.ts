@@ -39,6 +39,10 @@ const TRIGGER_GAP_REM = 1.125;
 const ABOVE_GAP_REM = 0.625;
 /** Overhang past the field's right edge when there is no trigger to aim at. */
 const FIELD_OVERHANG_REM = 1.875;
+/** Width of the caret; half of it is the closest the tip may get to an edge. */
+const CARET_WIDTH_REM = 1.5;
+/** Keeps the tip clear of the panel's rounded corners. */
+const CARET_EDGE_MARGIN_REM = 0.75;
 
 function remToPx(rem: number): number {
   const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -78,6 +82,13 @@ export class DatepickerService {
       .position()
       .flexibleConnectedTo(origin)
       .withPositions(buildPositions(config.anchor ?? 'field'))
+      /**
+       * The panel has a fixed size, so it has nothing to gain from the
+       * bounding-box path, which positions a box and flex-aligns the panel
+       * inside it. Positioning the panel directly is one fewer thing between
+       * the requested offsets and the result.
+       */
+      .withFlexibleDimensions(false)
       .withPush(true);
 
     const overlayConfig = new OverlayConfig({
@@ -109,12 +120,45 @@ export class DatepickerService {
     const portal = new ComponentPortal(DatepickerPanelComponent, null, injector);
     const componentRef = overlayRef.attach(portal);
 
-    // The caret only makes sense when the panel opens below its trigger.
+    const panelElement: HTMLElement | null =
+      componentRef.location.nativeElement.querySelector('.datepicker-panel');
+
+    /**
+     * Points the caret at the trigger by measuring where the panel actually
+     * landed, rather than trusting the offsets to have been applied verbatim.
+     *
+     * The overlay does not always end up exactly where it was asked to: CDK
+     * pushes it away from viewport edges, and when it renders in the browser's
+     * top layer its coordinate space can differ from the viewport's by a
+     * constant amount (observed: 15px in one application, 0 here). Measuring
+     * the rendered rects keeps the tip on the trigger whatever the cause.
+     */
+    const alignCaret = () => {
+      if (!panelElement) return;
+
+      const panelRect = panelElement.getBoundingClientRect();
+      const triggerRect = origin.getBoundingClientRect();
+      if (!panelRect.width || !triggerRect.width) return;
+
+      const triggerCentre = triggerRect.left + triggerRect.width / 2;
+      const edge = remToPx(CARET_WIDTH_REM) / 2 + remToPx(CARET_EDGE_MARGIN_REM);
+      const inset = Math.min(
+        Math.max(panelRect.right - triggerCentre, edge),
+        panelRect.width - edge,
+      );
+
+      panelElement.style.setProperty('--otp-datepicker-caret-inset', `${inset}px`);
+    };
+
     positionStrategy.positionChanges.subscribe(change => {
+      // The caret only makes sense when the panel opens below its trigger.
       componentRef.instance.placement.set(
         change.connectionPair.originY === 'bottom' ? 'below' : 'above'
       );
+      if (config.anchor === 'trigger') alignCaret();
     });
+
+    if (config.anchor === 'trigger') queueMicrotask(alignCaret);
 
     overlayRef.backdropClick().subscribe(() => datepickerRef.close(null));
 
