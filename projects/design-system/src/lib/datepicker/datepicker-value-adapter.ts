@@ -1,4 +1,5 @@
 import { InjectionToken, Provider } from '@angular/core';
+import { formatIsoWithOffset, parseIsoDate } from './date-utils';
 
 /**
  * Translates between the date type an application keeps in its form controls
@@ -19,10 +20,9 @@ export interface DatepickerValueAdapter<T = unknown> {
 }
 
 /**
- * Defaults to `null`, which leaves the built-in handling in place: a `Date` or
- * an ISO string is read, and `valueFormat` decides what is written back.
- * Providing an adapter overrides both directions, and `valueFormat` no longer
- * applies.
+ * Defaults to `null`, which keeps native `Date` as the form control's type.
+ * A `Date`, an ISO string or text in the field's own format is still read, but
+ * a picked day is written back as a `Date`.
  */
 export const OTP_DATEPICKER_VALUE_ADAPTER = new InjectionToken<DatepickerValueAdapter | null>(
   'OTP_DATEPICKER_VALUE_ADAPTER',

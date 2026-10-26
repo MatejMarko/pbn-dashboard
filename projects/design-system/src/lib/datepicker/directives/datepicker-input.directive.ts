@@ -13,22 +13,12 @@ import {
   compareDates,
   DateParseStatus,
   formatDate,
-  formatIsoWithOffset,
   parseDate,
   parseDateDetailed,
   parseIsoDate,
 } from '../date-utils';
 
-/**
- * Shape of the value the form control holds.
- *
- * - `iso`: ISO 8601 with the local offset, `2026-09-24T00:00:00.000+02:00`.
- *   Survives JSON serialization without the calendar day shifting.
- * - `date`: a `Date` at local midnight.
- */
-export type DatepickerValueFormat = 'iso' | 'date';
-
-/** Best-effort type name for the dev-mode warning above. */
+/** Best-effort type name for the dev-mode warning in `writeValue`. */
 function describeType(value: unknown): string {
   if (typeof value !== 'object' || value === null) return typeof value;
   return value.constructor?.name ?? 'object';
@@ -76,8 +66,6 @@ export class DatepickerInputDirective
   readonly calendar = input.required<CalendarComponent>({ alias: 'otpDatepickerInput' });
   /** How the date is shown in the field. */
   readonly dateFormat = input('d.M.yyyy');
-  /** How the date is stored in the form control. */
-  readonly valueFormat = input<DatepickerValueFormat>('iso');
 
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly valueAdapter = inject(OTP_DATEPICKER_VALUE_ADAPTER);
@@ -261,38 +249,26 @@ export class DatepickerInputDirective
 
   /** Pushes the current value to the form control in the app's date type. */
   private emitValue(): void {
-    const adapter = this.valueAdapter;
-    if (adapter) {
-      this.onChange(adapter.fromDate(this.value) as string | Date | null);
-      return;
-    }
-
-    if (!this.value) {
-      this.onChange(null);
-      return;
-    }
     this.onChange(
-      this.valueFormat() === 'iso' ? formatIsoWithOffset(this.value) : this.value
+      this.valueAdapter
+        ? (this.valueAdapter.fromDate(this.value) as string | Date | null)
+        : this.value
     );
   }
 
   private coerceDate(value: unknown): Date | null {
     if (value == null) return null;
 
-    const adapter = this.valueAdapter;
-    if (adapter) {
+    if (this.valueAdapter) {
       // The app owns the model type; text typed into the field is parsed below.
-      const fromAdapter = adapter.toDate(value);
+      const fromAdapter = this.valueAdapter.toDate(value);
       if (fromAdapter) return fromAdapter;
-    } else {
-      if (value instanceof Date) {
-        return isNaN(value.getTime()) ? null : value;
-      }
-      if (typeof value === 'string' && value !== '') {
-        // An ISO string may come from the control.
-        const iso = parseIsoDate(value);
-        if (iso) return iso;
-      }
+    } else if (value instanceof Date) {
+      return isNaN(value.getTime()) ? null : value;
+    } else if (typeof value === 'string' && value !== '') {
+      // An ISO string may still arrive from a backend value.
+      const iso = parseIsoDate(value);
+      if (iso) return iso;
     }
 
     // A value written as display text, e.g. '6.10.2026'.

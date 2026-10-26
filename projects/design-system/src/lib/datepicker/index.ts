@@ -7,7 +7,6 @@ export { CalendarComponent, type DatepickerInputHost } from './calendar/calendar
 export { DatepickerInputDirective } from './directives/datepicker-input.directive';
 export { DatepickerToggleDirective } from './directives/datepicker-toggle.directive';
 export { DateRangeComponent } from './date-range/date-range.component';
-export { type DatepickerValueFormat } from './directives/datepicker-input.directive';
 export { DatepickerService, type DatepickerConfig } from './datepicker.service';
 export { DatepickerRef } from './datepicker-ref';
 export { DatepickerIntl } from './datepicker-intl';
