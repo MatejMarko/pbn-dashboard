@@ -1,4 +1,4 @@
-import { Component, computed, input, Signal } from '@angular/core';
+import { Component, computed, input, Signal, ChangeDetectionStrategy } from '@angular/core';
 import { DsButtonColor, DsButtonSize, DsButtonVariant } from '../ds-button.types';
 import { composeButtonClasses } from '../ds-button.utils';
 import { SvgComponent } from '../../../lib/svg/svg';
@@ -8,6 +8,7 @@ import { SvgComponent } from '../../../lib/svg/svg';
   templateUrl: './ds-button.html',
   styleUrl: './ds-button.scss',
   imports: [SvgComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '[class]': 'composedClasses()',
   },

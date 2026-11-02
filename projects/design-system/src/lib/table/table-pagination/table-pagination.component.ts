@@ -1,4 +1,4 @@
-import { Component, computed, input, output, ViewEncapsulation } from '@angular/core';
+import { Component, computed, input, output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { SvgComponent } from '../../svg/svg';
 import { DecimalPipe } from '@angular/common';
 import { DsIconButton } from '../../ds-button/ds-icon-button/ds-icon-button';
@@ -8,6 +8,7 @@ import { DsIconButton } from '../../ds-button/ds-icon-button/ds-icon-button';
   templateUrl: './table-pagination.component.html',
   encapsulation: ViewEncapsulation.None,
   imports: [SvgComponent, DecimalPipe, DsIconButton],
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '[class.table-pagination]': 'true',
   },

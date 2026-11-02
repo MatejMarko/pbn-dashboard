@@ -1,11 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { DsDialogCdkService } from './ds-dialog-cdk.service';
 import { DsDialogCdkConfig } from './ds-dialog-cdk-config';
 
-@Component({ template: '', standalone: true })
+@Component({ template: '', changeDetection: ChangeDetectionStrategy.Eager,
+ standalone: true })
 class TestDialogComponent {}
 
 describe('DsDialogCdkService', () => {

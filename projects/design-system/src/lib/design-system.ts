@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'lib-design-system',
@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
       design-system works!
     </p>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: ``,
 })
 export class DesignSystem {

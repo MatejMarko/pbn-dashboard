@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgTemplateOutlet } from '@angular/common';
 import { SvgComponent } from '../svg/svg';
@@ -13,6 +13,7 @@ export interface Breadcrumb {
   selector: 'lib-breadcrumbs',
   imports: [RouterLink, NgTemplateOutlet, SvgComponent, GhostButton],
   templateUrl: './breadcrumbs.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './breadcrumbs.scss',
 })
 export class Breadcrumbs {

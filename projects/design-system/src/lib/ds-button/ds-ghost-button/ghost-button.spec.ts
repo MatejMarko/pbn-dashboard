@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { GhostButton } from './ghost-button';
 import { DsButtonColor } from '../ds-button.types';
 import { SvgNames } from '../../svg/svg-names.enum';
@@ -19,6 +19,7 @@ import { provideMockSvg } from '../../../test-utils/mock-svg';
       Ghost Text
     </button>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [GhostButton],
 })
 class TestHostComponent {

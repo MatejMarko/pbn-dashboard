@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { DialogComponent, DsButton, DsDialogCdkService, IconBackground } from '@design-system';
 import { SecondDialog } from './second-dialog';
@@ -15,6 +15,7 @@ import { SecondDialog } from './second-dialog';
       </ng-container>
     </lib-dialog-component>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     DialogComponent,
     DsButton,

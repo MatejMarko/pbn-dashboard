@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { DsIconButton } from './ds-icon-button';
 import { DsButtonColor, DsButtonSize, DsButtonVariant } from '../ds-button.types';
 import { provideMockSvg } from '../../../test-utils/mock-svg';
@@ -17,6 +17,7 @@ import { provideMockSvg } from '../../../test-utils/mock-svg';
       (click)="onClick()">
     </button>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DsIconButton],
 })
 class TestHostComponent {

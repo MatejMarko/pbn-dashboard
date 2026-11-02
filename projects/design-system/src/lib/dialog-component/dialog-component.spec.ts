@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DialogRef } from '@angular/cdk/dialog';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { DialogComponent } from './dialog-component';
@@ -18,6 +18,7 @@ import { DialogComponent } from './dialog-component';
     </lib-dialog-component>
   `,
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DialogComponent],
 })
 class TestHostComponent {
@@ -31,7 +32,7 @@ function setup(hasCloseIcon = false) {
     imports: [TestHostComponent],
     providers: [
       { provide: DialogRef, useValue: dialogRefSpy },
-      provideHttpClient(),
+      provideHttpClient(withXhr()),
       provideHttpClientTesting(),
     ],
   });

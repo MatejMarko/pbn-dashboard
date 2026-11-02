@@ -1,6 +1,6 @@
-import { Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideMockSvg } from '../../../test-utils/mock-svg';
 import {
@@ -27,6 +27,7 @@ import {
       </otp-table-section>
     </otp-table>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TableComponent, TableHeaderComponent, TableHeaderCellDirective, TableRowComponent, TableCellDirective, TableSectionComponent],
 })
 class SectionHost {
@@ -56,7 +57,7 @@ describe('TableSectionComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SectionHost],
-      providers: [provideHttpClient(), provideHttpClientTesting(), provideMockSvg()],
+      providers: [provideHttpClient(withXhr()), provideHttpClientTesting(), provideMockSvg()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SectionHost);

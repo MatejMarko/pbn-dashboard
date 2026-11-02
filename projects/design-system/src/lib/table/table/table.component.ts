@@ -5,6 +5,7 @@ import {
   input,
   model,
   ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { TableRowComponent } from '../table-row/table-row.component';
 
@@ -13,6 +14,7 @@ import { TableRowComponent } from '../table-row/table-row.component';
   template: '<ng-content></ng-content>',
   styleUrl: '../table.styles.scss',
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     'role': 'table',
     '[style.grid-template-columns]': 'resolvedColumns()',

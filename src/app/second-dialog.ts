@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DialogRef } from '@angular/cdk/dialog';
 import { DialogComponent, DsButton, IconBackground } from '@design-system';
 
 @Component({
   selector: 'app-second-dialog',
   imports: [DialogComponent, IconBackground, DsButton],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <lib-dialog-component [hasCloseIcon]="true">
       <otp-icon-background icon="OTP-icon-24x24-info" size="48" type="success"></otp-icon-background>

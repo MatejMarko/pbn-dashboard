@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   AtMostPipe,
   DsButton, DsDialogCdkService,
@@ -11,6 +11,7 @@ import {
   LabelDirective, GhostButton, ScreenSize, ScreenSizeService,
   Breadcrumb, Breadcrumbs,
   SvgComponent,
+  SvgNames,
   OTP_TABLE,
   OTP_DATEPICKER,
   ChipFilterComponent,
@@ -21,7 +22,6 @@ import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators 
 import { form, required, FormField } from '@angular/forms/signals';
 import { defer, map, of } from 'rxjs';
 import { FirstDialog } from '../first-dialog';
-import { SvgNames } from '@design-system/lib/svg/svg-names.enum';
 import {
   DS_FORM_FIELD
 } from '../../../.claude/worktrees/trusting-chatterjee-be2f38/projects/design-system/src/lib/ds-form-field';
@@ -85,6 +85,7 @@ interface Card {
     DS_FORM_FIELD,
   ],
   templateUrl: './dashboard.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dashboard.scss',
 })
 export class Dashboard {

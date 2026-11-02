@@ -1,4 +1,4 @@
-import { Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { YearViewComponent } from './year-view.component';
 
@@ -12,6 +12,7 @@ import { YearViewComponent } from './year-view.component';
       (yearSelected)="onYearSelected($event)"
     />
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [YearViewComponent],
 })
 class TestHost {

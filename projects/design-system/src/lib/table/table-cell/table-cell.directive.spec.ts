@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {
   TableComponent,
@@ -17,6 +17,7 @@ import {
       </otp-table-row>
     </otp-table>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TableComponent, TableRowComponent, TableCellDirective],
 })
 class CellHost {}
@@ -28,7 +29,7 @@ describe('TableCellDirective', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [CellHost],
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      providers: [provideHttpClient(withXhr()), provideHttpClientTesting()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CellHost);

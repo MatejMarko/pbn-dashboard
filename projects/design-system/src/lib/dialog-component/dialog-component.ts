@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { DialogRef } from '@angular/cdk/dialog';
 // todo: remove @design-system references in library
 import { DsIconButton } from '../../lib/ds-button';
@@ -9,6 +9,7 @@ import { DsIconButton } from '../../lib/ds-button';
     DsIconButton
   ],
   templateUrl: './dialog-component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dialog-component.scss',
 })
 // todo: rename to something like InformativeDialogComponent (or Basic/SmallDialogComponent)

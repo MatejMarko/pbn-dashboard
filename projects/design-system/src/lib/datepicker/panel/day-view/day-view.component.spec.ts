@@ -1,4 +1,4 @@
-import { Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DayViewComponent } from './day-view.component';
 
@@ -14,6 +14,7 @@ import { DayViewComponent } from './day-view.component';
       (activeDateChange)="onActiveDateChange($event)"
     />
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DayViewComponent],
 })
 class TestHost {

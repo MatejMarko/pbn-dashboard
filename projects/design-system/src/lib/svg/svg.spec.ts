@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, signal } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { SvgComponent } from './svg';
 
@@ -8,6 +8,7 @@ const MOCK_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><c
 
 @Component({
   template: `<otp-svg [name]="name()" [size]="size()"></otp-svg>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [SvgComponent],
 })
 class TestHostComponent {
@@ -23,7 +24,7 @@ describe('SvgComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      providers: [provideHttpClient(withXhr()), provideHttpClientTesting()],
     }).compileComponents();
 
     httpTesting = TestBed.inject(HttpTestingController);

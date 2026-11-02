@@ -1,4 +1,4 @@
-import { Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CalendarComponent } from '../calendar/calendar.component';
@@ -9,6 +9,7 @@ import { DatepickerInputDirective, DatepickerValueFormat } from './datepicker-in
     <input [otpDatepickerInput]="picker" [valueFormat]="valueFormat()" [formControl]="dateCtrl" />
     <otp-calendar #picker />
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ReactiveFormsModule, CalendarComponent, DatepickerInputDirective],
 })
 class Host {

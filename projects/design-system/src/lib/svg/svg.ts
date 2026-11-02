@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, inject, input, isDevMode } from '@angular/core';
+import { Component, effect, ElementRef, inject, input, isDevMode, ChangeDetectionStrategy } from '@angular/core';
 import { Svg, SvgSource } from '../svg';
 import { SvgNames } from './svg-names.enum';
 
@@ -8,6 +8,7 @@ import { SvgNames } from './svg-names.enum';
   imports: [],
   styleUrl: './svg.scss',
   template: '',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     class: 'otp-svg',
   },

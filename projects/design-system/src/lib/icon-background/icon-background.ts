@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, ChangeDetectionStrategy } from '@angular/core';
 import { SvgComponent } from '../svg/svg';
 
 type IconBackgroundType = 'success' | 'warning' | 'pending' | 'error' | 'neutral';
@@ -20,6 +20,7 @@ const SIZE_MAPPER: {[T in IconBackgroundSizePx]: IconBackgroundSize} = {
   selector: 'otp-icon-background',
   imports: [SvgComponent],
   templateUrl: './icon-background.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './icon-background.scss',
 })
 export class IconBackground {

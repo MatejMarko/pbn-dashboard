@@ -1,16 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ErrorDirective } from './error.directive';
 
 @Component({
   template: `<otp-error>Some error text</otp-error>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ErrorDirective],
 })
 class NoIdHost {}
 
 @Component({
   template: `<otp-error id="my-custom-id">Some error text</otp-error>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ErrorDirective],
 })
 class CustomIdHost {}
@@ -26,6 +28,7 @@ class CustomIdHost {}
     <otp-error>First error</otp-error>
     <otp-error>Second error</otp-error>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ErrorDirective],
 })
 class TwoErrorsHost {}

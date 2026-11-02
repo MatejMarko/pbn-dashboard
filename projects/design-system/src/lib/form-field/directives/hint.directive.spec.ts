@@ -1,16 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HintDirective } from './hint.directive';
 
 @Component({
   template: `<otp-hint>Some hint text</otp-hint>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [HintDirective],
 })
 class NoIdHost {}
 
 @Component({
   template: `<otp-hint id="my-custom-id">Some hint text</otp-hint>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [HintDirective],
 })
 class CustomIdHost {}
@@ -20,6 +22,7 @@ class CustomIdHost {}
     <otp-hint>First hint</otp-hint>
     <otp-hint>Second hint</otp-hint>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [HintDirective],
 })
 class TwoHintsHost {}

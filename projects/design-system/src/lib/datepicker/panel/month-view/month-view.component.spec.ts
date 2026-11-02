@@ -1,4 +1,4 @@
-import { Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MonthViewComponent } from './month-view.component';
 
@@ -12,6 +12,7 @@ import { MonthViewComponent } from './month-view.component';
       (monthSelected)="onMonthSelected($event)"
     />
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MonthViewComponent],
 })
 class TestHost {

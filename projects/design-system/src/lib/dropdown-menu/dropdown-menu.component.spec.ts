@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Component, TemplateRef, viewChild } from '@angular/core';
+import { Component, TemplateRef, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { CdkListboxModule } from '@angular/cdk/listbox';
 
@@ -19,6 +19,7 @@ function delay(ms: number) {
 @Component({
   imports: [DropdownMenuComponent],
   providers: [provideMockSvg()],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <otp-dropdown-menu
       [options]="items"
@@ -58,6 +59,7 @@ class HostComponent {
 @Component({
   imports: [DropdownMenuComponent],
   providers: [provideMockSvg()],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <otp-dropdown-menu
       [options]="items"

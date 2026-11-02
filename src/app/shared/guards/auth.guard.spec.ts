@@ -19,7 +19,7 @@ describe('authGuard', () => {
   });
 
   function runGuard() {
-    return TestBed.runInInjectionContext(() => authGuard({} as any, [] as any)) as boolean | UrlTree;
+    return TestBed.runInInjectionContext(() => authGuard({} as any, [] as any, {} as any)) as boolean | UrlTree;
   }
 
   it('should return true when authenticated', () => {

@@ -1,4 +1,4 @@
-import { Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CalendarComponent } from '../calendar/calendar.component';
@@ -42,6 +42,7 @@ const fakeDateTimeAdapter: DatepickerValueAdapter<FakeDateTime> = {
     <input [otpDatepickerInput]="picker" [formControl]="ctrl" />
     <otp-calendar #picker [min]="min()" [max]="max()" />
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ReactiveFormsModule, CalendarComponent, DatepickerInputDirective],
 })
 class Host {

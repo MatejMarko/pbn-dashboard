@@ -5,12 +5,14 @@ import {
   AfterViewInit,
   OnDestroy,
   HostBinding,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ConfigurableFocusTrapFactory, FocusTrap } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'ds-dialog-container',
   templateUrl: './ds-dialog-container.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './ds-dialog-container.scss',
 })
 export class DsDialogContainer implements AfterViewInit, OnDestroy {

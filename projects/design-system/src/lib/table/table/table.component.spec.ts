@@ -1,6 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {
   OTP_TABLE,
@@ -30,6 +30,7 @@ import {
       }
     </otp-table>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TableComponent, TableHeaderComponent, TableHeaderCellDirective, TableRowComponent, TableCellDirective],
 })
 class BasicTableHost {
@@ -54,6 +55,7 @@ class BasicTableHost {
       }
     </otp-table>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TableComponent, TableHeaderComponent, TableHeaderCellDirective, TableRowComponent, TableCellDirective],
 })
 class SelectableTableHost {
@@ -79,6 +81,7 @@ class SelectableTableHost {
       </otp-table-footer>
     </otp-table>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TableComponent, TableHeaderComponent, TableHeaderCellDirective, TableRowComponent, TableCellDirective, TableFooterComponent, TableFooterActionsDirective],
 })
 class FooterTableHost {}
@@ -89,7 +92,7 @@ describe('TableComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [BasicTableHost, SelectableTableHost, FooterTableHost],
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      providers: [provideHttpClient(withXhr()), provideHttpClientTesting()],
     }).compileComponents();
   });
 

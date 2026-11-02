@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DsButton, ErrorDirective, FormFieldComponent, InputComponent, LabelDirective } from '@design-system';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '../shared/services/user/user';
@@ -18,6 +18,7 @@ import { ROUTES } from '../app.routes';
     LabelDirective,
   ],
   templateUrl: './login.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './login.scss',
 })
 export class Login {

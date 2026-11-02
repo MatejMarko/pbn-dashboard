@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, signal, ViewEncapsulation } from '@angular/core';
+import { Component, computed, inject, input, signal, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { TableComponent } from '../table/table.component';
 import { TableCellDirective } from '../table-cell/table-cell.directive';
 
@@ -7,6 +7,7 @@ import { TableCellDirective } from '../table-cell/table-cell.directive';
   templateUrl: './table-row.component.html',
   encapsulation: ViewEncapsulation.None,
   imports: [TableCellDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     'role': 'row',
     '[class.table-row]': 'true',

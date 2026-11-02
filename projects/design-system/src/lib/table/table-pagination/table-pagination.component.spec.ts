@@ -1,6 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideMockSvg } from '../../../test-utils/mock-svg';
 import { TablePaginationComponent } from './table-pagination.component';
@@ -14,6 +14,7 @@ import { TablePaginationComponent } from './table-pagination.component';
       (pageChange)="onPageChange($event)"
     />
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TablePaginationComponent],
 })
 class PaginationHost {
@@ -30,7 +31,7 @@ describe('TablePaginationComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [PaginationHost],
-      providers: [provideHttpClient(), provideHttpClientTesting(), provideMockSvg()],
+      providers: [provideHttpClient(withXhr()), provideHttpClientTesting(), provideMockSvg()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PaginationHost);

@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { InputComponent } from './input.component';
 
 @Component({
   template: `<input otp-input />`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [InputComponent],
 })
 class TestHostComponent {}

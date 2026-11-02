@@ -9,6 +9,7 @@ import {
   signal,
   viewChild,
   ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { TableRowComponent } from '../table-row/table-row.component';
 import { SvgComponent } from '../../svg/svg';
@@ -22,6 +23,7 @@ const TRANSITION_BUFFER = 50;
   templateUrl: './table-section.component.html',
   encapsulation: ViewEncapsulation.None,
   imports: [SvgComponent, GhostButton],
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     'role': 'rowgroup',
     '[style.display]': '"contents"',

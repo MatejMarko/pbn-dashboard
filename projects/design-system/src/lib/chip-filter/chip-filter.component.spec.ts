@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { EMPTY, of } from 'rxjs';
@@ -30,6 +30,7 @@ const OPTIONS_WITH_DEFAULT: ChipOption<string>[] = [
       [(value)]="value"
     />
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ChipFilterComponent],
 })
 class TestHost {
@@ -47,6 +48,7 @@ class TestHost {
       [(value)]="value"
     />
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ChipFilterComponent],
 })
 class CustomOptionHost {

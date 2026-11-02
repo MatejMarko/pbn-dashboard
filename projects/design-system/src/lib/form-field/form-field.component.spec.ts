@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -19,6 +19,7 @@ import { HintRightDirective } from './directives/hint-right.directive';
       <otp-hint-right>0/50</otp-hint-right>
     </otp-form-field>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormFieldComponent, InputComponent, LabelDirective, ErrorDirective, HintDirective, HintRightDirective, ReactiveFormsModule],
 })
 class FullFormFieldHost {
@@ -33,6 +34,7 @@ class FullFormFieldHost {
       <otp-hint>A helpful hint</otp-hint>
     </otp-form-field>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormFieldComponent, InputComponent, LabelDirective, HintDirective, ReactiveFormsModule],
 })
 class NoValidationHost {
@@ -46,6 +48,7 @@ class NoValidationHost {
       <input otp-input [formControl]="control" />
     </otp-form-field>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormFieldComponent, InputComponent, LabelDirective, ReactiveFormsModule],
 })
 class DisabledHost {
@@ -61,6 +64,7 @@ class DisabledHost {
       <div otp-input-suffix>SUFFIX</div>
     </otp-form-field>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormFieldComponent, InputComponent, LabelDirective, ReactiveFormsModule],
 })
 class PrefixSuffixHost {
@@ -69,6 +73,7 @@ class PrefixSuffixHost {
 
 @Component({
   template: `<otp-form-field></otp-form-field>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormFieldComponent],
 })
 class EmptyHost {}
@@ -79,6 +84,7 @@ class EmptyHost {}
       <input otp-input [formControl]="control" />
     </otp-form-field>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormFieldComponent, InputComponent, ReactiveFormsModule],
 })
 class NoLabelHost {

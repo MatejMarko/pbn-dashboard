@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { DsButton } from './ds-button';
 import { DsButtonColor, DsButtonSize, DsButtonVariant } from '../ds-button.types';
 
@@ -16,6 +16,7 @@ import { DsButtonColor, DsButtonSize, DsButtonVariant } from '../ds-button.types
       Button Text
     </button>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DsButton],
 })
 class TestHostComponent {

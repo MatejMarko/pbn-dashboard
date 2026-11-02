@@ -1,4 +1,4 @@
-import { Component, computed, effect, input } from '@angular/core';
+import { Component, computed, effect, input, ChangeDetectionStrategy } from '@angular/core';
 import { DsButtonColor } from '../ds-button.types';
 import { SvgComponent } from '../../svg/svg';
 import { SvgNames } from '../../svg/svg-names.enum';
@@ -8,6 +8,7 @@ import { SvgNames } from '../../svg/svg-names.enum';
   templateUrl: './ghost-button.html',
   styleUrl: './ghost-button.scss',
   imports: [SvgComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '[class]': 'color()',
     '[attr.aria-label]': 'ariaLabel()',

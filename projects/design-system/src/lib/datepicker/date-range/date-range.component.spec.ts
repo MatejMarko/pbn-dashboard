@@ -1,4 +1,4 @@
-import { Component, viewChild } from '@angular/core';
+import { Component, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DateRangeComponent } from './date-range.component';
@@ -8,6 +8,7 @@ import { provideMockSvg } from '../../../test-utils/mock-svg';
   template: `
     <otp-date-range [fromControl]="from" [toControl]="to" />
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ReactiveFormsModule, DateRangeComponent],
 })
 class Host {
